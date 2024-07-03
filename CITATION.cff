@@ -1,0 +1,27 @@
+cff-version: 1.2.0
+title: ontouml-models-utils Python Library
+message: >-
+  If you use this software, please cite it using the metadata from this file.
+type: software
+authors:
+  - given-names: Pedro Paulo
+    family-names: Favato Barcelos
+    email: p.p.favatobarcelos@utwente.nl
+    affiliation: University of Twente
+    orcid: 'https://orcid.org/0000-0003-2736-7817'
+identifiers:
+  - type: url
+    value: 'https://github.com/ontouml/ontouml-models-utils'
+    description: Git repository
+repository-code: 'https://github.com/ontouml/ontouml-models-utils'
+url: 'https://ontouml.github.io/ontouml-models-utils/'
+repository-artifact: 'https://pypi.org/project/ontouml-models-utils/'
+abstract: A Python library for accessing and managing OntoUML models from the OntoUML/UFO Catalog,
+designed to simplify software development by providing easy-to-use functions.
+keywords:
+- ontouml
+- ontouml-models
+- ontology
+- ontology-engineering
+- catalog
+license: Apache-2.0
