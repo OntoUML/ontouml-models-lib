@@ -1,7 +1,6 @@
 import logging
 import csv
 from pathlib import Path
-from icecream import ic
 from rdflib import Graph, URIRef
 from rdflib.namespace import split_uri
 from query import Query

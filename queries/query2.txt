@@ -1,0 +1,7 @@
+PREFIX ontouml: <https://w3id.org/ontouml#>
+
+SELECT ?class ?project
+WHERE {
+  ?class a ontouml:Class .
+  ?class ontouml:project ?project .
+}

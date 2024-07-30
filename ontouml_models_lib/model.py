@@ -31,7 +31,7 @@ class Model(QueryableElement):
         path_metamodel_yaml = model_path / "metadata.yaml"
 
         self._load_graph_safely(path_model_graph)
-        self.hash_model = self._compute_consistent_hash(self.graph)
+        self.hash = self._compute_consistent_hash(self.graph)
 
         self._populate_attributes(path_metamodel_yaml)
 
