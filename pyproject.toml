@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "ontouml-models-utils"
-version = "3.0.0-dev"
-description = "ontouml-models-utils Python Library"
+version = "1.0.0-dev0"
+description = "ontouml-models-lib Python Library"
 license = "Apache-2.0"
 authors = ["Pedro Paulo F. Barcelos <p.p.favatobarcelos@utwente.nl>"]
 readme = "README.md"
@@ -10,10 +10,10 @@ repository = "https://github.com/ontouml/ontouml-models-utils"
 documentation = "https://ontouml.github.io/ontouml-models-utils"
 keywords = ["ontouml", "ontouml-models", "catalog", "ontology", "ontology-engineering"]
 packages = [{ include = "ontouml-models-utils" },
-    { include = "py.typed", from = "ontouml-models-utils" }]
+    { include = "py.typed", from = "ontouml-models-lib" }]
 
 [tool.poetry.urls]
-"PyPi Project" = "https://pypi.org/project/ontouml-models-utils/"
+"PyPi Project" = "https://pypi.org/project/ontouml-models-lib/"
 
 [tool.poetry.dependencies]
 python = "^3.09"

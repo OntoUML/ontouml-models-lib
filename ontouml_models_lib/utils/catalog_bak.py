@@ -1,7 +1,11 @@
+from typing import Optional
+
+from model import Model
+
 import requests
 from typing import Optional
 
-class OUCatalog:
+class OnlineCatalog:
     BASE_URL = "https://api.github.com/repos/OntoUML/ontouml-models/contents/models"
 
     def __init__(self, token: Optional[str] = None):
@@ -36,3 +40,4 @@ class OUCatalog:
             print("Token works! Repository details fetched successfully.")
         else:
             print(f"Failed to fetch repository details: {response.status_code} {response.text}")
+
