@@ -3,14 +3,12 @@ from pathlib import Path
 from typing import Optional
 
 import yaml
-from icecream import ic
 from rdflib import Graph
 from rdflib.compare import to_isomorphic
 from rdflib.util import guess_format
 
 from enumerations import OntologyPurpose, OntologyDevelopmentContext, OntologyRepresentationStyle, OntologyType
 from utils.queryable_element import QueryableElement
-
 
 class Model(QueryableElement):
     def __init__(self, model_path: Path) -> None:
@@ -34,7 +32,6 @@ class Model(QueryableElement):
         self.hash = self._compute_consistent_hash(self.graph)
 
         self._populate_attributes(path_metamodel_yaml)
-
 
     def _load_graph_safely(self, ontology_file: Path) -> Optional[Graph]:
         """ Safely load graph from file to working memory.
