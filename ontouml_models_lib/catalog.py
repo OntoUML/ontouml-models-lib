@@ -1,4 +1,45 @@
-import logging
+"""
+This module defines the `Catalog` class, which represents a collection of ontology models in the OntoUML/UFO Catalog.
+The `Catalog` class provides functionalities to load, manage, and execute queries on multiple ontology models,
+compiling the results from individual models into a cohesive dataset.
+
+The `Catalog` class inherits from `QueryableElement`, allowing it to execute SPARQL queries across its contained models.
+This enables users to perform complex queries on the entire catalog, leveraging the RDFLib library for graph operations.
+
+Example usage of the `Catalog` class:
+
+    >>> from catalog import Catalog
+    >>> catalog = Catalog(path='/path/to/catalog')
+    >>> catalog.execute_query_all_models(specific_query_path=Path('/path/to/query.rq'))
+    >>> catalog.execute_all_queries_all_models(queries_folder=Path('/path/to/queries'))
+
+Classes:
+    - Catalog: Manages a collection of ontology models, allowing loading, querying, and compiling results from them.
+
+Usage Notes:
+    The `Catalog` class assumes that the ontology models are organized in subfolders within the specified catalog path.
+    Each subfolder should contain an ontology file (`ontology.ttl`) and a metadata file (`metadata.yaml`) for the model.
+
+    The `execute_query_all_models` method executes a specific SPARQL query on all loaded models, compiling the results
+    into a single CSV file. The `execute_all_queries_all_models` method executes all queries from a specified folder on
+    all models, generating compiled results for each query.
+
+    Both methods automatically handle the creation of result directories and logging of query execution progress.
+
+Example:
+    To use the `Catalog` class, create an instance by specifying the path to the catalog directory and call the
+    `execute_query_all_models` or `execute_all_queries_all_models` methods with appropriate parameters.
+
+    >>> from catalog import Catalog
+    >>> catalog = Catalog(path='/path/to/catalog')
+    >>> catalog.execute_query_all_models(specific_query_path=Path('/path/to/query.rq'))
+    >>> catalog.execute_all_queries_all_models(queries_folder=Path('/path/to/queries'))
+
+This module is part of a library designed to manipulate concepts from and perform queries in the OntoUML/UFO Catalog.
+For more information about OntoUML and UFO, visit the OntoUML repository: https://github.com/OntoUML/ontouml-models
+"""
+
+
 import pandas as pd
 from pathlib import Path
 from loguru import logger
@@ -79,3 +120,39 @@ class Catalog(QueryableElement):
         queries = Query.get_all_queries(queries_folder)
         for query in queries:
             self.execute_query_all_models(query.query_file)
+
+    def get_model(self, model_id: str) -> Model:
+        """Retrieve a model from the catalog by its ID.
+
+        :param model_id: The ID of the model to retrieve.
+        :type model_id: str
+        :return: The model with the specified ID.
+        :rtype: Model
+        :raises ValueError: If no model with the specified ID is found.
+
+        Example:
+            >>> catalog = Catalog(path='/path/to/catalog')
+            >>> model = catalog.get_model_by_id('some_model_id')
+        """
+        for model in self.models:
+            if model.id == model_id:
+                return model
+        raise ValueError(f"No model found with ID: {model_id}")
+
+    def remove_model(self, model_id: str) -> None:
+        """Remove a model from the catalog by its ID.
+
+        :param model_id: The ID of the model to remove.
+        :type model_id: str
+        :raises ValueError: If no model with the specified ID is found.
+
+        Example:
+            >>> catalog = Catalog(path='/path/to/catalog')
+            >>> catalog.remove_model('some_model_id')
+        """
+        for i, model in enumerate(self.models):
+            if model.id == model_id:
+                del self.models[i]
+                logger.info(f"Model with ID {model_id} has been removed from the catalog.")
+                return
+        raise ValueError(f"No model found with ID: {model_id}")
