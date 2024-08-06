@@ -1,13 +1,16 @@
 from enum import Enum
 
+
 class OntologyDevelopmentContext(Enum):
     CLASSROOM = "Classroom"
     INDUSTRY = "Industry"
     RESEARCH = "Research"
 
+
 class OntologyRepresentationStyle(Enum):
     ONTOUML_STYLE = "OntoumlStyle"
     UFO_STYLE = "UfoStyle"
+
 
 class OntologyPurpose(Enum):
     CONCEPTUAL_CLARIFICATION = "ConceptualClarification"
@@ -20,6 +23,7 @@ class OntologyPurpose(Enum):
     LEARNING = "Learning"
     ONTOLOGIC_ALANALYSIS = "OntologicalAnalysis"
     SOFTWARE_ENGINEERING = "SoftwareEngineering"
+
 
 class OntologyType(Enum):
     CORE = "Core"

@@ -13,16 +13,16 @@ from utils.queryable_element import QueryableElement
 
 
 class Model(QueryableElement):
-    def __init__(self, model_path: Union[Path,str]) -> None:
+    def __init__(self, model_path: Union[Path, str]) -> None:
 
         if isinstance(model_path, str):
             model_path = Path(model_path)
 
         # Check if the model_path is a valid Path and exists
         if not isinstance(model_path, Path) or not model_path.exists():
-            raise ValueError(f"Invalid path provided: '{model_path}'. Path must exist.")
+            raise ValueError(f"Invalid catalog_path provided: '{model_path}'. Path must exist.")
 
-        super().__init__(id=model_path.name)  # Set the id to the last folder in the path
+        super().__init__(id=model_path.name)  # Set the id to the last folder in the catalog_path
 
         # Metadata attributes
         self.title: str = ""
@@ -65,7 +65,7 @@ class Model(QueryableElement):
     # ---------------------------------------------
 
     def _compute_consistent_hash(self, graph: Graph) -> int:
-        """ Compute a consistent model_graph_hash for an RDFLib model_graph.
+        """Compute a consistent model_graph_hash for an RDFLib model_graph.
 
         :param graph: RDFLib model_graph to be hashed.
         :type graph: Graph
@@ -75,14 +75,14 @@ class Model(QueryableElement):
 
         # Serialize the model_graph to a canonical format (N-Triples)
         iso_graph = to_isomorphic(graph)
-        serialized_graph = iso_graph.serialize(format='nt')
+        serialized_graph = iso_graph.serialize(format="nt")
 
         # Sort the serialized triples
         sorted_triples = sorted(serialized_graph.splitlines())
         sorted_graph_str = "\n".join(sorted_triples)
 
         # Encode the sorted serialization to UTF-8
-        encoded_graph = sorted_graph_str.encode('utf-8')
+        encoded_graph = sorted_graph_str.encode("utf-8")
 
         # Compute the SHA-256 model_graph_hash of the encoded model_graph
         graph_hash = hashlib.sha256(encoded_graph).hexdigest()
@@ -91,7 +91,7 @@ class Model(QueryableElement):
         return int(graph_hash, 16)
 
     def _load_graph_safely(self, ontology_file: Path) -> Graph:
-        """ Safely load graph from file (e.g., ttl) to working memory.
+        """Safely load graph from file (e.g., ttl) to working memory.
 
         :param ontology_file: Path to the ontology file to be loaded into the working memory.
         :type ontology_file: str
@@ -104,7 +104,7 @@ class Model(QueryableElement):
             raise FileNotFoundError(f"Ontology file {ontology_file} not found.")
         try:
             file_format = guess_format(ontology_file)
-            ontology_graph.parse(ontology_file, format=file_format, encoding='utf-8')
+            ontology_graph.parse(ontology_file, format=file_format, encoding="utf-8")
         except Exception as error:
             raise OSError(f"Error parsing ontology file {ontology_file}: {error}")
 
@@ -119,14 +119,14 @@ class Model(QueryableElement):
         if not yaml_file.exists():
             raise FileNotFoundError(f"Metadata file {yaml_file} not found.")
 
-        with open(yaml_file, 'r', encoding='utf-8') as file:
+        with open(yaml_file, "r", encoding="utf-8") as file:
             metadata = yaml.safe_load(file)
 
-        self.title = metadata.get('title', "")
-        self.keyword = metadata.get('keyword', [])
-        self.acronym = metadata.get('acronym')
-        self.source = metadata.get('source')
-        self.language = metadata.get('language')
+        self.title = metadata.get("title", "")
+        self.keyword = metadata.get("keyword", [])
+        self.acronym = metadata.get("acronym")
+        self.source = metadata.get("source")
+        self.language = metadata.get("language")
 
         def match_enum_value(enum_class, value: str):
             value_normalized = value.lower().replace(" ", "").replace("_", "")
@@ -136,27 +136,28 @@ class Model(QueryableElement):
                     return member
             # Explicit mapping for known cases
             if enum_class == OntologyRepresentationStyle:
-                if value_normalized == 'ontouml':
+                if value_normalized == "ontouml":
                     return OntologyRepresentationStyle.ONTOUML_STYLE
-                elif value_normalized == 'ufo':
+                elif value_normalized == "ufo":
                     return OntologyRepresentationStyle.UFO_STYLE
             raise ValueError(f"{value} is not a valid {enum_class.__name__}")
 
-        self.designedForTask = [match_enum_value(OntologyPurpose, task) for task in metadata.get('designedForTask', [])]
-        self.context = [match_enum_value(OntologyDevelopmentContext, ctx) for ctx in metadata.get('context', [])]
+        self.designedForTask = [match_enum_value(OntologyPurpose, task) for task in metadata.get("designedForTask", [])]
+        self.context = [match_enum_value(OntologyDevelopmentContext, ctx) for ctx in metadata.get("context", [])]
 
         # Handle single value or list for representationStyle
-        representation_style = metadata.get('representationStyle')
+        representation_style = metadata.get("representationStyle")
         if isinstance(representation_style, list):
-            self.representationStyle = [match_enum_value(OntologyRepresentationStyle, style) for style in
-                representation_style]
+            self.representationStyle = [
+                match_enum_value(OntologyRepresentationStyle, style) for style in representation_style
+            ]
         elif isinstance(representation_style, str):
             self.representationStyle = match_enum_value(OntologyRepresentationStyle, representation_style)
         else:
             self.representationStyle = None
 
         # Handle single value or list for ontologyType
-        ontology_type = metadata.get('ontologyType')
+        ontology_type = metadata.get("ontologyType")
         if isinstance(ontology_type, list):
             self.ontologyType = [match_enum_value(OntologyType, otype) for otype in ontology_type]
         elif isinstance(ontology_type, str):
@@ -164,4 +165,4 @@ class Model(QueryableElement):
         else:
             self.ontologyType = None
 
-        self.theme = metadata.get('theme')
+        self.theme = metadata.get("theme")

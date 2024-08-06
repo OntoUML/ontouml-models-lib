@@ -17,18 +17,18 @@ repos:
         pass_filenames: false
         stages:
           - pre-push
-      - id: pytest
-        name: pytest ./tests
-        entry: pytest --disable-warnings --no-header --no-summary --cov=ontouml-models-utils --cov-report=html ./tests
-        language: system
-        pass_filenames: false
       - id: update_requirements
         name: update requirements.txt
-        entry: poetry export -f requirements.txt --output requirements.txt --with dev
+        entry: poetry export -f requirements.txt --output requirements.txt --with dev --extras langcodes
         language: system
         pass_filenames: false
         stages:
           - pre-push
+#      - id: pytest
+#        name: pytest ./tests
+#        entry: pytest --disable-warnings --no-header --no-summary --cov=ontouml_models_lib --cov-report=html ./tests
+#        language: system
+#        pass_filenames: false
   - repo: https://github.com/PyCQA/autoflake
     rev: v2.3.1
     hooks:
@@ -43,17 +43,13 @@ repos:
       - id: check-case-conflict
       - id: check-merge-conflict
       # - id: no-commit-to-branch    # To be included when other contributions join the project
-  - repo: https://github.com/asottile/reorder-python-imports
-    rev: v3.13.0
-    hooks:
-    -   id: reorder-python-imports
   - repo: https://github.com/psf/black-pre-commit-mirror
-    rev: 24.4.2
+    rev: 24.8.0
     hooks:
       - id: black
         args: [ --line-length=120 ]
   - repo: https://github.com/PyCQA/flake8
-    rev: 7.1.0
+    rev: 7.1.1
     hooks:
       - id: flake8
         # to identify additional_dependencies, run: flake8 --version
@@ -73,10 +69,10 @@ repos:
                                   mccabe,
                                   tryceratops]
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v1.10.1
+    rev: v1.11.1
     hooks:
     -   id: mypy
-        args: [ -p=ontouml-models-utils ]
+        args: [ -p=ontouml_models_lib ]
         language: python
         types: [ python ]
         pass_filenames: false
@@ -132,5 +128,5 @@ ci:
   autoupdate_branch: ''
   autoupdate_commit_msg: '[pre-commit.ci] pre-commit autoupdate'
   autoupdate_schedule: weekly
-  skip: [ pytest ] # pytest is not necessary as there is already a workflow for that
+#  skip: [ pytest ] # pytest is not necessary as there is already a workflow for that
   submodules: false
