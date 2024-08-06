@@ -38,10 +38,11 @@ Example:
 This module is part of a library designed to manipulate concepts from and perform queries in the OntoUML/UFO Catalog.
 For more information about OntoUML and UFO, visit the OntoUML repository: https://github.com/OntoUML/ontouml-models
 """
-
+from typing import Optional, Any
 
 import pandas as pd
 from pathlib import Path
+
 from loguru import logger
 from rdflib import Graph
 from model import Model
@@ -54,14 +55,14 @@ class Catalog(QueryableElement):
         self.path: Path = Path(path)
         self.path_models: Path = self.path / 'models'
         self.models: list[Model] = []
-        self.load_models()
+        self.load_all_models()
         self.graph: Graph = self._create_catalog_graph()
 
     # ---------------------------------------------
     # Public Methods
     # ---------------------------------------------
 
-    def load_models(self):
+    def load_all_models(self):
         """Load data from the specified directory path."""
         list_models_folders = self._get_subfolders()
         list_models_folders = list_models_folders[0:5]
@@ -69,17 +70,15 @@ class Catalog(QueryableElement):
 
         for model_folder in list_models_folders:
             model_path = self.path_models / model_folder
-            try:
-                model = Model(model_path)
-                self.models.append(model)
-                logger.info("Successfully loaded model from folder: {}", model_folder)
-            except Exception as e:
-                logger.error("Failed to load model from folder: {}. Error: {}", model_folder, e)
+            model = Model(model_path)
+            self.models.append(model)
 
-    def execute_query_all_models(self, specific_query_path: Path):
+
+    def execute_query_all_models(self, specific_query_path: Path, results_path: Optional[Path]):
         """Execute a specific query on all models and generate a compiled results CSV."""
+
         query = Query(specific_query_path)
-        results_path = specific_query_path.parent / 'results'
+        results_path = specific_query_path.parent / 'results' if not results_path else results_path
         results_path.mkdir(exist_ok=True)
         compiled_file_path = results_path / f"{specific_query_path.stem}_result_compiled.csv"
         results = []
@@ -98,11 +97,11 @@ class Catalog(QueryableElement):
 
         self._generate_compiled_results(specific_query_path.stem, results, compiled_file_path)
 
-    def execute_all_queries_all_models(self, queries_folder: Path):
+    def execute_all_queries_all_models(self, queries_folder: Path, results_path: Optional[Path] = None):
         """Execute all queries in a folder on all models and generate compiled results CSVs."""
         queries = Query.get_all_queries(queries_folder)
         for query in queries:
-            self.execute_query_all_models(query.query_file)
+            self.execute_query_all_models(query.query_file, results_path)
 
     def get_model(self, model_id: str) -> Model:
         """Retrieve a model from the catalog by its ID.
@@ -121,6 +120,18 @@ class Catalog(QueryableElement):
             if model.id == model_id:
                 return model
         raise ValueError(f"No model found with ID: {model_id}")
+
+    def get_models(self, operand: str = "and", **filters: dict[str, Any]) -> list[Model]:
+        """
+        Return a list of models that match the given attribute restrictions.
+
+        :param operand: Logical operand for combining filters ("and" or "or").
+        :type operand: str
+        :param filters: Attribute restrictions to filter models.
+        :return: List of models that match the restrictions.
+        :rtype: list[Model]
+        """
+        return [model for model in self.models if self._match_model(model, filters, operand)]
 
     def remove_model(self, model_id: str) -> None:
         """Remove a model from the catalog by its ID.
@@ -156,7 +167,7 @@ class Catalog(QueryableElement):
                 catalog_graph += model.model_graph
         return catalog_graph
 
-    def _generate_compiled_results(self, query_name: str, results: list[dict], compiled_file_path: Path):
+    def _generate_compiled_results(self, results: list[dict], compiled_file_path: Path):
         """Generate a compiled CSV file from results of all models."""
         if results:
             df = pd.DataFrame(results)
@@ -164,3 +175,32 @@ class Catalog(QueryableElement):
             df = df[cols]
             df.to_csv(compiled_file_path, index=False)
             logger.info(f"Compiled results written to {compiled_file_path}")
+
+    def _match_model(self, model: Model, filters: dict[str, Any], operand: str) -> bool:
+        """
+        Check if a model matches the given attribute restrictions.
+
+        :param model: The model to check.
+        :type model: Model
+        :param filters: Attribute restrictions to filter models.
+        :type filters: dict
+        :param operand: Logical operand for combining filters ("and" or "or").
+        :type operand: str
+        :return: True if the model matches the restrictions, False otherwise.
+        :rtype: bool
+        """
+        matches: list[bool] = []
+        for attr, value in filters.items():
+            model_value = getattr(model, attr, None)
+            if isinstance(model_value, list):
+                match = value in model_value
+            else:
+                match = model_value == value
+            matches.append(match)
+
+        if operand == "and":
+            return all(matches)
+        elif operand == "or":
+            return any(matches)
+        else:
+            raise ValueError("Invalid operand. Use 'and' or 'or'.")

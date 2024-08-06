@@ -6,20 +6,20 @@ class OntologyDevelopmentContext(Enum):
     RESEARCH = "Research"
 
 class OntologyRepresentationStyle(Enum):
-    ONTOUMLSTYLE = "OntoumlStyle"
-    UFOSTYLE = "UfoStyle"
+    ONTOUML_STYLE = "OntoumlStyle"
+    UFO_STYLE = "UfoStyle"
 
 class OntologyPurpose(Enum):
-    CONCEPTUALCLARIFICATION = "ConceptualClarification"
-    DATAPUBLICATION = "DataPublication"
-    DECISIONSUPPORTSYSTEM = "DecisionSupportSystem"
+    CONCEPTUAL_CLARIFICATION = "ConceptualClarification"
+    DATA_PUBLICATION = "DataPublication"
+    DECISION_SUPPORT_SYSTEM = "DecisionSupportSystem"
     EXAMPLE = "Example"
-    INFORMATIONRETRIEVAL = "InformationRetrieval"
+    INFORMATION_RETRIEVAL = "InformationRetrieval"
     INTEROPERABILITY = "Interoperability"
-    LANGUAGEENGINEERING = "LanguageEngineering"
+    LANGUAGE_ENGINEERING = "LanguageEngineering"
     LEARNING = "Learning"
-    ONTOLOGICALANALYSIS = "OntologicalAnalysis"
-    SOFTWAREENGINEERING = "SoftwareEngineering"
+    ONTOLOGIC_ALANALYSIS = "OntologicalAnalysis"
+    SOFTWARE_ENGINEERING = "SoftwareEngineering"
 
 class OntologyType(Enum):
     CORE = "Core"

@@ -2,6 +2,8 @@ import logging
 import csv
 import hashlib
 from pathlib import Path
+from typing import Optional
+
 from rdflib import Graph, URIRef
 from rdflib.namespace import split_uri
 from query import Query
@@ -12,9 +14,9 @@ class QueryableElement:
         self.model_graph = Graph()
         self.model_graph_hash = self._compute_hash()
 
-    def _compute_hash(self) -> int:
-        """Compute a model_graph_hash for the QueryableElement."""
-        return hash(self.id)
+    # ---------------------------------------------
+    # Public Methods
+    # ---------------------------------------------
 
     def execute_query(self, query_file: Path, results_path: Path) -> list[dict]:
         """Execute a SPARQL query from a file on the element's model_graph and return results as a list of dictionaries.
@@ -73,6 +75,28 @@ class QueryableElement:
             logging.error(f"Query execution failed: {e}")
             return []
 
+
+    def execute_all_queries(self, queries_path: Path, results_path: Optional[Path]) -> None:
+        """Execute all queries from a directory and save the results.
+
+        :param queries_path: Path to the directory containing query files.
+        """
+
+        results_path = queries_path / 'results' if not results_path else results_path
+
+        queries = Query.get_all_queries(queries_path)
+        for query in queries:
+            self.execute_query(query.query_file, results_path)
+
+    # ---------------------------------------------
+    # Private Methods
+    # ---------------------------------------------
+
+    def _compute_hash(self) -> int:
+        """Compute a model_graph_hash for the QueryableElement."""
+        return hash(self.id)
+
+
     def _compute_query_hash(self, query: str) -> int:
         """Compute a consistent model_graph_hash for the query content."""
         encoded_content = query.encode('utf-8')
@@ -124,13 +148,3 @@ class QueryableElement:
                 writer.writerow(row)
 
         logging.info(f"Hash written to {hashes_file}")
-
-    def execute_all_queries(self, queries_path: Path) -> None:
-        """Execute all queries from a directory and save the results.
-
-        :param queries_path: Path to the directory containing query files.
-        """
-        queries = Query.get_all_queries(queries_path)
-        for query in queries:
-            results_path = queries_path / 'results'
-            self.execute_query(query.query_file, results_path)
