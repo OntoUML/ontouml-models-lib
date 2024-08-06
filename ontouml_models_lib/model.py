@@ -13,7 +13,8 @@ from utils.queryable_element import QueryableElement
 class Model(QueryableElement):
     def __init__(self, model_path: Path) -> None:
         super().__init__(id=model_path.name)  # Set the id to the last folder in the path
-        self.model_path: Path = model_path
+
+        # Metadata attributes
         self.title: str = ""
         self.keyword: list[str] = []
         self.acronym: Optional[str] = None
@@ -25,20 +26,63 @@ class Model(QueryableElement):
         self.ontologyType: Optional[OntologyType] = None
         self.theme: Optional[str] = None
 
+        # Paths
+        self.model_path: Path = model_path
         path_model_graph = model_path / "ontology.ttl"
-        path_metamodel_yaml = model_path / "metadata.yaml"
+        path_metadata_graph = model_path / "metadata.ttl"
+        path_metadata_yaml = model_path / "metadata.yaml"
 
+        # Initialize model_graph and metadata_graph as None
+        self.model_graph: Optional[Graph] = None
+        self.metadata_graph: Optional[Graph] = None
+
+        # Load the graphs
         self._load_graph_safely(path_model_graph)
-        self.hash = self._compute_consistent_hash(self.graph)
+        self._load_graph_safely(path_metadata_graph)
 
-        self._populate_attributes(path_metamodel_yaml)
+        # Compute the persistent hashes of the model's graphs
+        self.model_graph_hash = self._compute_consistent_hash(self.model_graph)
+        self.metadata_graph_hash = self._compute_consistent_hash(self.metadata_graph)
+
+        # Populate attributes from the YAML file
+        self._populate_attributes(path_metadata_yaml)
+
+    # ---------------------------------------------
+    # Private Methods
+    # ---------------------------------------------
+
+
+    def _compute_consistent_hash(self, graph: Graph) -> int:
+        """ Compute a consistent model_graph_hash for an RDFLib model_graph.
+
+        :param graph: RDFLib model_graph to be hashed.
+        :type graph: Graph
+        :return: Consistent model_graph_hash value of the model_graph.
+        :rtype: int
+        """
+        # Serialize the model_graph to a canonical format (N-Triples)
+        iso_graph = to_isomorphic(graph)
+        serialized_graph = iso_graph.serialize(format='nt')
+
+        # Sort the serialized triples
+        sorted_triples = sorted(serialized_graph.splitlines())
+        sorted_graph_str = "\n".join(sorted_triples)
+
+        # Encode the sorted serialization to UTF-8
+        encoded_graph = sorted_graph_str.encode('utf-8')
+
+        # Compute the SHA-256 model_graph_hash of the encoded model_graph
+        graph_hash = hashlib.sha256(encoded_graph).hexdigest()
+
+        # Convert the hexadecimal model_graph_hash to an integer
+        return int(graph_hash, 16)
 
     def _load_graph_safely(self, ontology_file: Path) -> Optional[Graph]:
-        """ Safely load graph from file to working memory.
+        """ Safely load graph from file (e.g., ttl) to working memory.
 
         :param ontology_file: Path to the ontology file to be loaded into the working memory.
         :type ontology_file: str
-        :return: RDFLib graph loaded as object.
+        :return: RDFLib model_graph loaded as object.
         :rtype: Graph
         """
         ontology_graph = Graph()
@@ -50,7 +94,7 @@ class Model(QueryableElement):
         except Exception as error:
             raise OSError(f"Error parsing ontology file {ontology_file}: {error}")
 
-        self.graph = ontology_graph
+        self.model_graph = ontology_graph
 
     def _populate_attributes(self, yaml_file: Path) -> None:
         """Populate the attributes of the model from a YAML file.
@@ -116,28 +160,3 @@ class Model(QueryableElement):
             self.ontologyType = None
 
         self.theme = metadata.get('theme')
-
-    def _compute_consistent_hash(self, graph: Graph) -> int:
-        """ Compute a consistent hash for an RDFLib graph.
-
-        :param graph: RDFLib graph to be hashed.
-        :type graph: Graph
-        :return: Consistent hash value of the graph.
-        :rtype: int
-        """
-        # Serialize the graph to a canonical format (N-Triples)
-        iso_graph = to_isomorphic(graph)
-        serialized_graph = iso_graph.serialize(format='nt')
-
-        # Sort the serialized triples
-        sorted_triples = sorted(serialized_graph.splitlines())
-        sorted_graph_str = "\n".join(sorted_triples)
-
-        # Encode the sorted serialization to UTF-8
-        encoded_graph = sorted_graph_str.encode('utf-8')
-
-        # Compute the SHA-256 hash of the encoded graph
-        graph_hash = hashlib.sha256(encoded_graph).hexdigest()
-
-        # Convert the hexadecimal hash to an integer
-        return int(graph_hash, 16)

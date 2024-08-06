@@ -1,15 +1,15 @@
 [tool.poetry]
-name = "ontouml-models-utils"
-version = "1.0.0-dev0"
+name = "ontouml-models-lib"
+version = "1.0.0a1"
 description = "ontouml-models-lib Python Library"
 license = "Apache-2.0"
 authors = ["Pedro Paulo F. Barcelos <p.p.favatobarcelos@utwente.nl>"]
 readme = "README.md"
-homepage = "https://github.com/ontouml/ontouml-models-utils"
-repository = "https://github.com/ontouml/ontouml-models-utils"
-documentation = "https://ontouml.github.io/ontouml-models-utils"
+homepage = "https://github.com/ontouml/ontouml-models-lib"
+repository = "https://github.com/ontouml/ontouml-models-lib"
+documentation = "https://ontouml.github.io/ontouml-models-lib"
 keywords = ["ontouml", "ontouml-models", "catalog", "ontology", "ontology-engineering"]
-packages = [{ include = "ontouml-models-utils" },
+packages = [{ include = "ontouml-models-lib" },
     { include = "py.typed", from = "ontouml-models-lib" }]
 
 [tool.poetry.urls]

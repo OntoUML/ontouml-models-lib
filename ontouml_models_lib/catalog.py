@@ -4,7 +4,7 @@ The `Catalog` class provides functionalities to load, manage, and execute querie
 compiling the results from individual models into a cohesive dataset.
 
 The `Catalog` class inherits from `QueryableElement`, allowing it to execute SPARQL queries across its contained models.
-This enables users to perform complex queries on the entire catalog, leveraging the RDFLib library for graph operations.
+This enables users to perform complex queries on the entire catalog, leveraging the RDFLib library for model_graph operations.
 
 Example usage of the `Catalog` class:
 
@@ -57,6 +57,10 @@ class Catalog(QueryableElement):
         self.load_models()
         self.graph: Graph = self._create_catalog_graph()
 
+    # ---------------------------------------------
+    # Public Methods
+    # ---------------------------------------------
+
     def load_models(self):
         """Load data from the specified directory path."""
         list_models_folders = self._get_subfolders()
@@ -71,27 +75,6 @@ class Catalog(QueryableElement):
                 logger.info("Successfully loaded model from folder: {}", model_folder)
             except Exception as e:
                 logger.error("Failed to load model from folder: {}. Error: {}", model_folder, e)
-
-    def _get_subfolders(self) -> list:
-        """Get the names of all subfolders in the catalog path."""
-        return [subfolder.name for subfolder in self.path_models.iterdir() if subfolder.is_dir()]
-
-    def _create_catalog_graph(self) -> Graph:
-        """Create a single RDFLib graph by merging all graphs from the models."""
-        catalog_graph = Graph()
-        for model in self.models:
-            if model.graph:
-                catalog_graph += model.graph
-        return catalog_graph
-
-    def _generate_compiled_results(self, query_name: str, results: list[dict], compiled_file_path: Path):
-        """Generate a compiled CSV file from results of all models."""
-        if results:
-            df = pd.DataFrame(results)
-            cols = ['model_id'] + [col for col in df.columns if col != 'model_id']
-            df = df[cols]
-            df.to_csv(compiled_file_path, index=False)
-            logger.info(f"Compiled results written to {compiled_file_path}")
 
     def execute_query_all_models(self, specific_query_path: Path):
         """Execute a specific query on all models and generate a compiled results CSV."""
@@ -156,3 +139,28 @@ class Catalog(QueryableElement):
                 logger.info(f"Model with ID {model_id} has been removed from the catalog.")
                 return
         raise ValueError(f"No model found with ID: {model_id}")
+
+    # ---------------------------------------------
+    # Private and Setters
+    # ---------------------------------------------
+
+    def _get_subfolders(self) -> list:
+        """Get the names of all subfolders in the catalog path."""
+        return [subfolder.name for subfolder in self.path_models.iterdir() if subfolder.is_dir()]
+
+    def _create_catalog_graph(self) -> Graph:
+        """Create a single RDFLib model_graph by merging all graphs from the models."""
+        catalog_graph = Graph()
+        for model in self.models:
+            if model.model_graph:
+                catalog_graph += model.model_graph
+        return catalog_graph
+
+    def _generate_compiled_results(self, query_name: str, results: list[dict], compiled_file_path: Path):
+        """Generate a compiled CSV file from results of all models."""
+        if results:
+            df = pd.DataFrame(results)
+            cols = ['model_id'] + [col for col in df.columns if col != 'model_id']
+            df = df[cols]
+            df.to_csv(compiled_file_path, index=False)
+            logger.info(f"Compiled results written to {compiled_file_path}")

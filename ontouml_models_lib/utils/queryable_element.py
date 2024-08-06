@@ -9,18 +9,18 @@ from query import Query
 class QueryableElement:
     def __init__(self, id: str):
         self.id = id
-        self.graph = Graph()
-        self.hash = self._compute_hash()
+        self.model_graph = Graph()
+        self.model_graph_hash = self._compute_hash()
 
     def _compute_hash(self) -> int:
-        """Compute a hash for the QueryableElement."""
+        """Compute a model_graph_hash for the QueryableElement."""
         return hash(self.id)
 
     def execute_query(self, query_file: Path, results_path: Path) -> list[dict]:
-        """Execute a SPARQL query from a file on the element's graph and return results as a list of dictionaries.
+        """Execute a SPARQL query from a file on the element's model_graph and return results as a list of dictionaries.
 
         :param query_file: Path to the file containing the SPARQL query.
-        :param results_path: Path to the directory to save the results and hash file.
+        :param results_path: Path to the directory to save the results and model_graph_hash file.
         :return: List of query results as dictionaries.
         """
         # Ensure query_file is a Path object
@@ -34,20 +34,20 @@ class QueryableElement:
         with open(query_file, 'r', encoding='utf-8') as file:
             query = file.read()
 
-        # Compute the hash for the query
+        # Compute the model_graph_hash for the query
         query_hash = self._compute_query_hash(query)
 
-        # Check if the hash combination already exists
+        # Check if the model_graph_hash combination already exists
         if self._hash_exists(query_hash, results_path):
-            logging.info(f"Query with hash {query_hash} and model hash {self.hash} already executed. Skipping execution.")
+            logging.info(f"Query with model_graph_hash {query_hash} and model model_graph_hash {self.model_graph_hash} already executed. Skipping execution.")
             return []
 
         # Log the query
         logging.info(f"Executing query from file {query_file}: {query}")
 
-        # Execute the query on the graph
+        # Execute the query on the model_graph
         try:
-            results = self.graph.query(query)
+            results = self.model_graph.query(query)
             logging.info(f"Query results: {results}")
 
             # Prepare results as a list of dictionaries
@@ -63,7 +63,7 @@ class QueryableElement:
                         result_dict[str(var)] = value
                 result_list.append(result_dict)
 
-            # Save the results and the hash
+            # Save the results and the model_graph_hash
             self._save_results(query_file.stem, result_list, results_path)
             self._save_hash_file(query_hash, results_path)
 
@@ -74,13 +74,13 @@ class QueryableElement:
             return []
 
     def _compute_query_hash(self, query: str) -> int:
-        """Compute a consistent hash for the query content."""
+        """Compute a consistent model_graph_hash for the query content."""
         encoded_content = query.encode('utf-8')
         content_hash = hashlib.sha256(encoded_content).hexdigest()
         return int(content_hash, 16)
 
     def _hash_exists(self, query_hash: int, results_path: Path) -> bool:
-        """Check if the hash combination already exists in the .hashes.csv file."""
+        """Check if the model_graph_hash combination already exists in the .hashes.csv file."""
         hashes_file = results_path / ".hashes.csv"
 
         if not hashes_file.exists():
@@ -89,7 +89,7 @@ class QueryableElement:
         with open(hashes_file, 'r', newline='', encoding='utf-8') as file:
             reader = csv.DictReader(file)
             for row in reader:
-                if int(row["query_hash"]) == query_hash and int(row["model_hash"]) == self.hash:
+                if int(row["query_hash"]) == query_hash and int(row["model_hash"]) == self.model_graph_hash:
                     return True
 
         return False
@@ -109,9 +109,9 @@ class QueryableElement:
         logging.info(f"Results written to {result_file}")
 
     def _save_hash_file(self, query_hash: int, results_path: Path):
-        """Save the hash of the query and the model to a single .hashes.csv file."""
+        """Save the model_graph_hash of the query and the model to a single .hashes.csv file."""
         hashes_file = results_path / ".hashes.csv"
-        row = {"query_hash": query_hash, "model_hash": self.hash}
+        row = {"query_hash": query_hash, "model_hash": self.model_graph_hash}
 
         if not hashes_file.exists():
             with open(hashes_file, 'w', newline='', encoding='utf-8') as file:

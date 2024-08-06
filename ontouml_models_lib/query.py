@@ -16,20 +16,20 @@ class Query:
 
     @staticmethod
     def _compute_consistent_hash(content: str) -> int:
-        """ Compute a consistent hash for the query content.
+        """ Compute a consistent model_graph_hash for the query content.
 
         :param content: The query content to be hashed.
         :type content: str
-        :return: Consistent hash value of the content.
+        :return: Consistent model_graph_hash value of the content.
         :rtype: int
         """
         # Encode the content to UTF-8
         encoded_content = content.encode('utf-8')
 
-        # Compute the SHA-256 hash of the encoded content
+        # Compute the SHA-256 model_graph_hash of the encoded content
         content_hash = hashlib.sha256(encoded_content).hexdigest()
 
-        # Convert the hexadecimal hash to an integer
+        # Convert the hexadecimal model_graph_hash to an integer
         return int(content_hash, 16)
 
     @staticmethod
