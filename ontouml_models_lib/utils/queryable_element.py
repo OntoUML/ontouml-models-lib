@@ -19,26 +19,15 @@ class QueryableElement:
     # Public Methods
     # ---------------------------------------------
 
-    def execute_query(self, query_file: Path, results_path: Path) -> list[dict]:
-        """Execute a SPARQL query from a file on the element's model_graph and return results as a list of dictionaries.
+    def execute_query(self, query: Query, results_path: Path) -> list[dict]:
+        """Execute a SPARQL query_content on the element's model_graph and return results as a list of dictionaries.
 
-        :param query_file: Path to the file containing the SPARQL query.
+        :param query: A Query instance containing the SPARQL query_content to be executed.
         :param results_path: Path to the directory to save the results and model_graph_hash file.
-        :return: List of query results as dictionaries.
+        :return: List of query_content results as dictionaries.
         """
-        # Ensure query_file is a Path object
-        if isinstance(query_file, str):
-            query_file = Path(query_file)
-
-        if not query_file.exists():
-            raise FileNotFoundError(f"Query file {query_file} not found.")
-
-        # Read the SPARQL query from the file
-        with open(query_file, "r", encoding="utf-8") as file:
-            query = file.read()
-
-        # Compute the model_graph_hash for the query
-        query_hash = self._compute_query_hash(query)
+        # Compute the model_graph_hash for the query_content
+        query_hash = self._compute_query_hash(query.query_content)
 
         # Check if the model_graph_hash combination already exists
         if self._hash_exists(query_hash, results_path):
@@ -47,12 +36,12 @@ class QueryableElement:
             )
             return []
 
-        # Log the query
-        logging.info(f"Executing query from file {query_file}: {query}")
+        # Log the query_content
+        logging.info(f"Executing query_content: {query.query_file_path}")
 
-        # Execute the query on the model_graph
+        # Execute the query_content on the model_graph
         try:
-            results = self.model_graph.query(query)
+            results = self.model_graph.query(query.query_content)
             logging.info(f"Query results: {results}")
 
             # Prepare results as a list of dictionaries
@@ -69,7 +58,7 @@ class QueryableElement:
                 result_list.append(result_dict)
 
             # Save the results and the model_graph_hash
-            self._save_results(query_file.stem, result_list, results_path)
+            self._save_results(query.query_file_path.stem, result_list, results_path)
             self._save_hash_file(query_hash, results_path)
 
             return result_list
@@ -78,17 +67,18 @@ class QueryableElement:
             logging.error(f"Query execution failed: {e}")
             return []
 
-    def execute_all_queries(self, queries_path: Path, results_path: Optional[Path]) -> None:
-        """Execute all queries from a directory and save the results.
+    def execute_queries(self, queries: list[Query], results_path: Optional[Path]) -> None:
+        """Execute a list of Query instances and save the results.
 
-        :param queries_path: Path to the directory containing query files.
+        :param queries: List of Query instances to be executed.
+        :param results_path: Optional; Path to the directory to save the results.
         """
+        # Ensure the results_path is set, or use a default location
+        results_path = results_path or Path("./results")
+        results_path.mkdir(exist_ok=True)
 
-        results_path = queries_path / "results" if not results_path else results_path
-
-        queries = Query.get_all_queries(queries_path)
         for query in queries:
-            self.execute_query(query.query_file, results_path)
+            self.execute_query(query, results_path)
 
     # ---------------------------------------------
     # Private Methods
@@ -99,7 +89,7 @@ class QueryableElement:
         return hash(self.id)
 
     def _compute_query_hash(self, query: str) -> int:
-        """Compute a consistent model_graph_hash for the query content."""
+        """Compute a consistent model_graph_hash for the query_content content."""
         encoded_content = query.encode("utf-8")
         content_hash = hashlib.sha256(encoded_content).hexdigest()
         return int(content_hash, 16)
@@ -120,7 +110,7 @@ class QueryableElement:
         return False
 
     def _save_results(self, query_name: str, results: list[dict], results_path: Path):
-        """Save the query results to a CSV file."""
+        """Save the query_content results to a CSV file."""
         result_file = results_path / f"{query_name}_result_{self.id}.csv"
         with open(result_file, "w", newline="", encoding="utf-8") as file:
             if results:
@@ -134,7 +124,7 @@ class QueryableElement:
         logging.info(f"Results written to {result_file}")
 
     def _save_hash_file(self, query_hash: int, results_path: Path):
-        """Save the model_graph_hash of the query and the model to a single .hashes.csv file."""
+        """Save the model_graph_hash of the query_content and the model to a single .hashes.csv file."""
         hashes_file = results_path / ".hashes.csv"
         row = {"query_hash": query_hash, "model_hash": self.model_graph_hash}
 

@@ -168,3 +168,5 @@ test*
 */results
 
 /bak
+*results*
+/queries/

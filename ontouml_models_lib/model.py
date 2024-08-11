@@ -8,7 +8,7 @@ from rdflib import Graph
 from rdflib.compare import to_isomorphic
 from rdflib.util import guess_format
 
-from utils.enumerations import OntologyPurpose, OntologyDevelopmentContext, OntologyRepresentationStyle, OntologyType
+from enumerations import OntologyPurpose, OntologyDevelopmentContext, OntologyRepresentationStyle, OntologyType
 from utils.queryable_element import QueryableElement
 
 
