@@ -174,6 +174,8 @@ class Catalog(QueryableElement):
     # Public Methods
     # ---------------------------------------------
 
+    # ----- EXECUTE METHODS -----
+
     def execute_query_on_model(self, query: Query, model: Model,
                                results_path: Optional[Union[str, Path]] = None) -> None:
         """
@@ -341,6 +343,8 @@ class Catalog(QueryableElement):
 
         self.execute_queries_on_models(queries, self.models, results_path)
 
+    # ----- GET METHODS -----
+
     def get_model(self, model_id: str) -> Model:
         """
         Retrieve a model from the catalog by its ID.
@@ -399,7 +403,9 @@ class Catalog(QueryableElement):
         else:
             return [model for model in self.models if self._match_model(model, filters, operand)]
 
-    def remove_model(self, model_id: str) -> None:
+    # ----- REMOVE METHODS -----
+
+    def remove_model_by_id(self, model_id: str) -> None:
         """
         Remove a model from the catalog by its ID.
 
@@ -414,7 +420,7 @@ class Catalog(QueryableElement):
 
         >>> from catalog import Catalog
         >>> catalog = Catalog('/path/to/catalog')
-        >>> catalog.remove_model('some_model_id')  # Remove a model by its unique ID
+        >>> catalog.remove_model_by_id('some_model_id')  # Remove a model by its unique ID
         """
         for i, model in enumerate(self.models):
             if model.id == model_id:

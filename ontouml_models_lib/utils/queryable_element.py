@@ -1,9 +1,9 @@
-import logging
 import csv
 import hashlib
 from pathlib import Path
 from typing import Optional
 
+from loguru import logger
 from rdflib import Graph, URIRef
 from rdflib.namespace import split_uri
 from query import Query
@@ -31,18 +31,18 @@ class QueryableElement:
 
         # Check if the model_graph_hash combination already exists
         if self._hash_exists(query_hash, results_path):
-            logging.info(
-                f"Query with model_graph_hash {query_hash} and model model_graph_hash {self.model_graph_hash} already executed. Skipping execution."
+            logger.info(
+                f"Skipping execution of query with pair model_graph_hash/query_hash: {query_hash}/{self.model_graph_hash}."
             )
             return []
 
         # Log the query_content
-        logging.info(f"Executing query_content: {query.query_file_path}")
+        logger.info(f"Executing query_content: {query.query_file_path}")
 
         # Execute the query_content on the model_graph
         try:
             results = self.model_graph.query(query.query_content)
-            logging.info(f"Query results: {results}")
+            logger.info(f"Query results: {results}")
 
             # Prepare results as a list of dictionaries
             result_list = []
@@ -64,7 +64,7 @@ class QueryableElement:
             return result_list
 
         except Exception as e:
-            logging.error(f"Query execution failed: {e}")
+            logger.error(f"Query execution failed: {e}")
             return []
 
     def execute_queries(self, queries: list[Query], results_path: Optional[Path]) -> None:
@@ -121,7 +121,7 @@ class QueryableElement:
             else:
                 file.write("")  # Create an empty file if there are no results
 
-        logging.info(f"Results written to {result_file}")
+        logger.info(f"Results written to {result_file}")
 
     def _save_hash_file(self, query_hash: int, results_path: Path):
         """Save the model_graph_hash of the query_content and the model to a single .hashes.csv file."""
@@ -138,4 +138,4 @@ class QueryableElement:
                 writer = csv.DictWriter(file, fieldnames=row.keys())
                 writer.writerow(row)
 
-        logging.info(f"Hash written to {hashes_file}")
+        logger.info(f"Hash written to {hashes_file}")
