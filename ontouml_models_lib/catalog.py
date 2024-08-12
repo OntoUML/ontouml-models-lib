@@ -10,14 +10,6 @@ within a specified catalog path. Each subdirectory is expected to contain an ont
 optional metadata file (`metadata.yaml`). The class supports complex queries across the entire collection by compiling
 results from individual models into a cohesive dataset.
 
-Features
---------
-- **Inheritance**: The `Catalog` class inherits from `QueryableElement`, allowing for SPARQL queries across all models.
-- **Model Management**: Load and manage ontology models, enabling filtered access based on specific attributes.
-- **Batch Query Execution**: Execute single or multiple queries across individual models, a set of models, or all models
-  in the catalog, with options to save results.
-- **Graph Merging**: Supports the creation of a unified RDFLib graph by merging graphs from all loaded models.
-
 Usage
 -----
 To use the `Catalog` class, instantiate it with the path to the catalog directory. The class will automatically load

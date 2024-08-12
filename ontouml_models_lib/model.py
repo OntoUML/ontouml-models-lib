@@ -1,3 +1,51 @@
+"""
+The `model` module provides the `Model` class, a specialized extension of the `QueryableElement` class, designed for
+managing and interacting with individual ontology models within the OntoUML/UFO catalog. This module facilitates the
+loading, querying, and management of RDF graphs and associated metadata for ontology models, ensuring compliance with
+the metadata schema specified in Appendix A.
+
+Overview
+--------
+The `Model` class represents a single ontology model, encapsulating its RDF graph and metadata, and provides methods for
+querying and interacting with this data. The metadata attributes, such as `title`, `keyword`, `acronym`, `language`,
+and others, are populated based on a YAML file and follow the standards defined in the OntoUML/UFO catalog's metadata
+schema. The class is built to support operations on ontology models stored in RDF formats, such as Turtle, and
+accompanied by metadata in YAML format.
+
+Usage
+-----
+Example 1: Loading a Model and Accessing Metadata
+
+    >>> from model import Model
+    >>> model = Model('/path/to/ontology_model_folder')
+    >>> print(model.title)
+    # Output: "Example Ontology Title"
+    >>> print(model.keyword)
+    # Output: ["ontology", "example"]
+
+Example 2: Executing a Query on the Model
+
+    >>> from model import Model
+    >>> from query import Query
+    >>> model = Model('/path/to/ontology_model_folder')
+    >>> query = Query('/path/to/query.sparql')
+    >>> results = model.execute_query(query, '/path/to/results')
+    >>> print(results)
+    # Output: [{'subject': 'ExampleSubject', 'predicate': 'ExamplePredicate', 'object': 'ExampleObject'}]
+
+Dependencies
+------------
+- **rdflib**: For RDF graph operations and SPARQL query execution.
+- **yaml**: For parsing YAML files containing metadata.
+- **loguru**: For logging operations and debugging information.
+
+References
+----------
+For additional details on the OntoUML/UFO catalog, refer to the official OntoUML repository:
+https://github.com/OntoUML/ontouml-models
+"""
+
+
 import hashlib
 from pathlib import Path
 from typing import Optional, Union
@@ -13,8 +61,77 @@ from utils.queryable_element import QueryableElement
 
 
 class Model(QueryableElement):
-    def __init__(self, model_path: Union[Path, str]) -> None:
+    """
+    Represents an individual ontology model within the OntoUML/UFO catalog.
 
+    The `Model` class extends the `QueryableElement` class to manage and interact with RDF graphs representing ontology
+    models. It provides methods for loading RDF graphs, extracting metadata from associated YAML files, and executing
+    SPARQL queries. This class ensures that ontology data is consistently managed and that metadata attributes are
+    easily accessible.
+
+    :ivar title: The title of the ontology model, as determined by the `dct:title` property. There must be at most one title per language.
+    :vartype title: str
+    :ivar keyword: A list of keywords associated with the ontology model, aiding in the categorization and
+                   searchability of the model.
+    :vartype keyword: list[str]
+    :ivar acronym: An optional acronym for the ontology model, providing a shorthand identifier.
+    :vartype acronym: Optional[str]
+    :ivar source: The source or origin of the ontology model, typically a publication, organization, or project.
+                  It is recommended to use persistent and resolvable identifiers, such as DOIs or DBLP URIs,
+                  to refer to these resources.
+    :vartype source: Optional[str]
+    :ivar language: The language in which the lexical labels of the ontology model are written.
+                    The use of values from the IANA Language Sub Tag Registry (e.g., "en", "pt") is required.
+    :vartype language: Optional[str]
+    :ivar designedForTask: A list of standardized purposes for which the ontology model was designed, categorized using
+                           the OntologyPurpose enumeration. Examples include Conceptual Clarification, Data Publication,
+                           and Decision Support Systems.
+    :vartype designedForTask: list[OntologyPurpose]
+    :ivar context: The development context of the ontology model, classified under the OntologyDevelopmentContext
+                   enumeration. Examples include Research, Industry, and Classroom.
+    :vartype context: list[OntologyDevelopmentContext]
+    :ivar representationStyle: The representation style of the ontology model, categorized under the
+                               OntologyRepresentationStyle enumeration. Examples include OntoumlStyle and UfoStyle.
+    :vartype representationStyle: Optional[OntologyRepresentationStyle]
+    :ivar ontologyType: The type of ontology, categorized under the OntologyType enumeration.
+                        Examples include Core, Domain, and Application.
+    :vartype ontologyType: Optional[OntologyType]
+    :ivar theme: The central theme of the ontology model, identified according to a theme taxonomy such as the
+                 Library of Congress Classification (LCC).
+    :vartype theme: Optional[str]
+
+    Example usage:
+
+        >>> from model import Model
+        >>> model = Model('/path/to/ontology_model_folder')
+        >>> print(model.title)
+        # Output: "Example Ontology Title"
+        >>> print(model.keyword)
+        # Output: ["ontology", "example"]
+    """
+    def __init__(self, model_path: Union[Path, str]) -> None:
+        """
+        Initializes a new instance of the `Model` class.
+
+        This constructor loads an ontology model from the specified path, including its RDF graph and associated
+        metadata. It verifies the validity of the provided path, loads the RDF graphs from Turtle files (`ontology.ttl`
+        and `metadata.ttl`), and extracts metadata from a YAML file (`metadata.yaml`). The metadata attributes are
+        populated based on the definitions provided in the OntoUML/UFO catalog's metadata schema.
+
+        :param model_path: The path to the directory containing the ontology model files. This path must exist and
+                           typically contains `ontology.ttl`, `metadata.ttl`, and `metadata.yaml` files.
+        :type model_path: Union[Path, str]
+
+        :raises ValueError: If the provided path is invalid or does not exist.
+        :raises RuntimeError: If loading the RDF graph or metadata fails.
+
+        Example usage:
+
+            >>> from model import Model
+            >>> model = Model('/path/to/ontology_model_folder')
+            >>> print(model.title)
+            # Output: "Example Ontology Title"
+        """
         if isinstance(model_path, str):
             model_path = Path(model_path)
 

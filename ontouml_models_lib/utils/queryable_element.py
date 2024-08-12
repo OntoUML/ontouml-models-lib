@@ -1,7 +1,7 @@
 import csv
 import hashlib
 from pathlib import Path
-from typing import Optional
+from typing import Optional, Union
 
 from loguru import logger
 from rdflib import Graph, URIRef
@@ -19,13 +19,18 @@ class QueryableElement:
     # Public Methods
     # ---------------------------------------------
 
-    def execute_query(self, query: Query, results_path: Path) -> list[dict]:
+    def execute_query(self, query: Query, results_path: Optional[Union[str, Path]] = None) -> list[dict]:
         """Execute a SPARQL query_content on the element's model_graph and return results as a list of dictionaries.
 
         :param query: A Query instance containing the SPARQL query_content to be executed.
         :param results_path: Path to the directory to save the results and model_graph_hash file.
         :return: List of query_content results as dictionaries.
         """
+
+        # Ensure results_path is not None
+        results_path = Path(results_path or "./results")
+        results_path.mkdir(exist_ok=True)
+
         # Compute the model_graph_hash for the query_content
         query_hash = self._compute_query_hash(query.query_content)
 
