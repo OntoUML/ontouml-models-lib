@@ -79,7 +79,7 @@ These classes are essential when working with the OntoUML/UFO Catalog, which is 
 #### Example 1: Working with the Catalog Class
 
 ```python
-from ontouml_model_lib import Catalog
+from ontouml_models_lib import Catalog
 
 ## Load a catalog from a specified path
 catalog = Catalog('/path/to/catalog')
@@ -97,7 +97,7 @@ print(results)
 #### Example 2: Working with the Model Class
 
 ```python
-from ontouml_model_lib import Model, Query
+from ontouml_models_lib import Model, Query
 
 ## Load an individual ontology model
 model = Model('/path/to/ontology_model_folder')
@@ -114,7 +114,7 @@ print(results)
 #### Example 3: Working with the Query Class
 
 ```python
-from ontouml_model_lib import Query
+from ontouml_models_lib import Query
 
 ## Load a SPARQL query from a file
 query = Query('/path/to/query.sparql')
