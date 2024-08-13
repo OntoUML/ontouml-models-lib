@@ -154,7 +154,7 @@ Module Contents
 
 
    .. py:attribute:: models
-      :type:  list[model.Model]
+      :type:  list[ontouml_models_lib.Model]
       :value: []
 
 
