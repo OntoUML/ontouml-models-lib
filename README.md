@@ -1,7 +1,26 @@
+[![Project DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.10211480.svg)](https://doi.org/10.5281/zenodo.10211480)
+[![Project Status - Active](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
+![GitHub - Release Date - PublishedAt](https://img.shields.io/github/release-date/OntoUML/ontouml-models-lib)
+![GitHub - Last Commit - Branch](https://img.shields.io/github/last-commit/OntoUML/ontouml-models-lib/main)
+![PyPI - Project](https://img.shields.io/pypi/v/ontouml-models-lib)
+![PyPI - Downloads](https://img.shields.io/pypi/dm/ontouml-models-lib)
+![Language - Top](https://img.shields.io/github/languages/top/OntoUML/ontouml-models-lib)
+![Language - Version](https://img.shields.io/pypi/pyversions/ontouml-models-lib)
+![CodeFactor Grade](https://img.shields.io/codefactor/grade/github/OntoUML/ontouml-models-lib)
+![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/OntoUML/ontouml-models-lib/badge)
+![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)
+![License - GitHub](https://img.shields.io/github/license/OntoUML/ontouml-models-lib)
+[![pre-commit](https://img.shields.io/badge/pre--commit-enabled-brightgreen?logo=pre-commit)](https://github.com/pre-commit/pre-commit)
+![Website](https://img.shields.io/website/http/ontouml.github.io/ontouml-models-lib.svg)
+
+[//]: # ([![pre-commit.ci status]&#40;https://results.pre-commit.ci/badge/github/OntoUML/ontouml-models-lib/main.svg&#41;]&#40;https://results.pre-commit.ci/latest/github/OntoUML/ontouml-models-lib/main&#41;)
+[//]: # (![GitHub Workflow Status &#40;with event&#41;]&#40;https://img.shields.io/github/actions/workflow/status/OntoUML/ontouml-models-lib/code_testing.yml&#41;)
+[//]: # ([![OpenSSF Best Practices]&#40;https://www.bestpractices.dev/projects/8328/badge&#41;]&#40;https://www.bestpractices.dev/projects/8328&#41;)
+[//]: # (![Static Badge]&#40;https://img.shields.io/badge/Test_Coverage-100%25-green&#41;)
 
 # OntoUML/UFO Catalog Python Library
 
-<p align="center"><img src="https://user-images.githubusercontent.com/8641647/223740939-1abcd2af-e954-4d19-b087-56f1be4417c3.png" width="500"></p>
+<p align="center"><img src="https://raw.githubusercontent.com/OntoUML/ontouml-models-lib/main/resources/ontouml-models-lib-logo.png" width="500"></p>
 
 ## Overview
 
@@ -89,9 +108,33 @@ print(query.hash)
 
 
 
-## Contributing
+## How to Contribute
 
-Contributions to this library are welcome. Please refer to the [OntoUML/UFO Catalog contribution guidelines](https://github.com/OntoUML/ontouml-models#how-to-contribute) for more information on how to contribute models or report issues.
+We welcome and appreciate contributions from the community! Whether you want to report a bug, suggest a new feature, or improve our codebase, your input is valuable.
+
+### Reporting Issues
+
+- If you find a bug or wish to suggest a feature, please [open a new issue](https://github.com/OntoUML/ontouml-models-lib/issues/new).
+- If you notice any discrepancies in the documentation created with the aid of AI, feel free to [report them by opening an issue](https://github.com/OntoUML/ontouml-models-lib/issues/new).
+
+### Code Contributions
+
+1. Fork the project repository and create a new feature branch for your work: `git checkout -b feature/YourFeatureName`.
+2. Make and commit your changes with descriptive commit messages.
+3. Push your work back up to your fork: `git push origin feature/YourFeatureName`.
+4. Submit a pull request to propose merging your feature branch into the main project repository.
+
+### Test Contributions
+
+- Enhance the project's reliability by adding new tests or improving existing ones.
+
+### General Guidelines
+
+- Ensure your code follows our coding standards.
+- Update the documentation as necessary.
+- Make sure your contributions do not introduce new issues.
+
+We appreciate your time and expertise in contributing to this project!
 
 ## License
 
@@ -99,8 +142,8 @@ This library is licensed under the [Creative Commons Attribution-ShareAlike 4.0 
 
 ## Author
 
-The LangString library is developed and maintained by:
+The ontouml-models-lib library is developed and maintained by:
 
 - Pedro Paulo Favato Barcelos [[GitHub](https://github.com/pedropaulofb)] [[LinkedIn](https://www.linkedin.com/in/pedro-paulo-favato-barcelos/)]
 
-Feel free to reach out using the provided links. For inquiries, contributions, or to report any issues, you can [open a new issue](https://github.com/pedropaulofb/langstring/issues/new) on this repository.
+Feel free to reach out using the provided links. For inquiries, contributions, or to report any issues, you can [open a new issue](https://github.com/OntoUML/ontouml-models-lib/issues/new) on this repository.
