@@ -1,0 +1,223 @@
+ontouml_models_lib.model
+========================
+
+.. py:module:: ontouml_models_lib.model
+
+.. autoapi-nested-parse::
+
+   The `model` module provides the `Model` class, a specialized extension of the `QueryableElement` class, designed for managing and interacting with individual ontology models within the OntoUML/UFO catalog.
+
+   This module facilitates the loading, querying, and management of RDF graphs and associated metadata for ontology
+   models, ensuring compliance with the metadata schema specified in Appendix A.
+
+   Overview
+   --------
+   The `Model` class represents a single ontology model, encapsulating its RDF graph and metadata, and provides methods for
+   querying and interacting with this data. The metadata attributes, such as `title`, `keyword`, `acronym`, `language`,
+   and others, are populated based on a YAML file and follow the standards defined in the OntoUML/UFO catalog's metadata
+   schema. The class is built to support operations on ontology models stored in RDF formats, such as Turtle, and
+   accompanied by metadata in YAML format.
+
+   Usage
+   -----
+   Example 1: Loading a Model and Accessing Metadata
+
+       >>> from model import Model
+       >>> model = Model('/path/to/ontology_model_folder')
+       >>> print(model.title)
+       # Output: "Example Ontology Title"
+       >>> print(model.keyword)
+       # Output: ["ontology", "example"]
+
+   Example 2: Executing a Query on the Model
+
+       >>> from model import Model
+       >>> from query import Query
+       >>> model = Model('/path/to/ontology_model_folder')
+       >>> query = Query('/path/to/query.sparql')
+       >>> results = model.execute_query(query, '/path/to/results')
+       >>> print(results)
+       # Output: [{'subject': 'ExampleSubject', 'predicate': 'ExamplePredicate', 'object': 'ExampleObject'}]
+
+   Dependencies
+   ------------
+   - **rdflib**: For RDF graph operations and SPARQL query execution.
+   - **yaml**: For parsing YAML files containing metadata.
+   - **loguru**: For logging operations and debugging information.
+
+   References
+   ----------
+   For additional details on the OntoUML/UFO catalog, refer to the official OntoUML repository:
+   https://github.com/OntoUML/ontouml-models
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   ontouml_models_lib.model.Model
+
+
+Module Contents
+---------------
+
+.. py:class:: Model(model_path)
+
+   Bases: :py:obj:`utils.queryable_element.QueryableElement`
+
+
+   Represents an individual ontology model within the OntoUML/UFO catalog.
+
+   The `Model` class extends the `QueryableElement` class to manage and interact with RDF graphs representing ontology
+   models. It provides methods for loading RDF graphs, extracting metadata from associated YAML files, and executing
+   SPARQL queries. This class ensures that ontology data is consistently managed and that metadata attributes are
+   easily accessible.
+
+   :ivar title: The title of the ontology model, as determined by the `dct:title` property. There must be at most one
+                title per language.
+   :vartype title: str
+   :ivar keyword: A list of keywords associated with the ontology model, aiding in the categorization and
+                  searchability of the model.
+   :vartype keyword: list[str]
+   :ivar acronym: An optional acronym for the ontology model, providing a shorthand identifier.
+   :vartype acronym: Optional[str]
+   :ivar source: The source or origin of the ontology model, typically a publication, organization, or project.
+                 It is recommended to use persistent and resolvable identifiers, such as DOIs or DBLP URIs,
+                 to refer to these resources.
+   :vartype source: Optional[str]
+   :ivar language: The language in which the lexical labels of the ontology model are written.
+                   The use of values from the IANA Language Sub Tag Registry (e.g., "en", "pt") is required.
+   :vartype language: Optional[str]
+   :ivar designedForTask: A list of standardized purposes for which the ontology model was designed, categorized using
+                          the OntologyPurpose enumeration. Examples include Conceptual Clarification, Data Publication,
+                          and Decision Support Systems.
+   :vartype designedForTask: list[OntologyPurpose]
+   :ivar context: The development context of the ontology model, classified under the OntologyDevelopmentContext
+                  enumeration. Examples include Research, Industry, and Classroom.
+   :vartype context: list[OntologyDevelopmentContext]
+   :ivar representationStyle: The representation style of the ontology model, categorized under the
+                              OntologyRepresentationStyle enumeration. Examples include OntoumlStyle and UfoStyle.
+   :vartype representationStyle: Optional[OntologyRepresentationStyle]
+   :ivar ontologyType: The type of ontology, categorized under the OntologyType enumeration.
+                       Examples include Core, Domain, and Application.
+   :vartype ontologyType: Optional[OntologyType]
+   :ivar theme: The central theme of the ontology model, identified according to a theme taxonomy such as the
+                Library of Congress Classification (LCC).
+   :vartype theme: Optional[str]
+
+   Example usage:
+
+       >>> from model import Model
+       >>> model = Model('/path/to/ontology_model_folder')
+       >>> print(model.title)
+       # Output: "Example Ontology Title"
+       >>> print(model.keyword)
+       # Output: ["ontology", "example"]
+
+
+   .. py:attribute:: title
+      :type:  str
+      :value: ''
+
+
+
+   .. py:attribute:: keyword
+      :type:  list[str]
+      :value: []
+
+
+
+   .. py:attribute:: acronym
+      :type:  Optional[str]
+      :value: None
+
+
+
+   .. py:attribute:: source
+      :type:  Optional[str]
+      :value: None
+
+
+
+   .. py:attribute:: language
+      :type:  Optional[str]
+      :value: None
+
+
+
+   .. py:attribute:: designedForTask
+      :type:  list[enumerations.OntologyPurpose]
+      :value: []
+
+
+
+   .. py:attribute:: context
+      :type:  list[enumerations.OntologyDevelopmentContext]
+      :value: []
+
+
+
+   .. py:attribute:: representationStyle
+      :type:  Optional[enumerations.OntologyRepresentationStyle]
+      :value: None
+
+
+
+   .. py:attribute:: ontologyType
+      :type:  Optional[enumerations.OntologyType]
+      :value: None
+
+
+
+   .. py:attribute:: theme
+      :type:  Optional[str]
+      :value: None
+
+
+
+   .. py:attribute:: model_path
+      :type:  pathlib.Path
+
+
+   .. py:attribute:: path_model_graph
+
+
+   .. py:attribute:: path_metadata_graph
+
+
+   .. py:attribute:: path_metadata_yaml
+
+
+   .. py:method:: _compute_consistent_hash(graph)
+
+      Compute a consistent model_graph_hash for an RDFLib model_graph.
+
+      :param graph: RDFLib model_graph to be hashed.
+      :type graph: Graph
+      :return: Consistent model_graph_hash value of the model_graph.
+      :rtype: int
+
+
+
+   .. py:method:: _load_graph_safely(ontology_file)
+
+      Safely load graph from file (e.g., ttl) to working memory.
+
+      :param ontology_file: Path to the ontology file to be loaded into the working memory.
+      :type ontology_file: str
+      :return: RDFLib model_graph loaded as object.
+      :rtype: Graph
+
+
+
+   .. py:method:: _populate_attributes(yaml_file)
+
+      Populate the attributes of the model from a YAML file.
+
+      :param yaml_file: Path to the YAML file containing the metadata.
+      :type yaml_file: Path
+
+
+

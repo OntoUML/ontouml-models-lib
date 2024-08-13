@@ -12,7 +12,6 @@ Enumerations:
 - `OntologyType`: Represents the types of ontologies based on their scope and application.
 """
 
-
 from enum import Enum
 
 
@@ -28,10 +27,10 @@ class OntologyDevelopmentContext(Enum):
     These contexts categorize ontologies based on their origin, whether they are created in educational, industrial,
     or research environments.
     """
+
     CLASSROOM = "Classroom"
     INDUSTRY = "Industry"
     RESEARCH = "Research"
-
 
 
 class OntologyRepresentationStyle(Enum):
@@ -46,6 +45,7 @@ class OntologyRepresentationStyle(Enum):
     These representation styles classify ontologies based on whether they adhere to OntoUML stereotypes or use
     foundational ontology elements from UFO.
     """
+
     ONTOUML_STYLE = "OntoumlStyle"
     UFO_STYLE = "UfoStyle"
 
@@ -73,6 +73,7 @@ class OntologyPurpose(Enum):
     These purposes categorize ontologies based on their intended use, from data publication to software engineering
     and conceptual analysis.
     """
+
     CONCEPTUAL_CLARIFICATION = "ConceptualClarification"
     DATA_PUBLICATION = "DataPublication"
     DECISION_SUPPORT_SYSTEM = "DecisionSupportSystem"
@@ -99,6 +100,7 @@ class OntologyType(Enum):
     These types classify ontologies based on their scope, from core ontologies applicable in multiple domains to
     specialized application ontologies.
     """
+
     CORE = "Core"
     DOMAIN = "Domain"
     APPLICATION = "Application"

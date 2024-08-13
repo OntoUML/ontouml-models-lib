@@ -1,7 +1,9 @@
 """
-The `queryable_element` module provides the `QueryableElement` class, a base class designed to represent elements within
-the OntoUML/UFO catalog that can be queried using SPARQL. This module facilitates the execution of SPARQL queries on RDF
-graphs, manages query results, and ensures consistent hashing of both queries and graph data.
+The `queryable_element` module provides the `QueryableElement` class, a base class designed to represent elements \
+within the OntoUML/UFO catalog that can be queried using SPARQL.
+
+This module facilitates the execution of SPARQL queries on RDF graphs, manages query results,
+and ensures consistent hashing of both queries and graph data.
 
 Overview
 --------
@@ -23,9 +25,10 @@ References
 For additional details on the OntoUML/UFO catalog, refer to the official OntoUML repository:
 https://github.com/OntoUML/ontouml-models
 """
+
 import csv
 import hashlib
-from abc import abstractmethod, ABC
+from abc import ABC
 from pathlib import Path
 from typing import Optional, Union
 
@@ -46,8 +49,6 @@ class QueryableElement(ABC):
 
     This class is intended for internal use and should be accessed indirectly through the `Catalog` or `Model` classes.
 
-    Attributes
-    ----------
     :ivar id: The unique identifier for the `QueryableElement`.
     :vartype id: str
     :ivar model_graph: The RDF graph associated with the `QueryableElement`.
@@ -56,9 +57,10 @@ class QueryableElement(ABC):
                             integrity of the graph's content.
     :vartype model_graph_hash: int
     """
+
     def __init__(self, id: str):
         """
-        Initializes a new instance of the `QueryableElement` class.
+        Initialize a new instance of the `QueryableElement` class.
 
         This constructor sets up the basic attributes for the `QueryableElement`, including a unique identifier (`id`)
         and an RDF graph (`model_graph`). It also computes and stores a persistent hash (`model_graph_hash`) for the
@@ -80,7 +82,7 @@ class QueryableElement(ABC):
 
     def execute_query(self, query: Query, results_path: Optional[Union[str, Path]] = None) -> list[dict]:
         """
-        Executes a SPARQL query on the element's RDF graph and returns the results as a list of dictionaries.
+        Execute a SPARQL query on the element's RDF graph and returns the results as a list of dictionaries.
 
         This method executes a SPARQL query on the `model_graph` associated with the `QueryableElement`. It first
         checks whether the combination of the graph's hash and the query's hash has already been executed, in which
@@ -145,15 +147,16 @@ class QueryableElement(ABC):
             self._save_results(query.query_file_path.stem, result_list, results_path)
             self._save_hash_file(query_hash, results_path)
 
-            return result_list
-
-        except Exception as e:
-            logger.error(f"Query execution failed: {e}")
+        except Exception:
+            logger.exception("Query execution failed.")
             return []
+
+        else:
+            return result_list
 
     def execute_queries(self, queries: list[Query], results_path: Optional[Union[str, Path]] = None) -> None:
         """
-        Executes a list of SPARQL queries on the element's RDF graph and saves the results.
+        Execute a list of SPARQL queries on the element's RDF graph and saves the results.
 
         This method iterates over a list of `Query` instances, executing each query on the `model_graph` associated
         with the `QueryableElement`. The results of each query are saved to a CSV file in the specified directory.

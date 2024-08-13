@@ -22,6 +22,26 @@
 
 <p align="center"><img src="https://raw.githubusercontent.com/OntoUML/ontouml-models-lib/main/resources/ontouml-models-lib-logo.png" width="500"></p>
 
+<!-- TOC -->
+* [OntoUML/UFO Catalog Python Library](#ontoumlufo-catalog-python-library)
+  * [Overview](#overview)
+  * [About the OntoUML/UFO Catalog](#about-the-ontoumlufo-catalog)
+  * [Features](#features)
+  * [Installation](#installation)
+  * [The Library's Classes](#the-librarys-classes)
+    * [Examples](#examples)
+      * [Example 1: Working with the Catalog Class](#example-1-working-with-the-catalog-class)
+      * [Example 2: Working with the Model Class](#example-2-working-with-the-model-class)
+      * [Example 3: Working with the Query Class](#example-3-working-with-the-query-class)
+  * [How to Contribute](#how-to-contribute)
+    * [Reporting Issues](#reporting-issues)
+    * [Code Contributions](#code-contributions)
+    * [Test Contributions](#test-contributions)
+    * [General Guidelines](#general-guidelines)
+  * [License](#license)
+  * [Author](#author)
+<!-- TOC -->
+
 ## Overview
 
 This Python library provides tools for manipulating and querying ontology models within the OntoUML/UFO framework. It is designed to work with concepts and models that adhere to the standards and practices outlined in the OntoUML/UFO Catalog. The library supports operations on models stored in machine-readable formats such as JSON and Turtle, and enables the execution of SPARQL queries on these models.
@@ -45,7 +65,7 @@ The catalog organizes its content into a well-defined structure, storing models 
 To install the library, use pip:
 
 ```bash
-pip install ontouml_models_lib
+pip install ontouml-models-lib
 ```
 
 ## The Library's Classes

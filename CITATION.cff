@@ -1,5 +1,5 @@
 cff-version: 1.2.0
-title: ontouml-models-utils Python Library
+title: ontouml-models-lib Python Library
 message: >-
   If you use this software, please cite it using the metadata from this file.
 type: software
@@ -11,11 +11,11 @@ authors:
     orcid: 'https://orcid.org/0000-0003-2736-7817'
 identifiers:
   - type: url
-    value: 'https://github.com/ontouml/ontouml-models-utils'
+    value: 'https://github.com/ontouml/ontouml-models-lib'
     description: Git repository
-repository-code: 'https://github.com/ontouml/ontouml-models-utils'
-url: 'https://ontouml.github.io/ontouml-models-utils/'
-repository-artifact: 'https://pypi.org/project/ontouml-models-utils/'
+repository-code: 'https://github.com/ontouml/ontouml-models-lib'
+url: 'https://ontouml.github.io/ontouml-models-lib/'
+repository-artifact: 'https://pypi.org/project/ontouml-models-lib/'
 abstract: A Python library for accessing and managing OntoUML models from the OntoUML/UFO Catalog,
 designed to simplify software development by providing easy-to-use functions.
 keywords:

@@ -1,0 +1,829 @@
+ontouml_models_lib
+==================
+
+.. py:module:: ontouml_models_lib
+
+.. autoapi-nested-parse::
+
+   The `__init__.py` file for the OntoUML/UFO catalog package.
+
+   This package provides a set of tools for manipulating and querying ontology models within the OntoUML/UFO framework.
+   The library is designed to help users work with concepts and models that conform to the standards and practices outlined
+   in the OntoUML/UFO Catalog, a structured and open-source repository containing high-quality, curated OntoUML and UFO
+   ontology models.
+
+   About the OntoUML/UFO Catalog
+   -----------------------------
+   The OntoUML/UFO Catalog, also known as the FAIR Model Catalog for Ontology-Driven Conceptual Modeling Research, is a
+   comprehensive and collaborative repository that supports empirical research in OntoUML and UFO, as well as in general
+   conceptual modeling. It offers a diverse collection of models in machine-readable formats (JSON and Turtle) that are
+   accessible via permanent identifiers. These models cover various domains and are created by modelers with differing
+   levels of expertise.
+
+   Public API
+   ----------
+   This file defines the public API of the package, exposing the following classes and enumerations:
+
+   Public Classes
+   --------------
+   - class `Catalog`: Manages a collection of ontology models, enabling queries across multiple models within the catalog.
+   - class `Query`: Encapsulates SPARQL queries, providing methods for loading, hashing, and executing queries.
+   - class `Model`: Represents an individual ontology model, allowing for querying and metadata management.
+
+   Public Enumerations
+   -------------------
+   - class `OntologyPurpose`: Enumerates the standardized purposes for which an ontology model may be designed.
+   - class `OntologyDevelopmentContext`: Enumerates the possible development contexts for an ontology model.
+   - class `OntologyRepresentationStyle`: Enumerates the representation styles adopted in an ontology model.
+   - class `OntologyType`: Enumerates the categories of ontologies according to their scope.
+
+   Intended Use
+   ------------
+   This library is specifically designed to assist users in manipulating and querying ontology models that conform to the
+   OntoUML/UFO standards. It provides a robust framework for interacting with the formal representations of concepts,
+   relations, and constraints that are central to the OntoUML/UFO modeling approach.
+
+   Example usage:
+
+       >>> from ontouml_models_lib import Catalog, Query, Model
+       >>> catalog = Catalog('/path/to/catalog')
+       >>> query = Query('/path/to/query.sparql')
+       >>> model = Model('/path/to/ontology_model_folder')
+
+   For more information on the OntoUML/UFO project and to access the latest models, please visit the official repository:
+   https://github.com/OntoUML/ontouml-models
+
+
+
+Subpackages
+-----------
+
+.. toctree::
+   :maxdepth: 1
+
+   /autoapi/ontouml_models_lib/utils/index
+
+
+Submodules
+----------
+
+.. toctree::
+   :maxdepth: 1
+
+   /autoapi/ontouml_models_lib/catalog/index
+   /autoapi/ontouml_models_lib/enumerations/index
+   /autoapi/ontouml_models_lib/model/index
+   /autoapi/ontouml_models_lib/query/index
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   ontouml_models_lib.Catalog
+   ontouml_models_lib.Query
+   ontouml_models_lib.Model
+   ontouml_models_lib.OntologyPurpose
+   ontouml_models_lib.OntologyDevelopmentContext
+   ontouml_models_lib.OntologyRepresentationStyle
+   ontouml_models_lib.OntologyType
+
+
+Package Contents
+----------------
+
+.. py:class:: Catalog(catalog_path)
+
+   Bases: :py:obj:`utils.queryable_element.QueryableElement`
+
+
+   Manages a collection of ontology models in the OntoUML/UFO Catalog.
+
+   The `Catalog` class allows loading, managing, and executing queries on multiple ontology models. It compiles the
+   results from individual models into a cohesive dataset, enabling complex queries across the entire catalog. This
+   class inherits from `QueryableElement`, which provides functionality to execute SPARQL queries using RDFLib.
+
+   :ivar path: The path to the catalog directory.
+   :vartype path: str
+   :ivar path_models: The path to the directory containing the ontology model subfolders.
+   :vartype path_models: str
+   :ivar models: A list of `Model` instances representing the loaded ontology models.
+   :vartype models: list[Model]
+   :ivar graph: An RDFLib `Graph` object representing the merged graph of all ontology models.
+   :vartype graph: rdflib.Graph
+
+   Examples
+   --------
+   Basic usage example of the `Catalog` class:
+
+       >>> from catalog import Catalog
+       >>> from query import Query
+
+       >>> # Initialize the catalog with the path to the directory
+       >>> catalog = Catalog('/path/to/catalog')
+
+       >>> # Load a specific query from a file
+       >>> query = Query('./queries/query.sparql')
+
+       >>> # Execute the query on all models in the catalog
+       >>> catalog.execute_query_on_all_models(query)
+
+       >>> # Execute multiple queries on all models in the catalog
+       >>> queries = Query.load_queries('./queries')
+       >>> catalog.execute_queries_on_all_models(queries)
+
+       >>> # Execute multiple queries on a specific model
+       >>> model = catalog.get_model('some_model_id')
+       >>> catalog.execute_queries_on_model(queries, model)
+
+
+   .. py:attribute:: catalog_path
+
+
+   .. py:attribute:: path
+      :type:  pathlib.Path
+
+
+   .. py:attribute:: path_models
+      :type:  pathlib.Path
+
+
+   .. py:attribute:: models
+      :type:  list[model.Model]
+      :value: []
+
+
+
+   .. py:attribute:: graph
+      :type:  rdflib.Graph
+
+
+   .. py:method:: execute_query_on_model(query, model, results_path = None)
+
+      Execute a specific Query on a specific Model and save the results.
+
+      This method runs a single SPARQL query on a specific ontology model and saves the results to the specified
+      directory. If no directory is provided, the results are saved in the default "./results" directory.
+
+      :param query: A Query instance representing the SPARQL query to be executed.
+      :type query: Query
+      :param model: A Model instance on which the query will be executed.
+      :type model: Model
+      :param results_path: Optional; Path to the directory where the query results should be saved. If not provided,
+                           defaults to "./results".
+      :type results_path: Optional[Union[str, Path]]
+
+      :raises FileNotFoundError: If the provided results path does not exist and cannot be created.
+      :raises Exception: For any other errors that occur during query execution.
+
+      Example usage:
+
+      >>> from catalog import Catalog
+      >>> from query import Query
+      >>> catalog = Catalog('/path/to/catalog')
+      >>> query = Query('./queries/query.sparql')  # Load a SPARQL query from a file
+      >>> model = catalog.get_model('some_model_id')  # Retrieve a model by its ID
+      >>> catalog.execute_query_on_model(query, model)
+
+
+
+   .. py:method:: execute_query_on_all_models(query, results_path = None)
+
+      Execute a single Query instance on all loaded Model instances in the catalog and save the results.
+
+      This method runs a single SPARQL query across all ontology models loaded in the catalog. The results are saved
+      in the specified directory, or in the default "./results" directory if no directory is provided.
+
+      :param query: A Query instance representing the SPARQL query to be executed on all models.
+      :type query: Query
+      :param results_path: Optional; Path to the directory where the query results should be saved. If not provided,
+                           defaults to "./results".
+      :type results_path: Optional[Union[str, Path]]
+
+      :raises FileNotFoundError: If the provided results path does not exist and cannot be created.
+      :raises Exception: For any other errors that occur during query execution.
+
+      Example usage:
+
+      >>> from catalog import Catalog
+      >>> from query import Query
+      >>> catalog = Catalog('/path/to/catalog')
+      >>> query = Query('./queries/query.sparql')  # Load a SPARQL query from a file
+      >>> catalog.execute_query_on_all_models(query)  # Execute the query on all models
+
+
+
+   .. py:method:: execute_queries_on_model(queries, model, results_path = None)
+
+      Execute a list of Query instances on a specific Model instance and save the results.
+
+      This method runs multiple SPARQL queries on a specific ontology model. The results of each query are saved in
+      the specified directory, or in the default "./results" directory if no directory is provided.
+
+      :param queries: A list of Query instances to be executed on the model.
+      :type queries: list[Query]
+      :param model: A Model instance on which the queries will be executed.
+      :type model: Model
+      :param results_path: Optional; Path to the directory where the query results should be saved. If not provided,
+                           defaults to "./results".
+      :type results_path: Optional[Union[str, Path]]
+
+      :raises FileNotFoundError: If the provided results path does not exist and cannot be created.
+      :raises Exception: For any other errors that occur during query execution.
+
+      Example usage:
+
+      >>> from catalog import Catalog
+      >>> from query import Query
+      >>> catalog = Catalog('/path/to/catalog')
+      >>> model = catalog.get_model('some_model_id')  # Retrieve a model by its ID
+      >>> queries = Query.load_queries('./queries')  # Load multiple SPARQL queries from a directory
+      >>> catalog.execute_queries_on_model(queries, model)
+
+
+
+   .. py:method:: execute_queries_on_models(queries, models, results_path = None)
+
+      Execute a list of Query instances on a list of Model instances and save the results.
+
+      This method runs multiple SPARQL queries across a specified set of ontology models in the catalog. The results
+      of each query on each model are saved in the specified directory, or in the default "./results" directory if no
+      directory is provided.
+
+      :param queries: A list of Query instances to be executed on the models.
+      :type queries: list[Query]
+      :param models: A list of Model instances on which the queries will be executed.
+      :type models: list[Model]
+      :param results_path: Optional; Path to the directory where the query results should be saved. If not provided,
+                           defaults to "./results".
+      :type results_path: Optional[Union[str, Path]]
+
+      :raises FileNotFoundError: If the provided results path does not exist and cannot be created.
+      :raises Exception: For any other errors that occur during query execution.
+
+      Example usage:
+
+      >>> from catalog import Catalog
+      >>> from query import Query
+      >>> catalog = Catalog('/path/to/catalog')
+      >>> models = catalog.get_models(language="en")  # Filter models by language
+      >>> queries = Query.load_queries('./queries')  # Load multiple SPARQL queries from a directory
+      >>> catalog.execute_queries_on_models(queries, models)
+
+
+
+   .. py:method:: execute_queries_on_all_models(queries, results_path = None)
+
+      Execute a list of Query instances on all loaded Model instances in the catalog and save the results.
+
+      This method runs multiple SPARQL queries across all ontology models loaded in the catalog. The results of each
+      query on each model are saved in the specified directory, or in the default "./results" directory if no
+      directory is provided.
+
+      :param queries: A list of Query instances to be executed on all models.
+      :type queries: list[Query]
+      :param results_path: Optional; Path to the directory where the query results should be saved. If not provided,
+                           defaults to "./results".
+      :type results_path: Optional[Union[str, Path]]
+
+      :raises FileNotFoundError: If the provided results path does not exist and cannot be created.
+      :raises Exception: For any other errors that occur during query execution.
+
+      Example usage:
+
+      >>> from catalog import Catalog
+      >>> from query import Query
+      >>> catalog = Catalog('/path/to/catalog')
+      >>> queries = Query.load_queries('./queries')  # Load multiple SPARQL queries from a directory
+      >>> catalog.execute_queries_on_all_models(queries)  # Execute the queries on all models
+
+
+
+   .. py:method:: get_model(model_id)
+
+      Retrieve a model from the catalog by its ID.
+
+      This method searches for a model within the catalog's loaded models by its unique ID. If a model with the
+      specified ID is found, it is returned. Otherwise, a `ValueError` is raised.
+
+      :param model_id: The ID of the model to retrieve.
+      :type model_id: str
+      :return: The model with the specified ID.
+      :rtype: Model
+      :raises ValueError: If no model with the specified ID is found.
+
+      Example usage:
+
+      >>> from catalog import Catalog
+      >>> catalog = Catalog('/path/to/catalog')
+      >>> model = catalog.get_model('some_model_id')  # Retrieve a model by its unique ID
+
+
+
+   .. py:method:: get_models(operand = 'and', **filters)
+
+      Return a list of models that match the given attribute restrictions.
+
+      This method filters the loaded models based on specified attribute restrictions. It supports logical operations
+      ("and" or "or") to combine multiple filters. If only a single filter is provided, the operand is ignored.
+
+      :param operand: Logical operand for combining filters ("and" or "or"). Defaults to "and".
+      :type operand: str
+      :param filters: Attribute restrictions to filter models. Attribute names and values should be passed as keyword
+                      arguments. Multiple values for the same attribute can be provided as a list.
+      :type filters: dict[str, Any]
+      :return: List of models that match the restrictions.
+      :rtype: list[Model]
+      :raises ValueError: If an invalid operand is provided.
+
+      Example usage:
+
+      >>> from catalog import Catalog
+      >>> catalog = Catalog('/path/to/catalog')
+      >>> # Filter models by a single attribute (language)
+      >>> filtered_models = catalog.get_models(language="en")
+      >>> # Filter models by multiple keywords
+      >>> filtered_models = catalog.get_models(operand="or", keyword=["safety", "geology"])
+      >>> # Filter models by multiple attributes (keyword and language)
+      >>> filtered_models = catalog.get_models(operand="and", keyword="safety", language="en")
+
+
+
+   .. py:method:: remove_model_by_id(model_id)
+
+      Remove a model from the catalog by its ID.
+
+      This method searches for a model within the catalog's loaded models by its unique ID. If a model with the
+      specified ID is found, it is removed from the catalog. Otherwise, a `ValueError` is raised.
+
+      :param model_id: The ID of the model to remove.
+      :type model_id: str
+      :raises ValueError: If no model with the specified ID is found.
+
+      Example usage:
+
+      >>> from catalog import Catalog
+      >>> catalog = Catalog('/path/to/catalog')
+      >>> catalog.remove_model_by_id('some_model_id')  # Remove a model by its unique ID
+
+
+
+   .. py:method:: _load_models()
+
+      Load all ontology models from the specified directory.
+
+      This method is called internally by the initializer to scan the catalog directory for subfolders, each
+      representing an ontology model. It loads the models from these subfolders and initializes them as instances of
+      the `Model` class. The loaded models are stored in the `models` attribute.
+
+      :raises FileNotFoundError: If the catalog path does not contain any model subfolders.
+
+
+
+   .. py:method:: _get_subfolders()
+
+      Get the names of all subfolders in the catalog catalog_path.
+
+
+
+   .. py:method:: _create_catalog_graph()
+
+      Create a single RDFLib model_graph by merging all graphs from the models.
+
+
+
+   .. py:method:: _generate_compiled_results(results, compiled_file_path)
+
+      Generate a compiled CSV file from results of all models.
+
+
+
+   .. py:method:: _match_model(model, filters, operand)
+
+      Check if a model matches the given attribute restrictions.
+
+      :param model: The model to check.
+      :type model: Model
+      :param filters: Attribute restrictions to filter models.
+      :type filters: dict
+      :param operand: Logical operand for combining filters ("and" or "or").
+      :type operand: str
+      :return: True if the model matches the restrictions, False otherwise.
+      :rtype: bool
+
+
+
+   .. py:method:: _match_single_filter(model, attr, value)
+
+      Check if a model matches a single attribute restriction.
+
+      :param model: The model to check.
+      :type model: Model
+      :param attr: The attribute name to filter by.
+      :type attr: str
+      :param value: The attribute value or list of values to filter by.
+      :type value: Any
+      :return: True if the model matches the restriction, False otherwise.
+      :rtype: bool
+
+
+
+.. py:class:: Query(query_file)
+
+   Represents a SPARQL query for execution within the OntoUML/UFO catalog.
+
+   The `Query` class encapsulates a SPARQL query, providing methods for loading the query from a file, computing a
+   persistent hash for the query content, and managing multiple queries through batch loading. This class ensures that
+   queries are handled consistently, facilitating their reuse and reliable execution across RDF graphs representing
+   ontology models.
+
+   :ivar query_file_path: The path to the file from which the SPARQL query was loaded.
+   :vartype query_file_path: Path
+   :ivar query_content: The content of the SPARQL query as a string.
+   :vartype query_content: str
+   :ivar hash: A persistent hash value computed from the query content, used to ensure consistent result management.
+   :vartype hash: int
+
+   Example usage:
+
+       >>> from query import Query
+       >>> query = Query('/path/to/query.sparql')
+       >>> print(query.query_content)
+       # Output: "SELECT ?s WHERE { ?s ?p ?o }"
+
+
+   .. py:attribute:: query_file
+
+
+   .. py:attribute:: query_file_path
+      :type:  pathlib.Path
+
+
+   .. py:attribute:: query_content
+      :type:  str
+
+
+   .. py:attribute:: hash
+      :type:  int
+
+
+   .. py:method:: load_queries(queries_path)
+      :staticmethod:
+
+
+      Load all query_content files from the specified directory catalog_path and return a list of Query instances.
+
+      :param queries_path: Path to the directory containing query_content files.
+      :type queries_path: Path
+      :return: List of Query instances.
+      :rtype: list[Query]
+
+
+
+   .. py:method:: _read_query_file(query_file)
+      :staticmethod:
+
+
+      Read the content of the query_content file.
+
+
+
+   .. py:method:: _compute_persistent_hash(content)
+      :staticmethod:
+
+
+      Compute a persistent hash for the query_content content.
+
+      :param content: The query_content content to be hashed.
+      :type content: str
+      :return: Consistent model_graph_hash value of the content.
+      :rtype: int
+
+
+
+.. py:class:: Model(model_path)
+
+   Bases: :py:obj:`utils.queryable_element.QueryableElement`
+
+
+   Represents an individual ontology model within the OntoUML/UFO catalog.
+
+   The `Model` class extends the `QueryableElement` class to manage and interact with RDF graphs representing ontology
+   models. It provides methods for loading RDF graphs, extracting metadata from associated YAML files, and executing
+   SPARQL queries. This class ensures that ontology data is consistently managed and that metadata attributes are
+   easily accessible.
+
+   :ivar title: The title of the ontology model, as determined by the `dct:title` property. There must be at most one
+                title per language.
+   :vartype title: str
+   :ivar keyword: A list of keywords associated with the ontology model, aiding in the categorization and
+                  searchability of the model.
+   :vartype keyword: list[str]
+   :ivar acronym: An optional acronym for the ontology model, providing a shorthand identifier.
+   :vartype acronym: Optional[str]
+   :ivar source: The source or origin of the ontology model, typically a publication, organization, or project.
+                 It is recommended to use persistent and resolvable identifiers, such as DOIs or DBLP URIs,
+                 to refer to these resources.
+   :vartype source: Optional[str]
+   :ivar language: The language in which the lexical labels of the ontology model are written.
+                   The use of values from the IANA Language Sub Tag Registry (e.g., "en", "pt") is required.
+   :vartype language: Optional[str]
+   :ivar designedForTask: A list of standardized purposes for which the ontology model was designed, categorized using
+                          the OntologyPurpose enumeration. Examples include Conceptual Clarification, Data Publication,
+                          and Decision Support Systems.
+   :vartype designedForTask: list[OntologyPurpose]
+   :ivar context: The development context of the ontology model, classified under the OntologyDevelopmentContext
+                  enumeration. Examples include Research, Industry, and Classroom.
+   :vartype context: list[OntologyDevelopmentContext]
+   :ivar representationStyle: The representation style of the ontology model, categorized under the
+                              OntologyRepresentationStyle enumeration. Examples include OntoumlStyle and UfoStyle.
+   :vartype representationStyle: Optional[OntologyRepresentationStyle]
+   :ivar ontologyType: The type of ontology, categorized under the OntologyType enumeration.
+                       Examples include Core, Domain, and Application.
+   :vartype ontologyType: Optional[OntologyType]
+   :ivar theme: The central theme of the ontology model, identified according to a theme taxonomy such as the
+                Library of Congress Classification (LCC).
+   :vartype theme: Optional[str]
+
+   Example usage:
+
+       >>> from model import Model
+       >>> model = Model('/path/to/ontology_model_folder')
+       >>> print(model.title)
+       # Output: "Example Ontology Title"
+       >>> print(model.keyword)
+       # Output: ["ontology", "example"]
+
+
+   .. py:attribute:: title
+      :type:  str
+      :value: ''
+
+
+
+   .. py:attribute:: keyword
+      :type:  list[str]
+      :value: []
+
+
+
+   .. py:attribute:: acronym
+      :type:  Optional[str]
+      :value: None
+
+
+
+   .. py:attribute:: source
+      :type:  Optional[str]
+      :value: None
+
+
+
+   .. py:attribute:: language
+      :type:  Optional[str]
+      :value: None
+
+
+
+   .. py:attribute:: designedForTask
+      :type:  list[enumerations.OntologyPurpose]
+      :value: []
+
+
+
+   .. py:attribute:: context
+      :type:  list[enumerations.OntologyDevelopmentContext]
+      :value: []
+
+
+
+   .. py:attribute:: representationStyle
+      :type:  Optional[enumerations.OntologyRepresentationStyle]
+      :value: None
+
+
+
+   .. py:attribute:: ontologyType
+      :type:  Optional[enumerations.OntologyType]
+      :value: None
+
+
+
+   .. py:attribute:: theme
+      :type:  Optional[str]
+      :value: None
+
+
+
+   .. py:attribute:: model_path
+      :type:  pathlib.Path
+
+
+   .. py:attribute:: path_model_graph
+
+
+   .. py:attribute:: path_metadata_graph
+
+
+   .. py:attribute:: path_metadata_yaml
+
+
+   .. py:method:: _compute_consistent_hash(graph)
+
+      Compute a consistent model_graph_hash for an RDFLib model_graph.
+
+      :param graph: RDFLib model_graph to be hashed.
+      :type graph: Graph
+      :return: Consistent model_graph_hash value of the model_graph.
+      :rtype: int
+
+
+
+   .. py:method:: _load_graph_safely(ontology_file)
+
+      Safely load graph from file (e.g., ttl) to working memory.
+
+      :param ontology_file: Path to the ontology file to be loaded into the working memory.
+      :type ontology_file: str
+      :return: RDFLib model_graph loaded as object.
+      :rtype: Graph
+
+
+
+   .. py:method:: _populate_attributes(yaml_file)
+
+      Populate the attributes of the model from a YAML file.
+
+      :param yaml_file: Path to the YAML file containing the metadata.
+      :type yaml_file: Path
+
+
+
+.. py:class:: OntologyPurpose(*args, **kwds)
+
+   Bases: :py:obj:`enum.Enum`
+
+
+   Represents the purposes for which ontologies are created.
+
+   :cvar CONCEPTUAL_CLARIFICATION: Created to clarify and untangle complex notions and relations through ontological
+                                   analysis.
+   :cvar DATA_PUBLICATION: Created to support data publication, such as generating an OWL vocabulary to publish data
+                           as linked open data.
+   :cvar DECISION_SUPPORT_SYSTEM: Created during the development of a decision support system.
+   :cvar EXAMPLE: Created to demonstrate OntoUML's application, support an experiment, or exemplify model reuse in
+                  specific scenarios.
+   :cvar INFORMATION_RETRIEVAL: Created to support the design of an information retrieval system.
+   :cvar INTEROPERABILITY: Created to support data integration, vocabulary alignment, or interoperability between
+                           software systems.
+   :cvar LANGUAGE_ENGINEERING: Created for the design of a domain-specific modeling language.
+   :cvar LEARNING: Created by authors to learn UFO and OntoUML, often as part of a course assignment.
+   :cvar ONTOLOGIC_ANALYSIS: Created as part of a broader ontological analysis.
+   :cvar SOFTWARE_ENGINEERING: Created during the development of an information system, such as generating a
+                               relational database schema.
+
+   These purposes categorize ontologies based on their intended use, from data publication to software engineering
+   and conceptual analysis.
+
+
+   .. py:attribute:: CONCEPTUAL_CLARIFICATION
+      :value: 'ConceptualClarification'
+
+
+
+   .. py:attribute:: DATA_PUBLICATION
+      :value: 'DataPublication'
+
+
+
+   .. py:attribute:: DECISION_SUPPORT_SYSTEM
+      :value: 'DecisionSupportSystem'
+
+
+
+   .. py:attribute:: EXAMPLE
+      :value: 'Example'
+
+
+
+   .. py:attribute:: INFORMATION_RETRIEVAL
+      :value: 'InformationRetrieval'
+
+
+
+   .. py:attribute:: INTEROPERABILITY
+      :value: 'Interoperability'
+
+
+
+   .. py:attribute:: LANGUAGE_ENGINEERING
+      :value: 'LanguageEngineering'
+
+
+
+   .. py:attribute:: LEARNING
+      :value: 'Learning'
+
+
+
+   .. py:attribute:: ONTOLOGIC_ALANALYSIS
+      :value: 'OntologicalAnalysis'
+
+
+
+   .. py:attribute:: SOFTWARE_ENGINEERING
+      :value: 'SoftwareEngineering'
+
+
+
+.. py:class:: OntologyDevelopmentContext(*args, **kwds)
+
+   Bases: :py:obj:`enum.Enum`
+
+
+   Represents the different contexts in which ontologies are developed.
+
+   :cvar CLASSROOM: Indicates that the ontology was developed within an educational setting, such as a classroom.
+   :cvar INDUSTRY: Indicates that the ontology was developed for or within an industrial or corporate context.
+   :cvar RESEARCH: Indicates that the ontology was developed as part of a research project, often associated with
+                   academic publications.
+
+   These contexts categorize ontologies based on their origin, whether they are created in educational, industrial,
+   or research environments.
+
+
+   .. py:attribute:: CLASSROOM
+      :value: 'Classroom'
+
+
+
+   .. py:attribute:: INDUSTRY
+      :value: 'Industry'
+
+
+
+   .. py:attribute:: RESEARCH
+      :value: 'Research'
+
+
+
+.. py:class:: OntologyRepresentationStyle(*args, **kwds)
+
+   Bases: :py:obj:`enum.Enum`
+
+
+   Represents the styles of ontology representation.
+
+   :cvar ONTOUML_STYLE: Characterizes a model that contains at least one class, relation, or property using a valid
+                        OntoUML stereotype.
+   :cvar UFO_STYLE: Characterizes a model that contains at least one class or relation from UFO (Unified Foundational
+                    Ontology) without an OntoUML stereotype.
+
+   These representation styles classify ontologies based on whether they adhere to OntoUML stereotypes or use
+   foundational ontology elements from UFO.
+
+
+   .. py:attribute:: ONTOUML_STYLE
+      :value: 'OntoumlStyle'
+
+
+
+   .. py:attribute:: UFO_STYLE
+      :value: 'UfoStyle'
+
+
+
+.. py:class:: OntologyType(*args, **kwds)
+
+   Bases: :py:obj:`enum.Enum`
+
+
+   Represents the types of ontologies based on their scope and application.
+
+   :cvar CORE: An ontology that grasps central concepts and relations of a given domain, often integrating several
+               domain ontologies and being applicable in multiple scenarios.
+   :cvar DOMAIN: An ontology that describes how a community conceptualizes a phenomenon of interest, typically
+                 narrower in scope than a core ontology.
+   :cvar APPLICATION: An ontology that specializes a domain ontology for a particular application, representing a model
+                      of a domain according to a specific viewpoint.
+
+   These types classify ontologies based on their scope, from core ontologies applicable in multiple domains to
+   specialized application ontologies.
+
+
+   .. py:attribute:: CORE
+      :value: 'Core'
+
+
+
+   .. py:attribute:: DOMAIN
+      :value: 'Domain'
+
+
+
+   .. py:attribute:: APPLICATION
+      :value: 'Application'
+
+
+

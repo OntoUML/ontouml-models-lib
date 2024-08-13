@@ -21,7 +21,7 @@ def get_version_from_pyproject():
 # -- Project information -----------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#project-information
 
-project = "ontouml-models-utils"
+project = "ontouml-models-lib"
 copyright = "Pedro Paulo F. Barcelos <p.p.favatobarcelos@utwente.nl>"
 author = "Pedro Paulo F. Barcelos <p.p.favatobarcelos@utwente.nl>"
 
@@ -33,7 +33,6 @@ version = get_version_from_pyproject()
 
 extensions = [
     "autoapi.extension",
-    "myst_parser",
     "sphinx.ext.autosectionlabel",
     "sphinx.ext.autosummary",
     "sphinx.ext.coverage",
@@ -45,9 +44,9 @@ extensions = [
 
 autodoc_typehints = "description"
 github_username = "pedropaulofb"
-github_repository = "ontouml/ontouml-models-utils"
+github_repository = "ontouml/ontouml-models-lib"
 
-autoapi_dirs = ["../ontouml-models-utils/"]
+autoapi_dirs = ["../ontouml_models_lib/"]
 
 templates_path = ["_templates"]
 exclude_patterns = ["_build", "Thumbs.db", ".DS_Store"]

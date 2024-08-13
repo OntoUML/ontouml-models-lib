@@ -20,16 +20,16 @@ This file defines the public API of the package, exposing the following classes 
 
 Public Classes
 --------------
-- :class:`Catalog`: Manages a collection of ontology models, enabling queries across multiple models within the catalog.
-- :class:`Query`: Encapsulates SPARQL queries, providing methods for loading, hashing, and executing queries.
-- :class:`Model`: Represents an individual ontology model, allowing for querying and metadata management.
+- class `Catalog`: Manages a collection of ontology models, enabling queries across multiple models within the catalog.
+- class `Query`: Encapsulates SPARQL queries, providing methods for loading, hashing, and executing queries.
+- class `Model`: Represents an individual ontology model, allowing for querying and metadata management.
 
 Public Enumerations
 -------------------
-- :class:`OntologyPurpose`: Enumerates the standardized purposes for which an ontology model may be designed.
-- :class:`OntologyDevelopmentContext`: Enumerates the possible development contexts for an ontology model.
-- :class:`OntologyRepresentationStyle`: Enumerates the representation styles adopted in an ontology model.
-- :class:`OntologyType`: Enumerates the categories of ontologies according to their scope.
+- class `OntologyPurpose`: Enumerates the standardized purposes for which an ontology model may be designed.
+- class `OntologyDevelopmentContext`: Enumerates the possible development contexts for an ontology model.
+- class `OntologyRepresentationStyle`: Enumerates the representation styles adopted in an ontology model.
+- class `OntologyType`: Enumerates the categories of ontologies according to their scope.
 
 Intended Use
 ------------
@@ -48,27 +48,21 @@ For more information on the OntoUML/UFO project and to access the latest models,
 https://github.com/OntoUML/ontouml-models
 """
 
-
 # Importing the publicly available classes
 from .catalog import Catalog
 from .query import Query
 from .model import Model
 
 # Importing the enumerations
-from .enumerations import (
-    OntologyPurpose,
-    OntologyDevelopmentContext,
-    OntologyRepresentationStyle,
-    OntologyType
-)
+from .enumerations import OntologyPurpose, OntologyDevelopmentContext, OntologyRepresentationStyle, OntologyType
 
 # Defining the public API
 __all__ = [
-    'Catalog',
-    'Query',
-    'Model',
-    'OntologyPurpose',
-    'OntologyDevelopmentContext',
-    'OntologyRepresentationStyle',
-    'OntologyType'
+    "Catalog",
+    "Query",
+    "Model",
+    "OntologyPurpose",
+    "OntologyDevelopmentContext",
+    "OntologyRepresentationStyle",
+    "OntologyType",
 ]

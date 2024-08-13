@@ -1,6 +1,8 @@
 """
-The `catalog` module provides the `Catalog` class, designed to manage and query collections of ontology models within
-the OntoUML/UFO Catalog. This module facilitates the loading, querying, and compilation of results from multiple
+The `catalog` module provides the `Catalog` class, designed to manage and query collections of ontology models within \
+the OntoUML/UFO Catalog.
+
+This module facilitates the loading, querying, and compilation of results from multiple
 ontology models, leveraging RDFLib for RDF graph operations and SPARQL queries.
 
 Overview
@@ -78,8 +80,6 @@ For additional details on the OntoUML/UFO catalog, refer to the official OntoUML
 https://github.com/OntoUML/ontouml-models
 """
 
-
-
 from typing import Optional, Any, Union
 
 import pandas as pd
@@ -134,16 +134,17 @@ class Catalog(QueryableElement):
         >>> catalog.execute_queries_on_model(queries, model)
     """
 
-    def __init__(self, catalog_path: Union[Path, str]) -> None:
+    def __init__(self, catalog_path: Union[Path, str]) -> None:  # noqa: DOC101,DOC103
         """
         Initialize the Catalog with a given path to the ontology models.
 
         This method sets up the catalog by specifying the directory containing the ontology models. It initializes the
         paths, loads all models from the directory, and creates a merged RDF graph of all models.
 
-        :param catalog_path: The path to the catalog directory containing the ontology models. The path can be provided
-                             as a string or a Path object.
+        :param catalog_path: The path to the catalog directory containing the ontology models.
+                             The path can be provided as a string or a Path object.
         :type catalog_path: Union[Path, str]
+
         :raises ValueError: If the provided path is not valid or if the directory does not contain any models.
 
         Example usage:
@@ -156,7 +157,7 @@ class Catalog(QueryableElement):
 
         super().__init__(id="catalog")  # Set the id to "catalog"
 
-        self.path: Path = Path(catalog_path)
+        self.path: Path = catalog_path
         self.path_models: Path = self.path / "models"
         self.models: list[Model] = []
         self._load_models()
@@ -168,13 +169,14 @@ class Catalog(QueryableElement):
 
     # ----- EXECUTE METHODS -----
 
-    def execute_query_on_model(self, query: Query, model: Model,
-                               results_path: Optional[Union[str, Path]] = None) -> None:
+    def execute_query_on_model(
+        self, query: Query, model: Model, results_path: Optional[Union[str, Path]] = None
+    ) -> None:
         """
         Execute a specific Query on a specific Model and save the results.
 
-        This method runs a single SPARQL query on a specific ontology model and saves the results to the specified directory.
-        If no directory is provided, the results are saved in the default "./results" directory.
+        This method runs a single SPARQL query on a specific ontology model and saves the results to the specified
+        directory. If no directory is provided, the results are saved in the default "./results" directory.
 
         :param query: A Query instance representing the SPARQL query to be executed.
         :type query: Query
@@ -196,7 +198,6 @@ class Catalog(QueryableElement):
         >>> model = catalog.get_model('some_model_id')  # Retrieve a model by its ID
         >>> catalog.execute_query_on_model(query, model)
         """
-
         results_path = results_path or Path("./results")
         results_path.mkdir(exist_ok=True)
         model.execute_query(query, results_path)
@@ -205,8 +206,8 @@ class Catalog(QueryableElement):
         """
         Execute a single Query instance on all loaded Model instances in the catalog and save the results.
 
-        This method runs a single SPARQL query across all ontology models loaded in the catalog. The results are saved in
-        the specified directory, or in the default "./results" directory if no directory is provided.
+        This method runs a single SPARQL query across all ontology models loaded in the catalog. The results are saved
+        in the specified directory, or in the default "./results" directory if no directory is provided.
 
         :param query: A Query instance representing the SPARQL query to be executed on all models.
         :type query: Query
@@ -225,7 +226,6 @@ class Catalog(QueryableElement):
         >>> query = Query('./queries/query.sparql')  # Load a SPARQL query from a file
         >>> catalog.execute_query_on_all_models(query)  # Execute the query on all models
         """
-
         # Ensure results_path is not None
         results_path = Path(results_path or "./results")
         results_path.mkdir(exist_ok=True)
@@ -234,13 +234,14 @@ class Catalog(QueryableElement):
         for model in self.models:
             model.execute_query(query, results_path)
 
-    def execute_queries_on_model(self, queries: list[Query], model: Model,
-                                 results_path: Optional[Union[str, Path]] = None) -> None:
+    def execute_queries_on_model(
+        self, queries: list[Query], model: Model, results_path: Optional[Union[str, Path]] = None
+    ) -> None:
         """
         Execute a list of Query instances on a specific Model instance and save the results.
 
-        This method runs multiple SPARQL queries on a specific ontology model. The results of each query are saved in the
-        specified directory, or in the default "./results" directory if no directory is provided.
+        This method runs multiple SPARQL queries on a specific ontology model. The results of each query are saved in
+        the specified directory, or in the default "./results" directory if no directory is provided.
 
         :param queries: A list of Query instances to be executed on the model.
         :type queries: list[Query]
@@ -262,7 +263,6 @@ class Catalog(QueryableElement):
         >>> queries = Query.load_queries('./queries')  # Load multiple SPARQL queries from a directory
         >>> catalog.execute_queries_on_model(queries, model)
         """
-
         # Ensure results_path is not None
         results_path = Path(results_path or "./results")
         results_path.mkdir(exist_ok=True)
@@ -271,13 +271,14 @@ class Catalog(QueryableElement):
         for query in queries:
             model.execute_query(query, results_path)
 
-    def execute_queries_on_models(self, queries: list[Query], models: list[Model],
-                                  results_path: Optional[Union[str, Path]] = None) -> None:
+    def execute_queries_on_models(
+        self, queries: list[Query], models: list[Model], results_path: Optional[Union[str, Path]] = None
+    ) -> None:
         """
         Execute a list of Query instances on a list of Model instances and save the results.
 
-        This method runs multiple SPARQL queries across a specified set of ontology models in the catalog. The results of
-        each query on each model are saved in the specified directory, or in the default "./results" directory if no
+        This method runs multiple SPARQL queries across a specified set of ontology models in the catalog. The results
+        of each query on each model are saved in the specified directory, or in the default "./results" directory if no
         directory is provided.
 
         :param queries: A list of Query instances to be executed on the models.
@@ -300,20 +301,21 @@ class Catalog(QueryableElement):
         >>> queries = Query.load_queries('./queries')  # Load multiple SPARQL queries from a directory
         >>> catalog.execute_queries_on_models(queries, models)
         """
-
         results_path = results_path or Path("./results")
         results_path.mkdir(exist_ok=True)
         for model in models:
             for query in queries:
                 model.execute_query(query, results_path)
 
-    def execute_queries_on_all_models(self, queries: list[Query],
-                                      results_path: Optional[Union[str, Path]] = None) -> None:
+    def execute_queries_on_all_models(
+        self, queries: list[Query], results_path: Optional[Union[str, Path]] = None
+    ) -> None:
         """
         Execute a list of Query instances on all loaded Model instances in the catalog and save the results.
 
-        This method runs multiple SPARQL queries across all ontology models loaded in the catalog. The results of each query
-        on each model are saved in the specified directory, or in the default "./results" directory if no directory is provided.
+        This method runs multiple SPARQL queries across all ontology models loaded in the catalog. The results of each
+        query on each model are saved in the specified directory, or in the default "./results" directory if no
+        directory is provided.
 
         :param queries: A list of Query instances to be executed on all models.
         :type queries: list[Query]
@@ -332,7 +334,6 @@ class Catalog(QueryableElement):
         >>> queries = Query.load_queries('./queries')  # Load multiple SPARQL queries from a directory
         >>> catalog.execute_queries_on_all_models(queries)  # Execute the queries on all models
         """
-
         self.execute_queries_on_models(queries, self.models, results_path)
 
     # ----- GET METHODS -----
@@ -341,8 +342,8 @@ class Catalog(QueryableElement):
         """
         Retrieve a model from the catalog by its ID.
 
-        This method searches for a model within the catalog's loaded models by its unique ID. If a model with the specified
-        ID is found, it is returned. Otherwise, a `ValueError` is raised.
+        This method searches for a model within the catalog's loaded models by its unique ID. If a model with the
+        specified ID is found, it is returned. Otherwise, a `ValueError` is raised.
 
         :param model_id: The ID of the model to retrieve.
         :type model_id: str
@@ -356,7 +357,6 @@ class Catalog(QueryableElement):
         >>> catalog = Catalog('/path/to/catalog')
         >>> model = catalog.get_model('some_model_id')  # Retrieve a model by its unique ID
         """
-
         for model in self.models:
             if model.id == model_id:
                 return model
@@ -392,8 +392,8 @@ class Catalog(QueryableElement):
         if len(filters) == 1:
             attr, value = next(iter(filters.items()))
             return [model for model in self.models if self._match_single_filter(model, attr, value)]
-        else:
-            return [model for model in self.models if self._match_model(model, filters, operand)]
+
+        return [model for model in self.models if self._match_model(model, filters, operand)]
 
     # ----- REMOVE METHODS -----
 
@@ -401,8 +401,8 @@ class Catalog(QueryableElement):
         """
         Remove a model from the catalog by its ID.
 
-        This method searches for a model within the catalog's loaded models by its unique ID. If a model with the specified
-        ID is found, it is removed from the catalog. Otherwise, a `ValueError` is raised.
+        This method searches for a model within the catalog's loaded models by its unique ID. If a model with the
+        specified ID is found, it is removed from the catalog. Otherwise, a `ValueError` is raised.
 
         :param model_id: The ID of the model to remove.
         :type model_id: str
@@ -429,9 +429,9 @@ class Catalog(QueryableElement):
         """
         Load all ontology models from the specified directory.
 
-        This method is called internally by the initializer to scan the catalog directory for subfolders, each representing
-        an ontology model. It loads the models from these subfolders and initializes them as instances of the `Model` class.
-        The loaded models are stored in the `models` attribute.
+        This method is called internally by the initializer to scan the catalog directory for subfolders, each
+        representing an ontology model. It loads the models from these subfolders and initializes them as instances of
+        the `Model` class. The loaded models are stored in the `models` attribute.
 
         :raises FileNotFoundError: If the catalog path does not contain any model subfolders.
         """
@@ -489,10 +489,11 @@ class Catalog(QueryableElement):
 
         if operand == "and":
             return all(matches)
-        elif operand == "or":
+
+        if operand == "or":
             return any(matches)
-        else:
-            raise ValueError("Invalid operand. Use 'and' or 'or'.")
+
+        raise ValueError("Invalid operand. Use 'and' or 'or'.")
 
     def _match_single_filter(self, model: Model, attr: str, value: Any) -> bool:
         """
@@ -512,7 +513,8 @@ class Catalog(QueryableElement):
             if isinstance(value, list):
                 return any(val in model_value for val in value)
             return value in model_value
-        else:
-            if isinstance(value, list):
-                return model_value in value
-            return model_value == value
+
+        if isinstance(value, list):
+            return model_value in value
+
+        return model_value == value

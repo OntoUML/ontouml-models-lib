@@ -1,0 +1,202 @@
+ontouml_models_lib.enumerations
+===============================
+
+.. py:module:: ontouml_models_lib.enumerations
+
+.. autoapi-nested-parse::
+
+   This module defines enumerations used in the OntoUML/UFO Catalog.
+
+   These enumerations classify and filter ontology models based on their development context, representation style,
+   purpose, and type. The enumerations align with the metadata schema specification used in the catalog.
+
+   Enumerations:
+   -------------
+   - `OntologyDevelopmentContext`: Represents the contexts in which ontologies are developed.
+   - `OntologyRepresentationStyle`: Represents the styles of ontology representation.
+   - `OntologyPurpose`: Represents the purposes for which ontologies are created.
+   - `OntologyType`: Represents the types of ontologies based on their scope and application.
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   ontouml_models_lib.enumerations.OntologyDevelopmentContext
+   ontouml_models_lib.enumerations.OntologyRepresentationStyle
+   ontouml_models_lib.enumerations.OntologyPurpose
+   ontouml_models_lib.enumerations.OntologyType
+
+
+Module Contents
+---------------
+
+.. py:class:: OntologyDevelopmentContext(*args, **kwds)
+
+   Bases: :py:obj:`enum.Enum`
+
+
+   Represents the different contexts in which ontologies are developed.
+
+   :cvar CLASSROOM: Indicates that the ontology was developed within an educational setting, such as a classroom.
+   :cvar INDUSTRY: Indicates that the ontology was developed for or within an industrial or corporate context.
+   :cvar RESEARCH: Indicates that the ontology was developed as part of a research project, often associated with
+                   academic publications.
+
+   These contexts categorize ontologies based on their origin, whether they are created in educational, industrial,
+   or research environments.
+
+
+   .. py:attribute:: CLASSROOM
+      :value: 'Classroom'
+
+
+
+   .. py:attribute:: INDUSTRY
+      :value: 'Industry'
+
+
+
+   .. py:attribute:: RESEARCH
+      :value: 'Research'
+
+
+
+.. py:class:: OntologyRepresentationStyle(*args, **kwds)
+
+   Bases: :py:obj:`enum.Enum`
+
+
+   Represents the styles of ontology representation.
+
+   :cvar ONTOUML_STYLE: Characterizes a model that contains at least one class, relation, or property using a valid
+                        OntoUML stereotype.
+   :cvar UFO_STYLE: Characterizes a model that contains at least one class or relation from UFO (Unified Foundational
+                    Ontology) without an OntoUML stereotype.
+
+   These representation styles classify ontologies based on whether they adhere to OntoUML stereotypes or use
+   foundational ontology elements from UFO.
+
+
+   .. py:attribute:: ONTOUML_STYLE
+      :value: 'OntoumlStyle'
+
+
+
+   .. py:attribute:: UFO_STYLE
+      :value: 'UfoStyle'
+
+
+
+.. py:class:: OntologyPurpose(*args, **kwds)
+
+   Bases: :py:obj:`enum.Enum`
+
+
+   Represents the purposes for which ontologies are created.
+
+   :cvar CONCEPTUAL_CLARIFICATION: Created to clarify and untangle complex notions and relations through ontological
+                                   analysis.
+   :cvar DATA_PUBLICATION: Created to support data publication, such as generating an OWL vocabulary to publish data
+                           as linked open data.
+   :cvar DECISION_SUPPORT_SYSTEM: Created during the development of a decision support system.
+   :cvar EXAMPLE: Created to demonstrate OntoUML's application, support an experiment, or exemplify model reuse in
+                  specific scenarios.
+   :cvar INFORMATION_RETRIEVAL: Created to support the design of an information retrieval system.
+   :cvar INTEROPERABILITY: Created to support data integration, vocabulary alignment, or interoperability between
+                           software systems.
+   :cvar LANGUAGE_ENGINEERING: Created for the design of a domain-specific modeling language.
+   :cvar LEARNING: Created by authors to learn UFO and OntoUML, often as part of a course assignment.
+   :cvar ONTOLOGIC_ANALYSIS: Created as part of a broader ontological analysis.
+   :cvar SOFTWARE_ENGINEERING: Created during the development of an information system, such as generating a
+                               relational database schema.
+
+   These purposes categorize ontologies based on their intended use, from data publication to software engineering
+   and conceptual analysis.
+
+
+   .. py:attribute:: CONCEPTUAL_CLARIFICATION
+      :value: 'ConceptualClarification'
+
+
+
+   .. py:attribute:: DATA_PUBLICATION
+      :value: 'DataPublication'
+
+
+
+   .. py:attribute:: DECISION_SUPPORT_SYSTEM
+      :value: 'DecisionSupportSystem'
+
+
+
+   .. py:attribute:: EXAMPLE
+      :value: 'Example'
+
+
+
+   .. py:attribute:: INFORMATION_RETRIEVAL
+      :value: 'InformationRetrieval'
+
+
+
+   .. py:attribute:: INTEROPERABILITY
+      :value: 'Interoperability'
+
+
+
+   .. py:attribute:: LANGUAGE_ENGINEERING
+      :value: 'LanguageEngineering'
+
+
+
+   .. py:attribute:: LEARNING
+      :value: 'Learning'
+
+
+
+   .. py:attribute:: ONTOLOGIC_ALANALYSIS
+      :value: 'OntologicalAnalysis'
+
+
+
+   .. py:attribute:: SOFTWARE_ENGINEERING
+      :value: 'SoftwareEngineering'
+
+
+
+.. py:class:: OntologyType(*args, **kwds)
+
+   Bases: :py:obj:`enum.Enum`
+
+
+   Represents the types of ontologies based on their scope and application.
+
+   :cvar CORE: An ontology that grasps central concepts and relations of a given domain, often integrating several
+               domain ontologies and being applicable in multiple scenarios.
+   :cvar DOMAIN: An ontology that describes how a community conceptualizes a phenomenon of interest, typically
+                 narrower in scope than a core ontology.
+   :cvar APPLICATION: An ontology that specializes a domain ontology for a particular application, representing a model
+                      of a domain according to a specific viewpoint.
+
+   These types classify ontologies based on their scope, from core ontologies applicable in multiple domains to
+   specialized application ontologies.
+
+
+   .. py:attribute:: CORE
+      :value: 'Core'
+
+
+
+   .. py:attribute:: DOMAIN
+      :value: 'Domain'
+
+
+
+   .. py:attribute:: APPLICATION
+      :value: 'Application'
+
+
+

@@ -1,0 +1,130 @@
+ontouml_models_lib.query
+========================
+
+.. py:module:: ontouml_models_lib.query
+
+.. autoapi-nested-parse::
+
+   The `query` module provides the `Query` class, designed to handle the loading, representation, and hashing of SPARQL queries for execution within the OntoUML/UFO catalog.
+
+   This module ensures that SPARQL queries are consistently managed,
+   enabling reliable query execution across RDF graphs representing ontology models.
+
+   Overview
+   --------
+   The `Query` class encapsulates SPARQL queries, providing methods to load queries from files, compute persistent hashes
+   to ensure the uniqueness and reusability of query results, and facilitate query execution across RDF graphs. This class
+   is crucial for managing the integrity and consistency of queries used within the catalog.
+
+   Usage
+   -----
+   Example 1: Loading a Query from a File
+
+       >>> from query import Query
+       >>> query = Query('/path/to/query.sparql')
+       >>> print(query.query_content)
+       # Output: "SELECT ?s WHERE { ?s ?p ?o }"
+
+   Example 2: Computing the Hash of a Query
+
+       >>> from query import Query
+       >>> query = Query('/path/to/query.sparql')
+       >>> print(query.hash)
+       # Output: 12345678901234567890 (example hash value)
+
+   Dependencies
+   ------------
+   - **hashlib**: For computing hashes of the SPARQL queries.
+   - **pathlib**: For handling file paths in a platform-independent manner.
+
+   References
+   ----------
+   For additional details on the OntoUML/UFO catalog, refer to the official OntoUML repository:
+   https://github.com/OntoUML/ontouml-models
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   ontouml_models_lib.query.Query
+
+
+Module Contents
+---------------
+
+.. py:class:: Query(query_file)
+
+   Represents a SPARQL query for execution within the OntoUML/UFO catalog.
+
+   The `Query` class encapsulates a SPARQL query, providing methods for loading the query from a file, computing a
+   persistent hash for the query content, and managing multiple queries through batch loading. This class ensures that
+   queries are handled consistently, facilitating their reuse and reliable execution across RDF graphs representing
+   ontology models.
+
+   :ivar query_file_path: The path to the file from which the SPARQL query was loaded.
+   :vartype query_file_path: Path
+   :ivar query_content: The content of the SPARQL query as a string.
+   :vartype query_content: str
+   :ivar hash: A persistent hash value computed from the query content, used to ensure consistent result management.
+   :vartype hash: int
+
+   Example usage:
+
+       >>> from query import Query
+       >>> query = Query('/path/to/query.sparql')
+       >>> print(query.query_content)
+       # Output: "SELECT ?s WHERE { ?s ?p ?o }"
+
+
+   .. py:attribute:: query_file
+
+
+   .. py:attribute:: query_file_path
+      :type:  pathlib.Path
+
+
+   .. py:attribute:: query_content
+      :type:  str
+
+
+   .. py:attribute:: hash
+      :type:  int
+
+
+   .. py:method:: load_queries(queries_path)
+      :staticmethod:
+
+
+      Load all query_content files from the specified directory catalog_path and return a list of Query instances.
+
+      :param queries_path: Path to the directory containing query_content files.
+      :type queries_path: Path
+      :return: List of Query instances.
+      :rtype: list[Query]
+
+
+
+   .. py:method:: _read_query_file(query_file)
+      :staticmethod:
+
+
+      Read the content of the query_content file.
+
+
+
+   .. py:method:: _compute_persistent_hash(content)
+      :staticmethod:
+
+
+      Compute a persistent hash for the query_content content.
+
+      :param content: The query_content content to be hashed.
+      :type content: str
+      :return: Consistent model_graph_hash value of the content.
+      :rtype: int
+
+
+

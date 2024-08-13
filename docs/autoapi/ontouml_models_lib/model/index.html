@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ontouml_models_lib.model &mdash; ontouml-models-lib  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/graphviz.css?v=fd3f3429" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/sphinx_rtd_size.css?v=f26ae176" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/logo_resize.css?v=11130da6" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../../../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+    <link rel="next" title="ontouml_models_lib.query" href="../query/index.html" />
+    <link rel="prev" title="ontouml_models_lib.enumerations" href="../enumerations/index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            ontouml-models-lib
+              <img src="../../../_static/ontouml-models-lib-logo.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.0.0b1
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="../../index.html">API Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="../index.html">ontouml_models_lib</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="../index.html#about-the-ontouml-ufo-catalog">About the OntoUML/UFO Catalog</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#public-api">Public API</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#public-classes">Public Classes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#public-enumerations">Public Enumerations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#intended-use">Intended Use</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#subpackages">Subpackages</a></li>
+<li class="toctree-l3 current"><a class="reference internal" href="../index.html#submodules">Submodules</a><ul class="current">
+<li class="toctree-l4"><a class="reference internal" href="../catalog/index.html">ontouml_models_lib.catalog</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../enumerations/index.html">ontouml_models_lib.enumerations</a></li>
+<li class="toctree-l4 current"><a class="current reference internal" href="#">ontouml_models_lib.model</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../query/index.html">ontouml_models_lib.query</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#classes">Classes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../index.html#package-contents">Package Contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">ontouml-models-lib</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">API Reference</a></li>
+          <li class="breadcrumb-item"><a href="../index.html">ontouml_models_lib</a></li>
+      <li class="breadcrumb-item active">ontouml_models_lib.model</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../../_sources/autoapi/ontouml_models_lib/model/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="module-ontouml_models_lib.model">
+<span id="ontouml-models-lib-model"></span><h1>ontouml_models_lib.model<a class="headerlink" href="#module-ontouml_models_lib.model" title="Link to this heading"></a></h1>
+<p>The <cite>model</cite> module provides the <cite>Model</cite> class, a specialized extension of the <cite>QueryableElement</cite> class, designed for managing and interacting with individual ontology models within the OntoUML/UFO catalog.</p>
+<p>This module facilitates the loading, querying, and management of RDF graphs and associated metadata for ontology
+models, ensuring compliance with the metadata schema specified in Appendix A.</p>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading"></a></h2>
+<p>The <cite>Model</cite> class represents a single ontology model, encapsulating its RDF graph and metadata, and provides methods for
+querying and interacting with this data. The metadata attributes, such as <cite>title</cite>, <cite>keyword</cite>, <cite>acronym</cite>, <cite>language</cite>,
+and others, are populated based on a YAML file and follow the standards defined in the OntoUML/UFO catalog’s metadata
+schema. The class is built to support operations on ontology models stored in RDF formats, such as Turtle, and
+accompanied by metadata in YAML format.</p>
+</section>
+<section id="usage">
+<h2>Usage<a class="headerlink" href="#usage" title="Link to this heading"></a></h2>
+<p>Example 1: Loading a Model and Accessing Metadata</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">model</span> <span class="kn">import</span> <span class="n">Model</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span> <span class="o">=</span> <span class="n">Model</span><span class="p">(</span><span class="s1">&#39;/path/to/ontology_model_folder&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">title</span><span class="p">)</span>
+<span class="go"># Output: &quot;Example Ontology Title&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">keyword</span><span class="p">)</span>
+<span class="go"># Output: [&quot;ontology&quot;, &quot;example&quot;]</span>
+</pre></div>
+</div>
+<p>Example 2: Executing a Query on the Model</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">model</span> <span class="kn">import</span> <span class="n">Model</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">query</span> <span class="kn">import</span> <span class="n">Query</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span> <span class="o">=</span> <span class="n">Model</span><span class="p">(</span><span class="s1">&#39;/path/to/ontology_model_folder&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">query</span> <span class="o">=</span> <span class="n">Query</span><span class="p">(</span><span class="s1">&#39;/path/to/query.sparql&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">results</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">execute_query</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="s1">&#39;/path/to/results&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">results</span><span class="p">)</span>
+<span class="go"># Output: [{&#39;subject&#39;: &#39;ExampleSubject&#39;, &#39;predicate&#39;: &#39;ExamplePredicate&#39;, &#39;object&#39;: &#39;ExampleObject&#39;}]</span>
+</pre></div>
+</div>
+</section>
+<section id="dependencies">
+<h2>Dependencies<a class="headerlink" href="#dependencies" title="Link to this heading"></a></h2>
+<ul class="simple">
+<li><p><strong>rdflib</strong>: For RDF graph operations and SPARQL query execution.</p></li>
+<li><p><strong>yaml</strong>: For parsing YAML files containing metadata.</p></li>
+<li><p><strong>loguru</strong>: For logging operations and debugging information.</p></li>
+</ul>
+</section>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Link to this heading"></a></h2>
+<p>For additional details on the OntoUML/UFO catalog, refer to the official OntoUML repository:
+<a class="reference external" href="https://github.com/OntoUML/ontouml-models">https://github.com/OntoUML/ontouml-models</a></p>
+</section>
+<section id="classes">
+<h2>Classes<a class="headerlink" href="#classes" title="Link to this heading"></a></h2>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#ontouml_models_lib.model.Model" title="ontouml_models_lib.model.Model"><code class="xref py py-obj docutils literal notranslate"><span class="pre">Model</span></code></a></p></td>
+<td><p>Represents an individual ontology model within the OntoUML/UFO catalog.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="module-contents">
+<h2>Module Contents<a class="headerlink" href="#module-contents" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="ontouml_models_lib.model.Model">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ontouml_models_lib.model.</span></span><span class="sig-name descname"><span class="pre">Model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model_path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ontouml_models_lib.model.Model" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-obj docutils literal notranslate"><span class="pre">utils.queryable_element.QueryableElement</span></code></p>
+<p>Represents an individual ontology model within the OntoUML/UFO catalog.</p>
+<p>The <cite>Model</cite> class extends the <cite>QueryableElement</cite> class to manage and interact with RDF graphs representing ontology
+models. It provides methods for loading RDF graphs, extracting metadata from associated YAML files, and executing
+SPARQL queries. This class ensures that ontology data is consistently managed and that metadata attributes are
+easily accessible.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Variables<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>title</strong> (<em>str</em>) – The title of the ontology model, as determined by the <cite>dct:title</cite> property. There must be at most one
+title per language.</p></li>
+<li><p><strong>keyword</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – A list of keywords associated with the ontology model, aiding in the categorization and
+searchability of the model.</p></li>
+<li><p><strong>acronym</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – An optional acronym for the ontology model, providing a shorthand identifier.</p></li>
+<li><p><strong>source</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – The source or origin of the ontology model, typically a publication, organization, or project.
+It is recommended to use persistent and resolvable identifiers, such as DOIs or DBLP URIs,
+to refer to these resources.</p></li>
+<li><p><strong>language</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – The language in which the lexical labels of the ontology model are written.
+The use of values from the IANA Language Sub Tag Registry (e.g., “en”, “pt”) is required.</p></li>
+<li><p><strong>designedForTask</strong> (<em>list</em><em>[</em><a class="reference internal" href="../enumerations/index.html#ontouml_models_lib.enumerations.OntologyPurpose" title="ontouml_models_lib.enumerations.OntologyPurpose"><em>OntologyPurpose</em></a><em>]</em>) – A list of standardized purposes for which the ontology model was designed, categorized using
+the OntologyPurpose enumeration. Examples include Conceptual Clarification, Data Publication,
+and Decision Support Systems.</p></li>
+<li><p><strong>context</strong> (<em>list</em><em>[</em><a class="reference internal" href="../enumerations/index.html#ontouml_models_lib.enumerations.OntologyDevelopmentContext" title="ontouml_models_lib.enumerations.OntologyDevelopmentContext"><em>OntologyDevelopmentContext</em></a><em>]</em>) – The development context of the ontology model, classified under the OntologyDevelopmentContext
+enumeration. Examples include Research, Industry, and Classroom.</p></li>
+<li><p><strong>representationStyle</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="../enumerations/index.html#ontouml_models_lib.enumerations.OntologyRepresentationStyle" title="ontouml_models_lib.enumerations.OntologyRepresentationStyle"><em>OntologyRepresentationStyle</em></a><em>]</em>) – The representation style of the ontology model, categorized under the
+OntologyRepresentationStyle enumeration. Examples include OntoumlStyle and UfoStyle.</p></li>
+<li><p><strong>ontologyType</strong> (<em>Optional</em><em>[</em><a class="reference internal" href="../enumerations/index.html#ontouml_models_lib.enumerations.OntologyType" title="ontouml_models_lib.enumerations.OntologyType"><em>OntologyType</em></a><em>]</em>) – The type of ontology, categorized under the OntologyType enumeration.
+Examples include Core, Domain, and Application.</p></li>
+<li><p><strong>theme</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – The central theme of the ontology model, identified according to a theme taxonomy such as the
+Library of Congress Classification (LCC).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Parameters<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>model_path</strong> (<em>Union</em><em>[</em><em>pathlib.Path</em><em>, </em><em>str</em><em>]</em>)</p>
+</dd>
+</dl>
+<p>Example usage:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">model</span> <span class="kn">import</span> <span class="n">Model</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">model</span> <span class="o">=</span> <span class="n">Model</span><span class="p">(</span><span class="s1">&#39;/path/to/ontology_model_folder&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">title</span><span class="p">)</span>
+<span class="go"># Output: &quot;Example Ontology Title&quot;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">keyword</span><span class="p">)</span>
+<span class="go"># Output: [&quot;ontology&quot;, &quot;example&quot;]</span>
+</pre></div>
+</div>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ontouml_models_lib.model.Model.title">
+<span class="sig-name descname"><span class="pre">title</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">''</span></em><a class="headerlink" href="#ontouml_models_lib.model.Model.title" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ontouml_models_lib.model.Model.keyword">
+<span class="sig-name descname"><span class="pre">keyword</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[]</span></em><a class="headerlink" href="#ontouml_models_lib.model.Model.keyword" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ontouml_models_lib.model.Model.acronym">
+<span class="sig-name descname"><span class="pre">acronym</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#ontouml_models_lib.model.Model.acronym" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ontouml_models_lib.model.Model.source">
+<span class="sig-name descname"><span class="pre">source</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#ontouml_models_lib.model.Model.source" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ontouml_models_lib.model.Model.language">
+<span class="sig-name descname"><span class="pre">language</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#ontouml_models_lib.model.Model.language" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ontouml_models_lib.model.Model.designedForTask">
+<span class="sig-name descname"><span class="pre">designedForTask</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../enumerations/index.html#ontouml_models_lib.enumerations.OntologyPurpose" title="ontouml_models_lib.enumerations.OntologyPurpose"><span class="pre">enumerations.OntologyPurpose</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[]</span></em><a class="headerlink" href="#ontouml_models_lib.model.Model.designedForTask" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ontouml_models_lib.model.Model.context">
+<span class="sig-name descname"><span class="pre">context</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="../enumerations/index.html#ontouml_models_lib.enumerations.OntologyDevelopmentContext" title="ontouml_models_lib.enumerations.OntologyDevelopmentContext"><span class="pre">enumerations.OntologyDevelopmentContext</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[]</span></em><a class="headerlink" href="#ontouml_models_lib.model.Model.context" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ontouml_models_lib.model.Model.representationStyle">
+<span class="sig-name descname"><span class="pre">representationStyle</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../enumerations/index.html#ontouml_models_lib.enumerations.OntologyRepresentationStyle" title="ontouml_models_lib.enumerations.OntologyRepresentationStyle"><span class="pre">enumerations.OntologyRepresentationStyle</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#ontouml_models_lib.model.Model.representationStyle" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ontouml_models_lib.model.Model.ontologyType">
+<span class="sig-name descname"><span class="pre">ontologyType</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="../enumerations/index.html#ontouml_models_lib.enumerations.OntologyType" title="ontouml_models_lib.enumerations.OntologyType"><span class="pre">enumerations.OntologyType</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#ontouml_models_lib.model.Model.ontologyType" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ontouml_models_lib.model.Model.theme">
+<span class="sig-name descname"><span class="pre">theme</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#ontouml_models_lib.model.Model.theme" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ontouml_models_lib.model.Model.model_path">
+<span class="sig-name descname"><span class="pre">model_path</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">pathlib.Path</span></em><a class="headerlink" href="#ontouml_models_lib.model.Model.model_path" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ontouml_models_lib.model.Model.path_model_graph">
+<span class="sig-name descname"><span class="pre">path_model_graph</span></span><a class="headerlink" href="#ontouml_models_lib.model.Model.path_model_graph" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ontouml_models_lib.model.Model.path_metadata_graph">
+<span class="sig-name descname"><span class="pre">path_metadata_graph</span></span><a class="headerlink" href="#ontouml_models_lib.model.Model.path_metadata_graph" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ontouml_models_lib.model.Model.path_metadata_yaml">
+<span class="sig-name descname"><span class="pre">path_metadata_yaml</span></span><a class="headerlink" href="#ontouml_models_lib.model.Model.path_metadata_yaml" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ontouml_models_lib.model.Model._compute_consistent_hash">
+<span class="sig-name descname"><span class="pre">_compute_consistent_hash</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">graph</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ontouml_models_lib.model.Model._compute_consistent_hash" title="Link to this definition"></a></dt>
+<dd><p>Compute a consistent model_graph_hash for an RDFLib model_graph.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>graph</strong> (<em>Graph</em>) – RDFLib model_graph to be hashed.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Consistent model_graph_hash value of the model_graph.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ontouml_models_lib.model.Model._load_graph_safely">
+<span class="sig-name descname"><span class="pre">_load_graph_safely</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ontology_file</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ontouml_models_lib.model.Model._load_graph_safely" title="Link to this definition"></a></dt>
+<dd><p>Safely load graph from file (e.g., ttl) to working memory.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>ontology_file</strong> (<em>str</em>) – Path to the ontology file to be loaded into the working memory.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>RDFLib model_graph loaded as object.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Graph</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ontouml_models_lib.model.Model._populate_attributes">
+<span class="sig-name descname"><span class="pre">_populate_attributes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">yaml_file</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ontouml_models_lib.model.Model._populate_attributes" title="Link to this definition"></a></dt>
+<dd><p>Populate the attributes of the model from a YAML file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>yaml_file</strong> (<em>Path</em>) – Path to the YAML file containing the metadata.</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../enumerations/index.html" class="btn btn-neutral float-left" title="ontouml_models_lib.enumerations" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../query/index.html" class="btn btn-neutral float-right" title="ontouml_models_lib.query" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright Pedro Paulo F. Barcelos &lt;p.p.favatobarcelos@utwente.nl&gt;.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

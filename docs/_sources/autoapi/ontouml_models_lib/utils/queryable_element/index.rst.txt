@@ -1,0 +1,163 @@
+ontouml_models_lib.utils.queryable_element
+==========================================
+
+.. py:module:: ontouml_models_lib.utils.queryable_element
+
+.. autoapi-nested-parse::
+
+   The `queryable_element` module provides the `QueryableElement` class, a base class designed to represent elements within the OntoUML/UFO catalog that can be queried using SPARQL.
+
+   This module facilitates the execution of SPARQL queries on RDF graphs, manages query results,
+   and ensures consistent hashing of both queries and graph data.
+
+   Overview
+   --------
+   The `QueryableElement` class serves as a foundational class for elements that interact with RDF graphs in the
+   OntoUML/UFO catalog. It provides methods for executing SPARQL queries on these graphs, computing and checking hashes
+   to prevent redundant query executions, and managing the storage of query results. This class is crucial for ensuring
+   the integrity, consistency, and reusability of queries within the catalog.
+
+   Dependencies
+   ------------
+   - **rdflib**: For RDF graph operations and SPARQL query execution.
+   - **hashlib**: For computing hashes of RDF graphs and SPARQL queries.
+   - **pathlib**: For handling file paths in a platform-independent manner.
+   - **csv**: For managing the storage of query results in CSV format.
+   - **loguru**: For logging operations and debugging information.
+
+   References
+   ----------
+   For additional details on the OntoUML/UFO catalog, refer to the official OntoUML repository:
+   https://github.com/OntoUML/ontouml-models
+
+
+
+Classes
+-------
+
+.. autoapisummary::
+
+   ontouml_models_lib.utils.queryable_element.QueryableElement
+
+
+Module Contents
+---------------
+
+.. py:class:: QueryableElement(id)
+
+   Bases: :py:obj:`abc.ABC`
+
+
+   A base class representing an element in the OntoUML/UFO catalog that can be queried using SPARQL.
+
+   The `QueryableElement` class provides foundational functionality for executing SPARQL queries on RDF graphs,
+   computing consistent hashes for both the RDF graphs and queries, and managing the storage of query results.
+   It is designed to be extended by other classes, such as `Catalog` and `Model`, and should not be instantiated
+   directly by users.
+
+   This class is intended for internal use and should be accessed indirectly through the `Catalog` or `Model` classes.
+
+   :ivar id: The unique identifier for the `QueryableElement`.
+   :vartype id: str
+   :ivar model_graph: The RDF graph associated with the `QueryableElement`.
+   :vartype model_graph: Graph
+   :ivar model_graph_hash: A persistent hash value computed from the RDF graph, used to ensure consistency and
+                           integrity of the graph's content.
+   :vartype model_graph_hash: int
+
+
+   .. py:attribute:: id
+      :type:  str
+
+
+   .. py:attribute:: model_graph
+      :type:  rdflib.Graph
+
+
+   .. py:attribute:: model_graph_hash
+      :type:  int
+
+
+   .. py:method:: execute_query(query, results_path = None)
+
+      Execute a SPARQL query on the element's RDF graph and returns the results as a list of dictionaries.
+
+      This method executes a SPARQL query on the `model_graph` associated with the `QueryableElement`. It first
+      checks whether the combination of the graph's hash and the query's hash has already been executed, in which
+      case it skips execution to prevent redundancy. If the query is executed, the results are saved to a CSV file,
+      and the hash combination is recorded for future reference.
+
+      :param query: A `Query` instance containing the SPARQL query to be executed.
+      :type query: Query
+      :param results_path: The path to the directory where the query results and hash file will be saved.
+                           If not provided, defaults to `./results`.
+      :type results_path: Optional[Union[str, Path]]
+      :return: A list of dictionaries, where each dictionary represents a result row from the SPARQL query.
+      :rtype: list[dict]
+
+      Example usage:
+
+          >>> from model import Model
+          >>> from query import Query
+          >>> model = Model('/path/to/ontology_model_folder')
+          >>> query = Query('/path/to/query.sparql')
+          >>> results = model.execute_query(query, '/path/to/results')
+          >>> print(results)
+          # Output: [{'subject': 'ExampleSubject', 'predicate': 'ExamplePredicate', 'object': 'ExampleObject'}]
+
+
+
+   .. py:method:: execute_queries(queries, results_path = None)
+
+      Execute a list of SPARQL queries on the element's RDF graph and saves the results.
+
+      This method iterates over a list of `Query` instances, executing each query on the `model_graph` associated
+      with the `QueryableElement`. The results of each query are saved to a CSV file in the specified directory.
+      This method is useful for batch processing multiple SPARQL queries on a single RDF graph.
+
+      :param queries: A list of `Query` instances to be executed on the `model_graph`.
+      :type queries: list[Query]
+      :param results_path: The path to the directory where the query results will be saved. If not provided,
+                           defaults to `./results`.
+      :type results_path: Optional[Path]
+
+      Example usage:
+
+          >>> from model import Model
+          >>> from query import Query
+          >>> model = Model('/path/to/ontology_model_folder')
+          >>> queries = [Query('/path/to/query1.sparql'), Query('/path/to/query2.sparql')]
+          >>> model.execute_queries(queries, '/path/to/results')
+
+
+
+   .. py:method:: _compute_hash()
+
+      Compute a model_graph_hash for the QueryableElement.
+
+
+
+   .. py:method:: _compute_query_hash(query)
+
+      Compute a consistent model_graph_hash for the query_content content.
+
+
+
+   .. py:method:: _hash_exists(query_hash, results_path)
+
+      Check if the model_graph_hash combination already exists in the .hashes.csv file.
+
+
+
+   .. py:method:: _save_results(query_name, results, results_path)
+
+      Save the query_content results to a CSV file.
+
+
+
+   .. py:method:: _save_hash_file(query_hash, results_path)
+
+      Save the model_graph_hash of the query_content and the model to a single .hashes.csv file.
+
+
+

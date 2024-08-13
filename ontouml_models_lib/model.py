@@ -1,8 +1,9 @@
 """
-The `model` module provides the `Model` class, a specialized extension of the `QueryableElement` class, designed for
-managing and interacting with individual ontology models within the OntoUML/UFO catalog. This module facilitates the
-loading, querying, and management of RDF graphs and associated metadata for ontology models, ensuring compliance with
-the metadata schema specified in Appendix A.
+The `model` module provides the `Model` class, a specialized extension of the `QueryableElement` class, designed \
+for managing and interacting with individual ontology models within the OntoUML/UFO catalog.
+
+This module facilitates the loading, querying, and management of RDF graphs and associated metadata for ontology
+models, ensuring compliance with the metadata schema specified in Appendix A.
 
 Overview
 --------
@@ -45,7 +46,6 @@ For additional details on the OntoUML/UFO catalog, refer to the official OntoUML
 https://github.com/OntoUML/ontouml-models
 """
 
-
 import hashlib
 from pathlib import Path
 from typing import Optional, Union
@@ -69,7 +69,8 @@ class Model(QueryableElement):
     SPARQL queries. This class ensures that ontology data is consistently managed and that metadata attributes are
     easily accessible.
 
-    :ivar title: The title of the ontology model, as determined by the `dct:title` property. There must be at most one title per language.
+    :ivar title: The title of the ontology model, as determined by the `dct:title` property. There must be at most one
+                 title per language.
     :vartype title: str
     :ivar keyword: A list of keywords associated with the ontology model, aiding in the categorization and
                    searchability of the model.
@@ -109,9 +110,10 @@ class Model(QueryableElement):
         >>> print(model.keyword)
         # Output: ["ontology", "example"]
     """
+
     def __init__(self, model_path: Union[Path, str]) -> None:
         """
-        Initializes a new instance of the `Model` class.
+        Initialize a new instance of the `Model` class.
 
         This constructor loads an ontology model from the specified path, including its RDF graph and associated
         metadata. It verifies the validity of the provided path, loads the RDF graphs from Turtle files (`ontology.ttl`
@@ -189,7 +191,6 @@ class Model(QueryableElement):
         :return: Consistent model_graph_hash value of the model_graph.
         :rtype: int
         """
-
         # Serialize the model_graph to a canonical format (N-Triples)
         iso_graph = to_isomorphic(graph)
         serialized_graph = iso_graph.serialize(format="nt")
@@ -215,7 +216,6 @@ class Model(QueryableElement):
         :return: RDFLib model_graph loaded as object.
         :rtype: Graph
         """
-
         ontology_graph = Graph()
         if not ontology_file.exists():
             raise FileNotFoundError(f"Ontology file {ontology_file} not found.")
@@ -223,7 +223,7 @@ class Model(QueryableElement):
             file_format = guess_format(ontology_file)
             ontology_graph.parse(ontology_file, format=file_format, encoding="utf-8")
         except Exception as error:
-            raise OSError(f"Error parsing ontology file {ontology_file}: {error}")
+            raise OSError(f"Error parsing ontology file {ontology_file}: {error}") from error
 
         return ontology_graph
 
@@ -255,7 +255,7 @@ class Model(QueryableElement):
             if enum_class == OntologyRepresentationStyle:
                 if value_normalized == "ontouml":
                     return OntologyRepresentationStyle.ONTOUML_STYLE
-                elif value_normalized == "ufo":
+                if value_normalized == "ufo":
                     return OntologyRepresentationStyle.UFO_STYLE
             raise ValueError(f"{value} is not a valid {enum_class.__name__}")
 

@@ -1,6 +1,8 @@
 """
-The `query` module provides the `Query` class, designed to handle the loading, representation, and hashing of SPARQL
-queries for execution within the OntoUML/UFO catalog. This module ensures that SPARQL queries are consistently managed,
+The `query` module provides the `Query` class, designed to handle the loading, representation, and hashing of SPARQL \
+queries for execution within the OntoUML/UFO catalog.
+
+This module ensures that SPARQL queries are consistently managed,
 enabling reliable query execution across RDF graphs representing ontology models.
 
 Overview
@@ -38,7 +40,7 @@ https://github.com/OntoUML/ontouml-models
 
 import hashlib
 from pathlib import Path
-from typing import List, Union
+from typing import Union
 
 
 class Query:
@@ -50,8 +52,6 @@ class Query:
     queries are handled consistently, facilitating their reuse and reliable execution across RDF graphs representing
     ontology models.
 
-    Attributes
-    ----------
     :ivar query_file_path: The path to the file from which the SPARQL query was loaded.
     :vartype query_file_path: Path
     :ivar query_content: The content of the SPARQL query as a string.
@@ -67,17 +67,17 @@ class Query:
         # Output: "SELECT ?s WHERE { ?s ?p ?o }"
     """
 
-    def __init__(self, query_file: Union[str,Path]):
+    def __init__(self, query_file: Union[str, Path]):
         """
-        Initializes a new instance of the `Query` class by loading a SPARQL query from the specified file.
+        Initialize a new instance of the `Query` class by loading a SPARQL query from the specified file.
 
-        This constructor reads the content of a SPARQL query from a file, computes a persistent hash of the query content,
-        and stores both the query content and the hash as attributes of the `Query` instance. The hash is used to manage query
-        results consistently, preventing redundant executions of the same query.
+        This constructor reads the content of a SPARQL query from a file, computes a persistent hash of the query
+        content, and stores both the query content and the hash as attributes of the `Query` instance.
+        The hash is used to manage query results consistently, preventing redundant executions of the same query.
 
-        :param query_file: The path to the file containing the SPARQL query. This can be provided as a string or a Path object.
+        :param query_file: The path to the file containing the SPARQL query.
+                           This can be provided as a string or a Path object.
         :type query_file: Union[str, Path]
-
         :raises FileNotFoundError: If the specified query file does not exist.
         :raises OSError: If an error occurs while reading the query file.
 
@@ -98,15 +98,15 @@ class Query:
     # ---------------------------------------------
 
     @staticmethod
-    def load_queries(queries_path: Union[str, Path]) -> List["Query"]:
-        """Load all query_content files from the specified directory catalog_path and return a list of Query instances.
+    def load_queries(queries_path: Union[str, Path]) -> list["Query"]:
+        """
+        Load all query_content files from the specified directory catalog_path and return a list of Query instances.
 
         :param queries_path: Path to the directory containing query_content files.
         :type queries_path: Path
         :return: List of Query instances.
-        :rtype: List[Query]
+        :rtype: list[Query]
         """
-
         # Converting to catalog_path if it is a string
         queries_path = Path(queries_path) if isinstance(queries_path, str) else queries_path
 
