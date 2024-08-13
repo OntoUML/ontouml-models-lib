@@ -56,8 +56,8 @@ from rdflib import Graph
 from rdflib.compare import to_isomorphic
 from rdflib.util import guess_format
 
-from enumerations import OntologyPurpose, OntologyDevelopmentContext, OntologyRepresentationStyle, OntologyType
-from utils.queryable_element import QueryableElement
+from .enumerations import OntologyPurpose, OntologyDevelopmentContext, OntologyRepresentationStyle, OntologyType
+from .utils.queryable_element import QueryableElement
 
 
 class Model(QueryableElement):

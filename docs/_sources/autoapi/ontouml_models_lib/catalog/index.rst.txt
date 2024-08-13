@@ -99,7 +99,7 @@ Module Contents
 
 .. py:class:: Catalog(catalog_path)
 
-   Bases: :py:obj:`utils.queryable_element.QueryableElement`
+   Bases: :py:obj:`ontouml_models_lib.utils.queryable_element.QueryableElement`
 
 
    Manages a collection of ontology models in the OntoUML/UFO Catalog.
@@ -154,7 +154,7 @@ Module Contents
 
 
    .. py:attribute:: models
-      :type:  list[ontouml_models_lib.Model]
+      :type:  list[ontouml_models_lib.model.Model]
       :value: []
 
 

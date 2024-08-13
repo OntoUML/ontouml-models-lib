@@ -65,7 +65,7 @@ Module Contents
 
 .. py:class:: Model(model_path)
 
-   Bases: :py:obj:`utils.queryable_element.QueryableElement`
+   Bases: :py:obj:`ontouml_models_lib.utils.queryable_element.QueryableElement`
 
 
    Represents an individual ontology model within the OntoUML/UFO catalog.
@@ -148,25 +148,25 @@ Module Contents
 
 
    .. py:attribute:: designedForTask
-      :type:  list[enumerations.OntologyPurpose]
+      :type:  list[ontouml_models_lib.enumerations.OntologyPurpose]
       :value: []
 
 
 
    .. py:attribute:: context
-      :type:  list[enumerations.OntologyDevelopmentContext]
+      :type:  list[ontouml_models_lib.enumerations.OntologyDevelopmentContext]
       :value: []
 
 
 
    .. py:attribute:: representationStyle
-      :type:  Optional[enumerations.OntologyRepresentationStyle]
+      :type:  Optional[ontouml_models_lib.enumerations.OntologyRepresentationStyle]
       :value: None
 
 
 
    .. py:attribute:: ontologyType
-      :type:  Optional[enumerations.OntologyType]
+      :type:  Optional[ontouml_models_lib.enumerations.OntologyType]
       :value: None
 
 

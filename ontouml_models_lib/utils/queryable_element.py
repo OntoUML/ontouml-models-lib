@@ -35,7 +35,7 @@ from typing import Optional, Union
 from loguru import logger
 from rdflib import Graph, URIRef
 from rdflib.namespace import split_uri
-from query import Query
+from ..query import Query
 
 
 class QueryableElement(ABC):
