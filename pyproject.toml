@@ -17,12 +17,15 @@ packages = [{ include = "ontouml_models_lib" },
 
 [tool.poetry.dependencies]
 python = "^3.09"
+loguru = "^0.7.2"
+rdflib = "^7.0.0"
+pandas = "^2.2.2"
+pyyaml = "^6.0.2"
 
 [tool.poetry.group.extras.dependencies]
 
 [tool.poetry.group.dev.dependencies]
 # General
-loguru = "^0.7.2"
 mypy = "^1.7.0"
 poetry = "^1.7.1"
 pre-commit = "^3.4.0"

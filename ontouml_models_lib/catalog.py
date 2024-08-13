@@ -87,7 +87,8 @@ from pathlib import Path
 
 from loguru import logger
 from rdflib import Graph
-from model import Model
+
+from ontouml_models_lib import Model
 from query import Query
 from utils.queryable_element import QueryableElement
 
