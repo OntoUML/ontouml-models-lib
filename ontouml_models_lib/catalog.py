@@ -428,13 +428,13 @@ class Catalog(QueryableElement):
 
     def _load_models(self) -> None:
         """
-        Load all ontology models from the specified directory.
+        Load all ontology models from the catalog directory.
 
-        This method is called internally by the initializer to scan the catalog directory for subfolders, each
-        representing an ontology model. It loads the models from these subfolders and initializes them as instances of
-        the `Model` class. The loaded models are stored in the `models` attribute.
+        This method scans the catalog directory for subfolders, each representing an ontology model. It loads the models
+        from these subfolders and initializes them as instances of the `Model` class. The loaded models are stored in
+        the `models` attribute of the `Catalog` instance.
 
-        :raises FileNotFoundError: If the catalog path does not contain any model subfolders.
+        :raises FileNotFoundError: If the catalog directory does not contain any model subfolders.
         """
         list_models_folders = self._get_subfolders()
         list_models_folders = list_models_folders[0:5]
@@ -446,11 +446,28 @@ class Catalog(QueryableElement):
             self.models.append(model)
 
     def _get_subfolders(self) -> list:
-        """Get the names of all subfolders in the catalog catalog_path."""
+        """
+        Retrieve the names of all subfolders in the catalog directory.
+
+        This method identifies all subfolders within the catalog's `path_models` directory, which represent individual
+        ontology models. The subfolders are expected to contain the necessary ontology and metadata files for each model.
+
+        :return: A list of subfolder names within the catalog directory.
+        :rtype: list
+        """
         return [subfolder.name for subfolder in self.path_models.iterdir() if subfolder.is_dir()]
 
     def _create_catalog_graph(self) -> Graph:
-        """Create a single RDFLib model_graph by merging all graphs from the models."""
+        """
+        Create a merged RDFLib graph from all loaded models in the catalog.
+
+        This method combines the RDF graphs of all loaded models into a single RDFLib `Graph` object. The merged graph
+        allows for executing SPARQL queries across the entire catalog, enabling comprehensive queries that span multiple
+        models.
+
+        :return: A merged RDFLib graph containing all triples from the models in the catalog.
+        :rtype: Graph
+        """
         catalog_graph = Graph()
         for model in self.models:
             if model.model_graph:
@@ -458,7 +475,18 @@ class Catalog(QueryableElement):
         return catalog_graph
 
     def _generate_compiled_results(self, results: list[dict], compiled_file_path: Path):
-        """Generate a compiled CSV file from results of all models."""
+        """
+        Generate a compiled CSV file from the results of all models.
+
+        This method compiles the results of SPARQL queries executed across multiple models into a single CSV file.
+        The compiled file is saved at the specified `compiled_file_path`. The method ensures that the results are
+        formatted as a tabular dataset, with the `model_id` column appearing first.
+
+        :param results: A list of dictionaries containing the results from multiple models.
+        :type results: list[dict]
+        :param compiled_file_path: The path where the compiled CSV file will be saved.
+        :type compiled_file_path: Path
+        """
         if results:
             df = pd.DataFrame(results)
             cols = ["model_id"] + [col for col in df.columns if col != "model_id"]
@@ -468,16 +496,22 @@ class Catalog(QueryableElement):
 
     def _match_model(self, model: Model, filters: dict[str, Any], operand: str) -> bool:
         """
-        Check if a model matches the given attribute restrictions.
+        Check if a model matches the specified attribute filters.
 
-        :param model: The model to check.
+        This method evaluates whether a model meets the attribute restrictions defined in the `filters` dictionary.
+        It supports combining multiple filters using logical operations ("and" or "or"), and returns a boolean indicating
+        whether the model satisfies the filter conditions.
+
+        :param model: The model to be checked against the filters.
         :type model: Model
-        :param filters: Attribute restrictions to filter models.
-        :type filters: dict
-        :param operand: Logical operand for combining filters ("and" or "or").
+        :param filters: A dictionary of attribute restrictions used to filter models. Attribute names and values are passed
+                        as keyword arguments.
+        :type filters: dict[str, Any]
+        :param operand: Logical operand for combining filters ("and" or "or"). Defaults to "and".
         :type operand: str
-        :return: True if the model matches the restrictions, False otherwise.
+        :return: True if the model matches the filter conditions; False otherwise.
         :rtype: bool
+        :raises ValueError: If an invalid operand is provided (not "and" or "or").
         """
         matches: list[bool] = []
         for attr, value in filters.items():
@@ -498,15 +532,19 @@ class Catalog(QueryableElement):
 
     def _match_single_filter(self, model: Model, attr: str, value: Any) -> bool:
         """
-        Check if a model matches a single attribute restriction.
+        Check if a model matches a single attribute filter.
 
-        :param model: The model to check.
+        This method evaluates whether a model meets a single attribute restriction. It compares the model's attribute
+        value to the provided filter value and returns a boolean indicating whether there is a match. It handles both
+        single-value and list-value comparisons.
+
+        :param model: The model to be checked against the filter.
         :type model: Model
-        :param attr: The attribute name to filter by.
+        :param attr: The name of the attribute to filter by.
         :type attr: str
-        :param value: The attribute value or list of values to filter by.
+        :param value: The expected value or list of values to filter by.
         :type value: Any
-        :return: True if the model matches the restriction, False otherwise.
+        :return: True if the model's attribute matches the filter; False otherwise.
         :rtype: bool
         """
         model_value = getattr(model, attr, None)

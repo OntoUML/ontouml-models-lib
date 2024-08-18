@@ -188,17 +188,50 @@ class QueryableElement(ABC):
     # ---------------------------------------------
 
     def _compute_hash(self) -> int:
-        """Compute a model_graph_hash for the QueryableElement."""
+        """
+        Compute a hash value for the QueryableElement.
+
+        This method generates a hash value based on the element's unique identifier (`id`). The computed hash serves
+        as a persistent identifier for the RDF graph associated with the element, ensuring consistency and integrity
+        across operations involving the element.
+
+        :return: The computed hash value for the QueryableElement.
+        :rtype: int
+        """
         return hash(self.id)
 
     def _compute_query_hash(self, query: str) -> int:
-        """Compute a consistent model_graph_hash for the query_content content."""
+        """
+        Compute a consistent hash value for a SPARQL query.
+
+        This method generates a SHA-256 hash for the given SPARQL query string. The resulting hash is used to ensure
+        that identical queries produce the same hash value, facilitating the management of query results and avoiding
+        redundant executions.
+
+        :param query: The SPARQL query string to be hashed.
+        :type query: str
+        :return: The computed hash value for the query.
+        :rtype: int
+        """
         encoded_content = query.encode("utf-8")
         content_hash = hashlib.sha256(encoded_content).hexdigest()
         return int(content_hash, 16)
 
     def _hash_exists(self, query_hash: int, results_path: Path) -> bool:
-        """Check if the model_graph_hash combination already exists in the .hashes.csv file."""
+        """
+        Check if a query's hash value already exists in the results directory.
+
+        This method verifies whether a hash value for a given SPARQL query has been previously computed and stored in
+        the `.hashes.csv` file within the specified results directory. This prevents redundant executions of the same
+        query on the same RDF graph.
+
+        :param query_hash: The hash value of the SPARQL query to be checked.
+        :type query_hash: int
+        :param results_path: The path to the directory where query results and hash records are stored.
+        :type results_path: Path
+        :return: True if the query's hash value exists in the results directory; False otherwise.
+        :rtype: bool
+        """
         hashes_file = results_path / ".hashes.csv"
 
         if not hashes_file.exists():
@@ -213,7 +246,20 @@ class QueryableElement(ABC):
         return False
 
     def _save_results(self, query_name: str, results: list[dict], results_path: Path):
-        """Save the query_content results to a CSV file."""
+        """
+        Save the results of a SPARQL query to a CSV file.
+
+        This method writes the results of a SPARQL query to a CSV file in the specified directory. The file is named
+        based on the query name and the unique identifier of the QueryableElement. If no results are present, an empty
+        file is created.
+
+        :param query_name: The name of the SPARQL query used to generate the results.
+        :type query_name: str
+        :param results: A list of dictionaries containing the query results, where each dictionary represents a result row.
+        :type results: list[dict]
+        :param results_path: The path to the directory where the results file will be saved.
+        :type results_path: Path
+        """
         result_file = results_path / f"{query_name}_result_{self.id}.csv"
         with open(result_file, "w", newline="", encoding="utf-8") as file:
             if results:
@@ -227,7 +273,18 @@ class QueryableElement(ABC):
         logger.info(f"Results written to {result_file}")
 
     def _save_hash_file(self, query_hash: int, results_path: Path):
-        """Save the model_graph_hash of the query_content and the model to a single .hashes.csv file."""
+        """
+        Save the hash value of a SPARQL query and the associated RDF graph to a file.
+
+        This method records the hash values of a SPARQL query and the corresponding RDF graph in the `.hashes.csv` file
+        within the specified directory. This ensures that the combination of the query and graph can be identified
+        in future operations, preventing redundant executions.
+
+        :param query_hash: The hash value of the SPARQL query being executed.
+        :type query_hash: int
+        :param results_path: The path to the directory where the hash record will be saved.
+        :type results_path: Path
+        """
         hashes_file = results_path / ".hashes.csv"
         row = {"query_hash": query_hash, "model_hash": self.model_graph_hash}
 

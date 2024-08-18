@@ -122,17 +122,33 @@ class Query:
 
     @staticmethod
     def _read_query_file(query_file: Path) -> str:
-        """Read the content of the query_content file."""
+        """
+        Read the content of a SPARQL query file.
+
+        This method opens a SPARQL query file, reads its content, and returns it as a string. The file is read using
+        UTF-8 encoding to ensure compatibility with a wide range of characters.
+
+        :param query_file: The path to the SPARQL query file.
+        :type query_file: Path
+        :return: The content of the SPARQL query file as a string.
+        :rtype: str
+        :raises FileNotFoundError: If the specified query file does not exist.
+        :raises OSError: If an error occurs while reading the query file.
+        """
         with open(query_file, "r", encoding="utf-8") as file:
             return file.read()
 
     @staticmethod
     def _compute_persistent_hash(content: str) -> int:
-        """Compute a persistent hash for the query_content content.
+        """
+        Compute a persistent hash value for the content of a SPARQL query.
 
-        :param content: The query_content content to be hashed.
+        This method generates a SHA-256 hash from the content of a SPARQL query string. The hash is computed in a way that
+        ensures consistency across executions, facilitating the identification and management of query results.
+
+        :param content: The content of the SPARQL query to be hashed.
         :type content: str
-        :return: Consistent model_graph_hash value of the content.
+        :return: The computed hash value for the query content.
         :rtype: int
         """
         # Encode the content to UTF-8

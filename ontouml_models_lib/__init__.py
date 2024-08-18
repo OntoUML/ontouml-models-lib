@@ -20,9 +20,9 @@ This file defines the public API of the package, exposing the following classes 
 
 Public Classes
 --------------
-- class `Catalog`: Manages a collection of ontology models, enabling queries across multiple models within the catalog.
-- class `Query`: Encapsulates SPARQL queries, providing methods for loading, hashing, and executing queries.
-- class `Model`: Represents an individual ontology model, allowing for querying and metadata management.
+    - **Catalog**: Manages a collection of ontology models, enabling queries across multiple models within the catalog.
+    - **Query**: Encapsulates SPARQL queries, providing methods for loading, hashing, and executing queries.
+    - **Model**: Represents an individual ontology model, allowing for querying and metadata management.
 
 Public Enumerations
 -------------------

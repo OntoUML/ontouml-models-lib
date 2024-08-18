@@ -184,11 +184,16 @@ class Model(QueryableElement):
     # ---------------------------------------------
 
     def _compute_consistent_hash(self, graph: Graph) -> int:
-        """Compute a consistent model_graph_hash for an RDFLib model_graph.
+        """
+        Compute a consistent hash value for an RDFLib graph.
 
-        :param graph: RDFLib model_graph to be hashed.
+        This method generates a SHA-256 hash for an RDFLib graph by first serializing it to a canonical format (N-Triples),
+        sorting the serialized triples, and then encoding the sorted serialization to UTF-8. The resulting hash value is
+        used to ensure consistency and integrity of the graph's content.
+
+        :param graph: The RDFLib graph to be hashed.
         :type graph: Graph
-        :return: Consistent model_graph_hash value of the model_graph.
+        :return: The computed hash value for the RDFLib graph.
         :rtype: int
         """
         # Serialize the model_graph to a canonical format (N-Triples)
@@ -209,12 +214,18 @@ class Model(QueryableElement):
         return int(graph_hash, 16)
 
     def _load_graph_safely(self, ontology_file: Path) -> Graph:
-        """Safely load graph from file (e.g., ttl) to working memory.
+        """
+        Safely load an RDFLib graph from a file.
 
-        :param ontology_file: Path to the ontology file to be loaded into the working memory.
-        :type ontology_file: str
-        :return: RDFLib model_graph loaded as object.
+        This method loads an RDFLib graph from a specified ontology file, ensuring that the file exists and is correctly
+        parsed. It determines the file format based on its extension and returns the loaded graph.
+
+        :param ontology_file: The path to the ontology file to be loaded.
+        :type ontology_file: Path
+        :return: The loaded RDFLib graph.
         :rtype: Graph
+        :raises FileNotFoundError: If the ontology file does not exist.
+        :raises OSError: If an error occurs during the parsing of the ontology file.
         """
         ontology_graph = Graph()
         if not ontology_file.exists():
@@ -228,10 +239,17 @@ class Model(QueryableElement):
         return ontology_graph
 
     def _populate_attributes(self, yaml_file: Path) -> None:
-        """Populate the attributes of the model from a YAML file.
+        """
+        Populate the model's attributes from a YAML metadata file.
 
-        :param yaml_file: Path to the YAML file containing the metadata.
+        This method reads a YAML file containing metadata and assigns the corresponding values to the model's attributes.
+        It handles enumerations by matching the string values in the YAML file to the appropriate enumeration members.
+        The method supports both single-value and list-value attributes.
+
+        :param yaml_file: The path to the YAML file containing the metadata.
         :type yaml_file: Path
+        :raises FileNotFoundError: If the YAML metadata file does not exist.
+        :raises ValueError: If an invalid value is encountered for an enumeration attribute.
         """
         if not yaml_file.exists():
             raise FileNotFoundError(f"Metadata file {yaml_file} not found.")
