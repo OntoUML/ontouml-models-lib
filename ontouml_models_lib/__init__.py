@@ -26,10 +26,10 @@ Public Classes
 
 Public Enumerations
 -------------------
-- class `OntologyPurpose`: Enumerates the standardized purposes for which an ontology model may be designed.
-- class `OntologyDevelopmentContext`: Enumerates the possible development contexts for an ontology model.
-- class `OntologyRepresentationStyle`: Enumerates the representation styles adopted in an ontology model.
-- class `OntologyType`: Enumerates the categories of ontologies according to their scope.
+- **OntologyPurpose**: Enumerates the standardized purposes for which an ontology model may be designed.
+- **OntologyDevelopmentContext**: Enumerates the possible development contexts for an ontology model.
+- **OntologyRepresentationStyle**: Enumerates the representation styles adopted in an ontology model.
+- **OntologyType**: Enumerates the categories of ontologies according to their scope.
 
 Intended Use
 ------------

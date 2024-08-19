@@ -99,8 +99,8 @@ class QueryableElement(ABC):
 
         Example usage:
 
-            >>> from model import Model
-            >>> from query import Query
+            >>> from ontouml_models_lib import Model
+            >>> from ontouml_models_lib import Query
             >>> model = Model('/path/to/ontology_model_folder')
             >>> query = Query('/path/to/query.sparql')
             >>> results = model.execute_query(query, '/path/to/results')
@@ -170,8 +170,8 @@ class QueryableElement(ABC):
 
         Example usage:
 
-            >>> from model import Model
-            >>> from query import Query
+            >>> from ontouml_models_lib import Model
+            >>> from ontouml_models_lib import Query
             >>> model = Model('/path/to/ontology_model_folder')
             >>> queries = [Query('/path/to/query1.sparql'), Query('/path/to/query2.sparql')]
             >>> model.execute_queries(queries, '/path/to/results')

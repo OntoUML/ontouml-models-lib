@@ -17,7 +17,7 @@ Usage
 -----
 Example 1: Loading a Model and Accessing Metadata
 
-    >>> from model import Model
+    >>> from ontouml_models_lib import Model
     >>> model = Model('/path/to/ontology_model_folder')
     >>> print(model.title)
     # Output: "Example Ontology Title"
@@ -26,8 +26,8 @@ Example 1: Loading a Model and Accessing Metadata
 
 Example 2: Executing a Query on the Model
 
-    >>> from model import Model
-    >>> from query import Query
+    >>> from ontouml_models_lib import Model
+    >>> from ontouml_models_lib import Query
     >>> model = Model('/path/to/ontology_model_folder')
     >>> query = Query('/path/to/query.sparql')
     >>> results = model.execute_query(query, '/path/to/results')
@@ -103,7 +103,7 @@ class Model(QueryableElement):
 
     Example usage:
 
-        >>> from model import Model
+        >>> from ontouml_models_lib import Model
         >>> model = Model('/path/to/ontology_model_folder')
         >>> print(model.title)
         # Output: "Example Ontology Title"
@@ -129,7 +129,7 @@ class Model(QueryableElement):
 
         Example usage:
 
-            >>> from model import Model
+            >>> from ontouml_models_lib import Model
             >>> model = Model('/path/to/ontology_model_folder')
             >>> print(model.title)
             # Output: "Example Ontology Title"

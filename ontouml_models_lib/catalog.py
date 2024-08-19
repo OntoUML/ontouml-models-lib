@@ -22,8 +22,8 @@ Examples
 --------
 Example 1: Loading a Catalog and Executing a Single Query on All Models
 
-    >>> from catalog import Catalog
-    >>> from query import Query
+    >>> from ontouml_models_lib import Catalog
+    >>> from ontouml_models_lib import Query
 
     >>> # Initialize the catalog with the path to the directory
     >>> catalog = Catalog('/path/to/catalog')
@@ -36,8 +36,8 @@ Example 1: Loading a Catalog and Executing a Single Query on All Models
 
 Example 2: Filtering Models by Attributes and Executing Multiple Queries
 
-    >>> from catalog import Catalog
-    >>> from query import Query
+    >>> from ontouml_models_lib import Catalog
+    >>> from ontouml_models_lib import Query
 
     >>> # Initialize the catalog
     >>> catalog = Catalog('/path/to/catalog')
@@ -53,8 +53,8 @@ Example 2: Filtering Models by Attributes and Executing Multiple Queries
 
 Example 3: Executing Multiple Queries on a Specific Model
 
-    >>> from catalog import Catalog
-    >>> from query import Query
+    >>> from ontouml_models_lib import Catalog
+    >>> from ontouml_models_lib import Query
 
     >>> # Initialize the catalog
     >>> catalog = Catalog('/path/to/catalog')
@@ -114,8 +114,8 @@ class Catalog(QueryableElement):
     --------
     Basic usage example of the `Catalog` class:
 
-        >>> from catalog import Catalog
-        >>> from query import Query
+        >>> from ontouml_models_lib import Catalog
+        >>> from ontouml_models_lib import Query
 
         >>> # Initialize the catalog with the path to the directory
         >>> catalog = Catalog('/path/to/catalog')
@@ -150,7 +150,7 @@ class Catalog(QueryableElement):
 
         Example usage:
 
-        >>> from catalog import Catalog
+        >>> from ontouml_models_lib import Catalog
         >>> catalog = Catalog('/path/to/catalog')
         """
         # Converting to catalog_path if it is a string
@@ -192,8 +192,8 @@ class Catalog(QueryableElement):
 
         Example usage:
 
-        >>> from catalog import Catalog
-        >>> from query import Query
+        >>> from ontouml_models_lib import Catalog
+        >>> from ontouml_models_lib import Query
         >>> catalog = Catalog('/path/to/catalog')
         >>> query = Query('./queries/query.sparql')  # Load a SPARQL query from a file
         >>> model = catalog.get_model('some_model_id')  # Retrieve a model by its ID
@@ -221,8 +221,8 @@ class Catalog(QueryableElement):
 
         Example usage:
 
-        >>> from catalog import Catalog
-        >>> from query import Query
+        >>> from ontouml_models_lib import Catalog
+        >>> from ontouml_models_lib import Query
         >>> catalog = Catalog('/path/to/catalog')
         >>> query = Query('./queries/query.sparql')  # Load a SPARQL query from a file
         >>> catalog.execute_query_on_all_models(query)  # Execute the query on all models
@@ -257,8 +257,8 @@ class Catalog(QueryableElement):
 
         Example usage:
 
-        >>> from catalog import Catalog
-        >>> from query import Query
+        >>> from ontouml_models_lib import Catalog
+        >>> from ontouml_models_lib import Query
         >>> catalog = Catalog('/path/to/catalog')
         >>> model = catalog.get_model('some_model_id')  # Retrieve a model by its ID
         >>> queries = Query.load_queries('./queries')  # Load multiple SPARQL queries from a directory
@@ -295,8 +295,8 @@ class Catalog(QueryableElement):
 
         Example usage:
 
-        >>> from catalog import Catalog
-        >>> from query import Query
+        >>> from ontouml_models_lib import Catalog
+        >>> from ontouml_models_lib import Query
         >>> catalog = Catalog('/path/to/catalog')
         >>> models = catalog.get_models(language="en")  # Filter models by language
         >>> queries = Query.load_queries('./queries')  # Load multiple SPARQL queries from a directory
@@ -329,8 +329,8 @@ class Catalog(QueryableElement):
 
         Example usage:
 
-        >>> from catalog import Catalog
-        >>> from query import Query
+        >>> from ontouml_models_lib import Catalog
+        >>> from ontouml_models_lib import Query
         >>> catalog = Catalog('/path/to/catalog')
         >>> queries = Query.load_queries('./queries')  # Load multiple SPARQL queries from a directory
         >>> catalog.execute_queries_on_all_models(queries)  # Execute the queries on all models
@@ -354,7 +354,7 @@ class Catalog(QueryableElement):
 
         Example usage:
 
-        >>> from catalog import Catalog
+        >>> from ontouml_models_lib import Catalog
         >>> catalog = Catalog('/path/to/catalog')
         >>> model = catalog.get_model('some_model_id')  # Retrieve a model by its unique ID
         """
@@ -381,7 +381,7 @@ class Catalog(QueryableElement):
 
         Example usage:
 
-        >>> from catalog import Catalog
+        >>> from ontouml_models_lib import Catalog
         >>> catalog = Catalog('/path/to/catalog')
         >>> # Filter models by a single attribute (language)
         >>> filtered_models = catalog.get_models(language="en")
@@ -411,7 +411,7 @@ class Catalog(QueryableElement):
 
         Example usage:
 
-        >>> from catalog import Catalog
+        >>> from ontouml_models_lib import Catalog
         >>> catalog = Catalog('/path/to/catalog')
         >>> catalog.remove_model_by_id('some_model_id')  # Remove a model by its unique ID
         """

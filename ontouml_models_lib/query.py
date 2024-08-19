@@ -15,14 +15,14 @@ Usage
 -----
 Example 1: Loading a Query from a File
 
-    >>> from query import Query
+    >>> from ontouml_models_lib import Query
     >>> query = Query('/path/to/query.sparql')
     >>> print(query.query_content)
     # Output: "SELECT ?s WHERE { ?s ?p ?o }"
 
 Example 2: Computing the Hash of a Query
 
-    >>> from query import Query
+    >>> from ontouml_models_lib import Query
     >>> query = Query('/path/to/query.sparql')
     >>> print(query.hash)
     # Output: 12345678901234567890 (example hash value)
@@ -61,7 +61,7 @@ class Query:
 
     Example usage:
 
-        >>> from query import Query
+        >>> from ontouml_models_lib import Query
         >>> query = Query('/path/to/query.sparql')
         >>> print(query.query_content)
         # Output: "SELECT ?s WHERE { ?s ?p ?o }"
@@ -83,7 +83,7 @@ class Query:
 
         Example usage:
 
-            >>> from query import Query
+            >>> from ontouml_models_lib import Query
             >>> query = Query('/path/to/query.sparql')
             >>> print(query.query_content)
             # Output: "SELECT ?s WHERE { ?s ?p ?o }"
