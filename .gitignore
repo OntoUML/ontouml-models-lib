@@ -167,4 +167,5 @@ bak/secure_token.txt
 
 /bak
 /queries
-*results*
+results/
+tester.py
