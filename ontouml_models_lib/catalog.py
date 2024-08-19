@@ -437,7 +437,6 @@ class Catalog(QueryableElement):
         :raises FileNotFoundError: If the catalog directory does not contain any model subfolders.
         """
         list_models_folders = self._get_subfolders()
-        list_models_folders = list_models_folders[0:5]
         logger.info("Loading catalog from catalog_path: {}", self.path_models)
 
         for model_folder in list_models_folders:
