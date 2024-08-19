@@ -162,8 +162,6 @@ cython_debug/
 .idea/
 
 bak/secure_token.txt
-test*
-*test
 
 */results
 
