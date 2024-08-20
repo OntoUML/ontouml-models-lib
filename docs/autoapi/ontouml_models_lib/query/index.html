@@ -40,7 +40,7 @@
               <img src="../../../_static/ontouml-models-lib-logo.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                1.0.0b1
+                1.0.0b2
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -115,14 +115,14 @@ is crucial for managing the integrity and consistency of queries used within the
 <section id="usage">
 <h2>Usage<a class="headerlink" href="#usage" title="Link to this heading"></a></h2>
 <p>Example 1: Loading a Query from a File</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">query</span> <span class="kn">import</span> <span class="n">Query</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">ontouml_models_lib</span> <span class="kn">import</span> <span class="n">Query</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">query</span> <span class="o">=</span> <span class="n">Query</span><span class="p">(</span><span class="s1">&#39;/path/to/query.sparql&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">query</span><span class="o">.</span><span class="n">query_content</span><span class="p">)</span>
 <span class="go"># Output: &quot;SELECT ?s WHERE { ?s ?p ?o }&quot;</span>
 </pre></div>
 </div>
 <p>Example 2: Computing the Hash of a Query</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">query</span> <span class="kn">import</span> <span class="n">Query</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">ontouml_models_lib</span> <span class="kn">import</span> <span class="n">Query</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">query</span> <span class="o">=</span> <span class="n">Query</span><span class="p">(</span><span class="s1">&#39;/path/to/query.sparql&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">query</span><span class="o">.</span><span class="n">hash</span><span class="p">)</span>
 <span class="go"># Output: 12345678901234567890 (example hash value)</span>
@@ -174,7 +174,7 @@ ontology models.</p>
 </dd>
 </dl>
 <p>Example usage:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">query</span> <span class="kn">import</span> <span class="n">Query</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">ontouml_models_lib</span> <span class="kn">import</span> <span class="n">Query</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">query</span> <span class="o">=</span> <span class="n">Query</span><span class="p">(</span><span class="s1">&#39;/path/to/query.sparql&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">query</span><span class="o">.</span><span class="n">query_content</span><span class="p">)</span>
 <span class="go"># Output: &quot;SELECT ?s WHERE { ?s ?p ?o }&quot;</span>
@@ -220,13 +220,24 @@ ontology models.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="ontouml_models_lib.query.Query._read_query_file">
 <em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">_read_query_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">query_file</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ontouml_models_lib.query.Query._read_query_file" title="Link to this definition"></a></dt>
-<dd><p>Read the content of the query_content file.</p>
+<dd><p>Read the content of a SPARQL query file.</p>
+<p>This method opens a SPARQL query file, reads its content, and returns it as a string. The file is read using
+UTF-8 encoding to ensure compatibility with a wide range of characters.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>query_file</strong> (<em>pathlib.Path</em>)</p>
+<dd class="field-odd"><p><strong>query_file</strong> (<em>Path</em>) – The path to the SPARQL query file.</p>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>str</p>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The content of the SPARQL query file as a string.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>FileNotFoundError</strong> – If the specified query file does not exist.</p></li>
+<li><p><strong>OSError</strong> – If an error occurs while reading the query file.</p></li>
+</ul>
 </dd>
 </dl>
 </dd></dl>
@@ -234,13 +245,15 @@ ontology models.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="ontouml_models_lib.query.Query._compute_persistent_hash">
 <em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">_compute_persistent_hash</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">content</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ontouml_models_lib.query.Query._compute_persistent_hash" title="Link to this definition"></a></dt>
-<dd><p>Compute a persistent hash for the query_content content.</p>
+<dd><p>Compute a persistent hash value for the content of a SPARQL query.</p>
+<p>This method generates a SHA-256 hash from the content of a SPARQL query string. The hash is computed in a way
+that ensures consistency across executions, facilitating the identification and management of query results.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>content</strong> (<em>str</em>) – The query_content content to be hashed.</p>
+<dd class="field-odd"><p><strong>content</strong> (<em>str</em>) – The content of the SPARQL query to be hashed.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Consistent model_graph_hash value of the content.</p>
+<dd class="field-even"><p>The computed hash value for the query content.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>int</p>

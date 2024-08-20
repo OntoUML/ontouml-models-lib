@@ -97,8 +97,8 @@ Module Contents
 
       Example usage:
 
-          >>> from model import Model
-          >>> from query import Query
+          >>> from ontouml_models_lib import Model
+          >>> from ontouml_models_lib import Query
           >>> model = Model('/path/to/ontology_model_folder')
           >>> query = Query('/path/to/query.sparql')
           >>> results = model.execute_query(query, '/path/to/results')
@@ -123,8 +123,8 @@ Module Contents
 
       Example usage:
 
-          >>> from model import Model
-          >>> from query import Query
+          >>> from ontouml_models_lib import Model
+          >>> from ontouml_models_lib import Query
           >>> model = Model('/path/to/ontology_model_folder')
           >>> queries = [Query('/path/to/query1.sparql'), Query('/path/to/query2.sparql')]
           >>> model.execute_queries(queries, '/path/to/results')
@@ -133,31 +133,75 @@ Module Contents
 
    .. py:method:: _compute_hash()
 
-      Compute a model_graph_hash for the QueryableElement.
+      Compute a hash value for the QueryableElement.
+
+      This method generates a hash value based on the element's unique identifier (`id`). The computed hash serves
+      as a persistent identifier for the RDF graph associated with the element, ensuring consistency and integrity
+      across operations involving the element.
+
+      :return: The computed hash value for the QueryableElement.
+      :rtype: int
 
 
 
    .. py:method:: _compute_query_hash(query)
 
-      Compute a consistent model_graph_hash for the query_content content.
+      Compute a consistent hash value for a SPARQL query.
+
+      This method generates a SHA-256 hash for the given SPARQL query string. The resulting hash is used to ensure
+      that identical queries produce the same hash value, facilitating the management of query results and avoiding
+      redundant executions.
+
+      :param query: The SPARQL query string to be hashed.
+      :type query: str
+      :return: The computed hash value for the query.
+      :rtype: int
 
 
 
    .. py:method:: _hash_exists(query_hash, results_path)
 
-      Check if the model_graph_hash combination already exists in the .hashes.csv file.
+      Check if a query's hash value already exists in the results directory.
+
+      This method verifies whether a hash value for a given SPARQL query has been previously computed and stored in
+      the `.hashes.csv` file within the specified results directory. This prevents redundant executions of the same
+      query on the same RDF graph.
+
+      :param query_hash: The hash value of the SPARQL query to be checked.
+      :type query_hash: int
+      :param results_path: The path to the directory where query results and hash records are stored.
+      :type results_path: Path
+      :return: True if the query's hash value exists in the results directory; False otherwise.
+      :rtype: bool
 
 
 
-   .. py:method:: _save_results(query_name, results, results_path)
+   .. py:method:: _save_results(results, result_file)
 
-      Save the query_content results to a CSV file.
+      Save the results of a SPARQL query to a CSV file.
+
+      This method writes the results of a SPARQL query to a CSV file in the specified file.
+      If no results are present, an empty file is created.
+
+      :param results: A list of dicts containing the query results, where each dictionary represents a result row.
+      :type results: list[dict]
+      :param results_path: The path to the file to which the results will be saved.
+      :type results_path: Path
 
 
 
    .. py:method:: _save_hash_file(query_hash, results_path)
 
-      Save the model_graph_hash of the query_content and the model to a single .hashes.csv file.
+      Save the hash value of a SPARQL query and the associated RDF graph to a file.
+
+      This method records the hash values of a SPARQL query and the corresponding RDF graph in the `.hashes.csv` file
+      within the specified directory. This ensures that the combination of the query and graph can be identified
+      in future operations, preventing redundant executions.
+
+      :param query_hash: The hash value of the SPARQL query being executed.
+      :type query_hash: int
+      :param results_path: The path to the directory where the hash record will be saved.
+      :type results_path: Path
 
 
 

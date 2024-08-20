@@ -119,7 +119,10 @@ class QueryableElement(ABC):
 
         # Check if the model_graph_hash combination already exists
         if self._hash_exists(query_hash, results_path):
-            logger.info(f"Skipping execution of query {query.query_file_path.name} on {self.id}. Results already available at {result_file}.")
+            logger.info(
+                f"Skipping execution of query {query.query_file_path.name} on {self.id}. "
+                f"Results already available at {result_file}."
+            )
             return []
 
         # Execute the query_content on the model_graph
@@ -142,8 +145,10 @@ class QueryableElement(ABC):
             # Save the results and the model_graph_hash
             self._save_results(result_list, result_file)
             self._save_hash_file(query_hash, results_path)
-            logger.success(f"Query {query.query_file_path.name} successfully executed on {self.id}. "
-                           f"Results written to {result_file}")
+            logger.success(
+                f"Query {query.query_file_path.name} successfully executed on {self.id}. "
+                f"Results written to {result_file}"
+            )
 
         except Exception:
             logger.exception(f"Query {query.query_file_path.name} execution failed on {self.id}.")
@@ -250,7 +255,7 @@ class QueryableElement(ABC):
         This method writes the results of a SPARQL query to a CSV file in the specified file.
         If no results are present, an empty file is created.
 
-        :param results: A list of dictionaries containing the query results, where each dictionary represents a result row.
+        :param results: A list of dicts containing the query results, where each dictionary represents a result row.
         :type results: list[dict]
         :param results_path: The path to the file to which the results will be saved.
         :type results_path: Path

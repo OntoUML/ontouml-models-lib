@@ -26,16 +26,16 @@ ontouml_models_lib
 
    Public Classes
    --------------
-   - class `Catalog`: Manages a collection of ontology models, enabling queries across multiple models within the catalog.
-   - class `Query`: Encapsulates SPARQL queries, providing methods for loading, hashing, and executing queries.
-   - class `Model`: Represents an individual ontology model, allowing for querying and metadata management.
+       - **Catalog**: Manages a collection of ontology models, enabling queries across multiple models within the catalog.
+       - **Query**: Encapsulates SPARQL queries, providing methods for loading, hashing, and executing queries.
+       - **Model**: Represents an individual ontology model, allowing for querying and metadata management.
 
    Public Enumerations
    -------------------
-   - class `OntologyPurpose`: Enumerates the standardized purposes for which an ontology model may be designed.
-   - class `OntologyDevelopmentContext`: Enumerates the possible development contexts for an ontology model.
-   - class `OntologyRepresentationStyle`: Enumerates the representation styles adopted in an ontology model.
-   - class `OntologyType`: Enumerates the categories of ontologies according to their scope.
+   - **OntologyPurpose**: Enumerates the standardized purposes for which an ontology model may be designed.
+   - **OntologyDevelopmentContext**: Enumerates the possible development contexts for an ontology model.
+   - **OntologyRepresentationStyle**: Enumerates the representation styles adopted in an ontology model.
+   - **OntologyType**: Enumerates the categories of ontologies according to their scope.
 
    Intended Use
    ------------
@@ -117,8 +117,8 @@ Package Contents
    --------
    Basic usage example of the `Catalog` class:
 
-       >>> from catalog import Catalog
-       >>> from query import Query
+       >>> from ontouml_models_lib import Catalog
+       >>> from ontouml_models_lib import Query
 
        >>> # Initialize the catalog with the path to the directory
        >>> catalog = Catalog('/path/to/catalog')
@@ -179,8 +179,8 @@ Package Contents
 
       Example usage:
 
-      >>> from catalog import Catalog
-      >>> from query import Query
+      >>> from ontouml_models_lib import Catalog
+      >>> from ontouml_models_lib import Query
       >>> catalog = Catalog('/path/to/catalog')
       >>> query = Query('./queries/query.sparql')  # Load a SPARQL query from a file
       >>> model = catalog.get_model('some_model_id')  # Retrieve a model by its ID
@@ -206,8 +206,8 @@ Package Contents
 
       Example usage:
 
-      >>> from catalog import Catalog
-      >>> from query import Query
+      >>> from ontouml_models_lib import Catalog
+      >>> from ontouml_models_lib import Query
       >>> catalog = Catalog('/path/to/catalog')
       >>> query = Query('./queries/query.sparql')  # Load a SPARQL query from a file
       >>> catalog.execute_query_on_all_models(query)  # Execute the query on all models
@@ -234,8 +234,8 @@ Package Contents
 
       Example usage:
 
-      >>> from catalog import Catalog
-      >>> from query import Query
+      >>> from ontouml_models_lib import Catalog
+      >>> from ontouml_models_lib import Query
       >>> catalog = Catalog('/path/to/catalog')
       >>> model = catalog.get_model('some_model_id')  # Retrieve a model by its ID
       >>> queries = Query.load_queries('./queries')  # Load multiple SPARQL queries from a directory
@@ -264,8 +264,8 @@ Package Contents
 
       Example usage:
 
-      >>> from catalog import Catalog
-      >>> from query import Query
+      >>> from ontouml_models_lib import Catalog
+      >>> from ontouml_models_lib import Query
       >>> catalog = Catalog('/path/to/catalog')
       >>> models = catalog.get_models(language="en")  # Filter models by language
       >>> queries = Query.load_queries('./queries')  # Load multiple SPARQL queries from a directory
@@ -292,8 +292,8 @@ Package Contents
 
       Example usage:
 
-      >>> from catalog import Catalog
-      >>> from query import Query
+      >>> from ontouml_models_lib import Catalog
+      >>> from ontouml_models_lib import Query
       >>> catalog = Catalog('/path/to/catalog')
       >>> queries = Query.load_queries('./queries')  # Load multiple SPARQL queries from a directory
       >>> catalog.execute_queries_on_all_models(queries)  # Execute the queries on all models
@@ -315,7 +315,7 @@ Package Contents
 
       Example usage:
 
-      >>> from catalog import Catalog
+      >>> from ontouml_models_lib import Catalog
       >>> catalog = Catalog('/path/to/catalog')
       >>> model = catalog.get_model('some_model_id')  # Retrieve a model by its unique ID
 
@@ -339,7 +339,7 @@ Package Contents
 
       Example usage:
 
-      >>> from catalog import Catalog
+      >>> from ontouml_models_lib import Catalog
       >>> catalog = Catalog('/path/to/catalog')
       >>> # Filter models by a single attribute (language)
       >>> filtered_models = catalog.get_models(language="en")
@@ -363,7 +363,7 @@ Package Contents
 
       Example usage:
 
-      >>> from catalog import Catalog
+      >>> from ontouml_models_lib import Catalog
       >>> catalog = Catalog('/path/to/catalog')
       >>> catalog.remove_model_by_id('some_model_id')  # Remove a model by its unique ID
 
@@ -371,60 +371,92 @@ Package Contents
 
    .. py:method:: _load_models()
 
-      Load all ontology models from the specified directory.
+      Load all ontology models from the catalog directory.
 
-      This method is called internally by the initializer to scan the catalog directory for subfolders, each
-      representing an ontology model. It loads the models from these subfolders and initializes them as instances of
-      the `Model` class. The loaded models are stored in the `models` attribute.
+      This method scans the catalog directory for subfolders, each representing an ontology model. It loads the models
+      from these subfolders and initializes them as instances of the `Model` class. The loaded models are stored in
+      the `models` attribute of the `Catalog` instance.
 
-      :raises FileNotFoundError: If the catalog path does not contain any model subfolders.
+      :raises FileNotFoundError: If the catalog directory does not contain any model subfolders.
 
 
 
    .. py:method:: _get_subfolders()
 
-      Get the names of all subfolders in the catalog catalog_path.
+      Retrieve the names of all subfolders in the catalog directory.
+
+      This method identifies all subfolders within the catalog's `path_models` directory, which represent individual
+      ontology models. The subfolders are expected to have the necessary ontology and metadata files for each model.
+
+      :return: A list of subfolder names within the catalog directory.
+      :rtype: list
 
 
 
    .. py:method:: _create_catalog_graph()
 
-      Create a single RDFLib model_graph by merging all graphs from the models.
+      Create a merged RDFLib graph from all loaded models in the catalog.
+
+      This method combines the RDF graphs of all loaded models into a single RDFLib `Graph` object. The merged graph
+      allows for executing SPARQL queries across the entire catalog, enabling comprehensive queries that span multiple
+      models.
+
+      :return: A merged RDFLib graph containing all triples from the models in the catalog.
+      :rtype: Graph
 
 
 
    .. py:method:: _generate_compiled_results(results, compiled_file_path)
 
-      Generate a compiled CSV file from results of all models.
+      Generate a compiled CSV file from the results of all models.
+
+      This method compiles the results of SPARQL queries executed across multiple models into a single CSV file.
+      The compiled file is saved at the specified `compiled_file_path`. The method ensures that the results are
+      formatted as a tabular dataset, with the `model_id` column appearing first.
+
+      :param results: A list of dictionaries containing the results from multiple models.
+      :type results: list[dict]
+      :param compiled_file_path: The path where the compiled CSV file will be saved.
+      :type compiled_file_path: Path
 
 
 
    .. py:method:: _match_model(model, filters, operand)
 
-      Check if a model matches the given attribute restrictions.
+      Check if a model matches the specified attribute filters.
 
-      :param model: The model to check.
+      This method evaluates whether a model meets the attribute restrictions defined in the `filters` dictionary.
+      It supports combining multiple filters using logical operations ("and" or "or"), and returns a boolean
+      indicating whether the model satisfies the filter conditions.
+
+      :param model: The model to be checked against the filters.
       :type model: Model
-      :param filters: Attribute restrictions to filter models.
-      :type filters: dict
-      :param operand: Logical operand for combining filters ("and" or "or").
+      :param filters: A dictionary of attribute restrictions used to filter models. Attribute names and values are
+                      passed as keyword arguments.
+      :type filters: dict[str, Any]
+      :param operand: Logical operand for combining filters ("and" or "or"). Defaults to "and".
       :type operand: str
-      :return: True if the model matches the restrictions, False otherwise.
+      :return: True if the model matches the filter conditions; False otherwise.
       :rtype: bool
+      :raises ValueError: If an invalid operand is provided (not "and" or "or").
 
 
 
    .. py:method:: _match_single_filter(model, attr, value)
 
-      Check if a model matches a single attribute restriction.
+      Check if a model matches a single attribute filter.
 
-      :param model: The model to check.
+      This method evaluates whether a model meets a single attribute restriction. It compares the model's attribute
+      value to the provided filter value and returns a boolean indicating whether there is a match. It handles both
+      single-value and list-value comparisons.
+
+      :param model: The model to be checked against the filter.
       :type model: Model
-      :param attr: The attribute name to filter by.
+      :param attr: The name of the attribute to filter by.
       :type attr: str
-      :param value: The attribute value or list of values to filter by.
+      :param value: The expected value or list of values to filter by.
       :type value: Any
-      :return: True if the model matches the restriction, False otherwise.
+      :return: True if the model's attribute matches the filter; False otherwise.
       :rtype: bool
 
 
@@ -447,7 +479,7 @@ Package Contents
 
    Example usage:
 
-       >>> from query import Query
+       >>> from ontouml_models_lib import Query
        >>> query = Query('/path/to/query.sparql')
        >>> print(query.query_content)
        # Output: "SELECT ?s WHERE { ?s ?p ?o }"
@@ -485,7 +517,17 @@ Package Contents
       :staticmethod:
 
 
-      Read the content of the query_content file.
+      Read the content of a SPARQL query file.
+
+      This method opens a SPARQL query file, reads its content, and returns it as a string. The file is read using
+      UTF-8 encoding to ensure compatibility with a wide range of characters.
+
+      :param query_file: The path to the SPARQL query file.
+      :type query_file: Path
+      :return: The content of the SPARQL query file as a string.
+      :rtype: str
+      :raises FileNotFoundError: If the specified query file does not exist.
+      :raises OSError: If an error occurs while reading the query file.
 
 
 
@@ -493,11 +535,14 @@ Package Contents
       :staticmethod:
 
 
-      Compute a persistent hash for the query_content content.
+      Compute a persistent hash value for the content of a SPARQL query.
 
-      :param content: The query_content content to be hashed.
+      This method generates a SHA-256 hash from the content of a SPARQL query string. The hash is computed in a way
+      that ensures consistency across executions, facilitating the identification and management of query results.
+
+      :param content: The content of the SPARQL query to be hashed.
       :type content: str
-      :return: Consistent model_graph_hash value of the content.
+      :return: The computed hash value for the query content.
       :rtype: int
 
 
@@ -548,7 +593,7 @@ Package Contents
 
    Example usage:
 
-       >>> from model import Model
+       >>> from ontouml_models_lib import Model
        >>> model = Model('/path/to/ontology_model_folder')
        >>> print(model.title)
        # Output: "Example Ontology Title"
@@ -631,32 +676,47 @@ Package Contents
 
    .. py:method:: _compute_consistent_hash(graph)
 
-      Compute a consistent model_graph_hash for an RDFLib model_graph.
+      Compute a consistent hash value for an RDFLib graph.
 
-      :param graph: RDFLib model_graph to be hashed.
+      This method generates a SHA-256 hash for an RDFLib graph by first serializing it to a canonical format
+      (N-Triples), sorting the serialized triples, and then encoding the sorted serialization to UTF-8. The
+      resulting hash value is used to ensure consistency and integrity of the graph's content.
+
+      :param graph: The RDFLib graph to be hashed.
       :type graph: Graph
-      :return: Consistent model_graph_hash value of the model_graph.
+      :return: The computed hash value for the RDFLib graph.
       :rtype: int
 
 
 
    .. py:method:: _load_graph_safely(ontology_file)
 
-      Safely load graph from file (e.g., ttl) to working memory.
+      Safely load an RDFLib graph from a file.
 
-      :param ontology_file: Path to the ontology file to be loaded into the working memory.
-      :type ontology_file: str
-      :return: RDFLib model_graph loaded as object.
+      This method loads an RDFLib graph from a specified ontology file, ensuring that the file exists and is correctly
+      parsed. It determines the file format based on its extension and returns the loaded graph.
+
+      :param ontology_file: The path to the ontology file to be loaded.
+      :type ontology_file: Path
+      :return: The loaded RDFLib graph.
       :rtype: Graph
+      :raises FileNotFoundError: If the ontology file does not exist.
+      :raises OSError: If an error occurs during the parsing of the ontology file.
 
 
 
    .. py:method:: _populate_attributes(yaml_file)
 
-      Populate the attributes of the model from a YAML file.
+      Populate the model's attributes from a YAML metadata file.
 
-      :param yaml_file: Path to the YAML file containing the metadata.
+      This method reads a YAML file containing metadata and assigns the corresponding values to the model's attrs.
+      It handles enumerations by matching the string values in the YAML file to the appropriate enumeration members.
+      The method supports both single-value and list-value attributes.
+
+      :param yaml_file: The path to the YAML file containing the metadata.
       :type yaml_file: Path
+      :raises FileNotFoundError: If the YAML metadata file does not exist.
+      :raises ValueError: If an invalid value is encountered for an enumeration attribute.
 
 
 

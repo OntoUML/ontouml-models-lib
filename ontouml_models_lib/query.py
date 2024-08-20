@@ -143,8 +143,8 @@ class Query:
         """
         Compute a persistent hash value for the content of a SPARQL query.
 
-        This method generates a SHA-256 hash from the content of a SPARQL query string. The hash is computed in a way that
-        ensures consistency across executions, facilitating the identification and management of query results.
+        This method generates a SHA-256 hash from the content of a SPARQL query string. The hash is computed in a way
+        that ensures consistency across executions, facilitating the identification and management of query results.
 
         :param content: The content of the SPARQL query to be hashed.
         :type content: str

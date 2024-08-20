@@ -187,9 +187,9 @@ class Model(QueryableElement):
         """
         Compute a consistent hash value for an RDFLib graph.
 
-        This method generates a SHA-256 hash for an RDFLib graph by first serializing it to a canonical format (N-Triples),
-        sorting the serialized triples, and then encoding the sorted serialization to UTF-8. The resulting hash value is
-        used to ensure consistency and integrity of the graph's content.
+        This method generates a SHA-256 hash for an RDFLib graph by first serializing it to a canonical format
+        (N-Triples), sorting the serialized triples, and then encoding the sorted serialization to UTF-8. The
+        resulting hash value is used to ensure consistency and integrity of the graph's content.
 
         :param graph: The RDFLib graph to be hashed.
         :type graph: Graph
@@ -242,7 +242,7 @@ class Model(QueryableElement):
         """
         Populate the model's attributes from a YAML metadata file.
 
-        This method reads a YAML file containing metadata and assigns the corresponding values to the model's attributes.
+        This method reads a YAML file containing metadata and assigns the corresponding values to the model's attrs.
         It handles enumerations by matching the string values in the YAML file to the appropriate enumeration members.
         The method supports both single-value and list-value attributes.
 

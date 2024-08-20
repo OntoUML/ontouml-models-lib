@@ -449,7 +449,7 @@ class Catalog(QueryableElement):
         Retrieve the names of all subfolders in the catalog directory.
 
         This method identifies all subfolders within the catalog's `path_models` directory, which represent individual
-        ontology models. The subfolders are expected to contain the necessary ontology and metadata files for each model.
+        ontology models. The subfolders are expected to have the necessary ontology and metadata files for each model.
 
         :return: A list of subfolder names within the catalog directory.
         :rtype: list
@@ -498,13 +498,13 @@ class Catalog(QueryableElement):
         Check if a model matches the specified attribute filters.
 
         This method evaluates whether a model meets the attribute restrictions defined in the `filters` dictionary.
-        It supports combining multiple filters using logical operations ("and" or "or"), and returns a boolean indicating
-        whether the model satisfies the filter conditions.
+        It supports combining multiple filters using logical operations ("and" or "or"), and returns a boolean
+        indicating whether the model satisfies the filter conditions.
 
         :param model: The model to be checked against the filters.
         :type model: Model
-        :param filters: A dictionary of attribute restrictions used to filter models. Attribute names and values are passed
-                        as keyword arguments.
+        :param filters: A dictionary of attribute restrictions used to filter models. Attribute names and values are
+                        passed as keyword arguments.
         :type filters: dict[str, Any]
         :param operand: Logical operand for combining filters ("and" or "or"). Defaults to "and".
         :type operand: str

@@ -41,7 +41,7 @@
               <img src="../../../_static/ontouml-models-lib-logo.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                1.0.0b1
+                1.0.0b2
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -118,7 +118,7 @@ accompanied by metadata in YAML format.</p>
 <section id="usage">
 <h2>Usage<a class="headerlink" href="#usage" title="Link to this heading"></a></h2>
 <p>Example 1: Loading a Model and Accessing Metadata</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">model</span> <span class="kn">import</span> <span class="n">Model</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">ontouml_models_lib</span> <span class="kn">import</span> <span class="n">Model</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">model</span> <span class="o">=</span> <span class="n">Model</span><span class="p">(</span><span class="s1">&#39;/path/to/ontology_model_folder&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">title</span><span class="p">)</span>
 <span class="go"># Output: &quot;Example Ontology Title&quot;</span>
@@ -127,8 +127,8 @@ accompanied by metadata in YAML format.</p>
 </pre></div>
 </div>
 <p>Example 2: Executing a Query on the Model</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">model</span> <span class="kn">import</span> <span class="n">Model</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">query</span> <span class="kn">import</span> <span class="n">Query</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">ontouml_models_lib</span> <span class="kn">import</span> <span class="n">Model</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">ontouml_models_lib</span> <span class="kn">import</span> <span class="n">Query</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">model</span> <span class="o">=</span> <span class="n">Model</span><span class="p">(</span><span class="s1">&#39;/path/to/ontology_model_folder&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">query</span> <span class="o">=</span> <span class="n">Query</span><span class="p">(</span><span class="s1">&#39;/path/to/query.sparql&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">results</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">execute_query</span><span class="p">(</span><span class="n">query</span><span class="p">,</span> <span class="s1">&#39;/path/to/results&#39;</span><span class="p">)</span>
@@ -202,7 +202,7 @@ Library of Congress Classification (LCC).</p></li>
 </dd>
 </dl>
 <p>Example usage:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">model</span> <span class="kn">import</span> <span class="n">Model</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">ontouml_models_lib</span> <span class="kn">import</span> <span class="n">Model</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">model</span> <span class="o">=</span> <span class="n">Model</span><span class="p">(</span><span class="s1">&#39;/path/to/ontology_model_folder&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">title</span><span class="p">)</span>
 <span class="go"># Output: &quot;Example Ontology Title&quot;</span>
@@ -283,13 +283,16 @@ Library of Congress Classification (LCC).</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="ontouml_models_lib.model.Model._compute_consistent_hash">
 <span class="sig-name descname"><span class="pre">_compute_consistent_hash</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">graph</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ontouml_models_lib.model.Model._compute_consistent_hash" title="Link to this definition"></a></dt>
-<dd><p>Compute a consistent model_graph_hash for an RDFLib model_graph.</p>
+<dd><p>Compute a consistent hash value for an RDFLib graph.</p>
+<p>This method generates a SHA-256 hash for an RDFLib graph by first serializing it to a canonical format
+(N-Triples), sorting the serialized triples, and then encoding the sorted serialization to UTF-8. The
+resulting hash value is used to ensure consistency and integrity of the graph’s content.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>graph</strong> (<em>Graph</em>) – RDFLib model_graph to be hashed.</p>
+<dd class="field-odd"><p><strong>graph</strong> (<em>Graph</em>) – The RDFLib graph to be hashed.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>Consistent model_graph_hash value of the model_graph.</p>
+<dd class="field-even"><p>The computed hash value for the RDFLib graph.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>int</p>
@@ -300,16 +303,24 @@ Library of Congress Classification (LCC).</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="ontouml_models_lib.model.Model._load_graph_safely">
 <span class="sig-name descname"><span class="pre">_load_graph_safely</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ontology_file</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ontouml_models_lib.model.Model._load_graph_safely" title="Link to this definition"></a></dt>
-<dd><p>Safely load graph from file (e.g., ttl) to working memory.</p>
+<dd><p>Safely load an RDFLib graph from a file.</p>
+<p>This method loads an RDFLib graph from a specified ontology file, ensuring that the file exists and is correctly
+parsed. It determines the file format based on its extension and returns the loaded graph.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>ontology_file</strong> (<em>str</em>) – Path to the ontology file to be loaded into the working memory.</p>
+<dd class="field-odd"><p><strong>ontology_file</strong> (<em>Path</em>) – The path to the ontology file to be loaded.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>RDFLib model_graph loaded as object.</p>
+<dd class="field-even"><p>The loaded RDFLib graph.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Graph</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>FileNotFoundError</strong> – If the ontology file does not exist.</p></li>
+<li><p><strong>OSError</strong> – If an error occurs during the parsing of the ontology file.</p></li>
+</ul>
 </dd>
 </dl>
 </dd></dl>
@@ -317,13 +328,22 @@ Library of Congress Classification (LCC).</p></li>
 <dl class="py method">
 <dt class="sig sig-object py" id="ontouml_models_lib.model.Model._populate_attributes">
 <span class="sig-name descname"><span class="pre">_populate_attributes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">yaml_file</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ontouml_models_lib.model.Model._populate_attributes" title="Link to this definition"></a></dt>
-<dd><p>Populate the attributes of the model from a YAML file.</p>
+<dd><p>Populate the model’s attributes from a YAML metadata file.</p>
+<p>This method reads a YAML file containing metadata and assigns the corresponding values to the model’s attrs.
+It handles enumerations by matching the string values in the YAML file to the appropriate enumeration members.
+The method supports both single-value and list-value attributes.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>yaml_file</strong> (<em>Path</em>) – Path to the YAML file containing the metadata.</p>
+<dd class="field-odd"><p><strong>yaml_file</strong> (<em>Path</em>) – The path to the YAML file containing the metadata.</p>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>None</p>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>FileNotFoundError</strong> – If the YAML metadata file does not exist.</p></li>
+<li><p><strong>ValueError</strong> – If an invalid value is encountered for an enumeration attribute.</p></li>
+</ul>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
 </dd>
 </dl>
 </dd></dl>
