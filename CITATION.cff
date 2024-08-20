@@ -18,10 +18,5 @@ url: 'https://ontouml.github.io/ontouml-models-lib/'
 repository-artifact: 'https://pypi.org/project/ontouml-models-lib/'
 abstract: A Python library for accessing and managing OntoUML models from the OntoUML/UFO Catalog,
 designed to simplify software development by providing easy-to-use functions.
-keywords:
-- ontouml
-- ontouml-models
-- ontology
-- ontology-engineering
-- catalog
+keywords: ["ontouml", "ontouml-models", "ontology", "ontology-engineering", "catalog"]
 license: Apache-2.0
