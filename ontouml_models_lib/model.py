@@ -174,7 +174,7 @@ class Model(QueryableElement):
             # Populate attributes from the YAML file
             self._populate_attributes(path_metadata_yaml)
 
-            logger.info(f"Successfully loaded model from folder: {model_path.name}")
+            logger.success(f"Successfully loaded model from folder: {model_path.name}")
 
         except Exception as e:
             raise RuntimeError(f"Failed to load model from folder: {model_path.name}") from e

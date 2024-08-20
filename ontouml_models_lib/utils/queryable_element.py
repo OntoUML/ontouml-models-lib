@@ -111,24 +111,20 @@ class QueryableElement(ABC):
         results_path = Path(results_path or "./results")
         results_path.mkdir(exist_ok=True)
 
+        # The file is named based on the query name and the unique identifier of the QueryableElement.
+        result_file = results_path / f"{query.query_file_path.stem}_result_{self.id}.csv"
+
         # Compute the model_graph_hash for the query_content
         query_hash = self._compute_query_hash(query.query_content)
 
         # Check if the model_graph_hash combination already exists
         if self._hash_exists(query_hash, results_path):
-            logger.info(
-                f"Skipping execution of query with pair model_graph_hash/query_hash: "
-                f"{query_hash}/{self.model_graph_hash}."
-            )
+            logger.info(f"Skipping execution of query {query.query_file_path.name} on {self.id}. Results already available at {result_file}.")
             return []
-
-        # Log the query_content
-        logger.info(f"Executing query_content: {query.query_file_path}")
 
         # Execute the query_content on the model_graph
         try:
             results = self.model_graph.query(query.query_content)
-            logger.info(f"Query results: {results}")
 
             # Prepare results as a list of dictionaries
             result_list = []
@@ -144,11 +140,13 @@ class QueryableElement(ABC):
                 result_list.append(result_dict)
 
             # Save the results and the model_graph_hash
-            self._save_results(query.query_file_path.stem, result_list, results_path)
+            self._save_results(result_list, result_file)
             self._save_hash_file(query_hash, results_path)
+            logger.success(f"Query {query.query_file_path.name} successfully executed on {self.id}. "
+                           f"Results written to {result_file}")
 
         except Exception:
-            logger.exception("Query execution failed.")
+            logger.exception(f"Query {query.query_file_path.name} execution failed on {self.id}.")
             return []
 
         else:
@@ -245,22 +243,18 @@ class QueryableElement(ABC):
 
         return False
 
-    def _save_results(self, query_name: str, results: list[dict], results_path: Path):
+    def _save_results(self, results: list[dict], result_file: Path):
         """
         Save the results of a SPARQL query to a CSV file.
 
-        This method writes the results of a SPARQL query to a CSV file in the specified directory. The file is named
-        based on the query name and the unique identifier of the QueryableElement. If no results are present, an empty
-        file is created.
+        This method writes the results of a SPARQL query to a CSV file in the specified file.
+        If no results are present, an empty file is created.
 
-        :param query_name: The name of the SPARQL query used to generate the results.
-        :type query_name: str
         :param results: A list of dictionaries containing the query results, where each dictionary represents a result row.
         :type results: list[dict]
-        :param results_path: The path to the directory where the results file will be saved.
+        :param results_path: The path to the file to which the results will be saved.
         :type results_path: Path
         """
-        result_file = results_path / f"{query_name}_result_{self.id}.csv"
         with open(result_file, "w", newline="", encoding="utf-8") as file:
             if results:
                 header = results[0].keys()
@@ -269,8 +263,6 @@ class QueryableElement(ABC):
                 writer.writerows(results)
             else:
                 file.write("")  # Create an empty file if there are no results
-
-        logger.info(f"Results written to {result_file}")
 
     def _save_hash_file(self, query_hash: int, results_path: Path):
         """
@@ -297,5 +289,3 @@ class QueryableElement(ABC):
             with open(hashes_file, "a", newline="", encoding="utf-8") as file:
                 writer = csv.DictWriter(file, fieldnames=row.keys())
                 writer.writerow(row)
-
-        logger.info(f"Hash written to {hashes_file}")

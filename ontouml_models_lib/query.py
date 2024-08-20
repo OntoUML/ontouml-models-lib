@@ -113,7 +113,7 @@ class Query:
         if not queries_path.is_dir():
             raise FileNotFoundError(f"Directory {queries_path} not found.")
 
-        query_files = [file for file in queries_path.iterdir() if file.is_file() and file.suffix == ".txt"]
+        query_files = [file for file in queries_path.iterdir() if file.is_file()]
         return [Query(query_file) for query_file in query_files]
 
     # ---------------------------------------------

@@ -1,0 +1,9 @@
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX ontouml: <https://w3id.org/ontouml#>
+
+SELECT ?relation ?source ?target
+WHERE {
+  ?relation rdf:type ontouml:Relation .
+  ?relation ontouml:sourceEnd ?source .
+  ?relation ontouml:targetEnd ?target .
+}

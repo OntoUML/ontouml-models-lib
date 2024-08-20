@@ -1,0 +1,8 @@
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX ontouml: <https://w3id.org/ontouml#>
+
+SELECT ?class_name
+WHERE {
+  ?class rdf:type ontouml:Class .
+  ?class ontouml:name ?class_name
+}
