@@ -13,7 +13,7 @@ def ontouml_models_path() -> Path:
 
 def test_get_subfolders_populated_directory(ontouml_models_path: Path) -> None:
     """Test that _get_subfolders returns all subdirectories in a populated models directory."""
-    with patch.object(Catalog, '_load_models', return_value=None):
+    with patch.object(Catalog, "_load_models", return_value=None):
         catalog = Catalog(ontouml_models_path)
         subfolders = catalog._get_subfolders()
 
@@ -26,7 +26,7 @@ def test_get_subfolders_ignores_files(ontouml_models_path: Path) -> None:
     file_path = ontouml_models_path / "models/file.txt"
     file_path.write_text("This is a test file and should be ignored.")
 
-    with patch.object(Catalog, '_load_models', return_value=None):
+    with patch.object(Catalog, "_load_models", return_value=None):
         catalog = Catalog(ontouml_models_path)
         subfolders = catalog._get_subfolders()
 
@@ -44,7 +44,7 @@ def test_get_subfolders_empty_directory(ontouml_models_path: Path) -> None:
     models_path.mkdir()  # Create an empty models directory
 
     try:
-        with patch.object(Catalog, '_load_models', return_value=None):
+        with patch.object(Catalog, "_load_models", return_value=None):
             catalog = Catalog(ontouml_models_path)
             subfolders = catalog._get_subfolders()
             assert subfolders == [], "Expected an empty list when the models directory is empty."
@@ -53,14 +53,12 @@ def test_get_subfolders_empty_directory(ontouml_models_path: Path) -> None:
         temp_path.rename(models_path)
 
 
-
-
 def test_get_subfolders_ignores_nested_directories(ontouml_models_path: Path) -> None:
     """Test that _get_subfolders ignores nested directories and only returns top-level directory names."""
     nested_dir_path = ontouml_models_path / "models/model1/nested_model"
     nested_dir_path.mkdir(parents=True, exist_ok=True)
 
-    with patch.object(Catalog, '_load_models', return_value=None):
+    with patch.object(Catalog, "_load_models", return_value=None):
         catalog = Catalog(ontouml_models_path)
         subfolders = catalog._get_subfolders()
 
@@ -75,11 +73,13 @@ def test_get_subfolders_handles_special_characters(ontouml_models_path: Path) ->
     special_dir_path = ontouml_models_path / "models/special_#@!_model"
     special_dir_path.mkdir(parents=True, exist_ok=True)
 
-    with patch.object(Catalog, '_load_models', return_value=None):
+    with patch.object(Catalog, "_load_models", return_value=None):
         catalog = Catalog(ontouml_models_path)
         subfolders = catalog._get_subfolders()
 
-    assert "special_#@!_model" in subfolders, "Expected the method to correctly handle special characters in directory names."
+    assert (
+        "special_#@!_model" in subfolders
+    ), "Expected the method to correctly handle special characters in directory names."
 
     # Clean up the special directory after the test
     shutil.rmtree(special_dir_path)

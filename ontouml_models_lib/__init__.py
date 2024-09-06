@@ -26,10 +26,10 @@ Public Classes
 
 Public Enumerations
 -------------------
-- **OntologyPurpose**: Enumerates the standardized purposes for which an ontology model may be designed.
-- **OntologyDevelopmentContext**: Enumerates the possible development contexts for an ontology model.
-- **OntologyRepresentationStyle**: Enumerates the representation styles adopted in an ontology model.
-- **OntologyType**: Enumerates the categories of ontologies according to their scope.
+    - **OntologyPurpose**: Enumerates the standardized purposes for which an ontology model may be designed.
+    - **OntologyDevelopmentContext**: Enumerates the possible development contexts for an ontology model.
+    - **OntologyRepresentationStyle**: Enumerates the representation styles adopted in an ontology model.
+    - **OntologyType**: Enumerates the categories of ontologies according to their scope.
 
 Intended Use
 ------------
@@ -37,7 +37,7 @@ This library is specifically designed to assist users in manipulating and queryi
 OntoUML/UFO standards. It provides a robust framework for interacting with the formal representations of concepts,
 relations, and constraints that are central to the OntoUML/UFO modeling approach.
 
-Example usage:
+**Example**::
 
     >>> from ontouml_models_lib import Catalog, Query, Model
     >>> catalog = Catalog('/path/to/catalog')

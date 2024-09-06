@@ -38,10 +38,10 @@
           
           <a href="../../index.html" class="icon icon-home">
             ontouml-models-lib
-              <img src="../../_static/ontouml-models-lib-logo.png" class="logo" alt="Logo"/>
+              <img src="https://raw.githubusercontent.com/OntoUML/ontouml-models-lib/main/resources/ontouml-models-lib-logo.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                1.0.0b2
+                1.0.0b3
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -144,20 +144,22 @@ levels of expertise.</p>
 </section>
 <section id="public-enumerations">
 <h2>Public Enumerations<a class="headerlink" href="#public-enumerations" title="Link to this heading"></a></h2>
-<ul class="simple">
+<blockquote>
+<div><ul class="simple">
 <li><p><strong>OntologyPurpose</strong>: Enumerates the standardized purposes for which an ontology model may be designed.</p></li>
 <li><p><strong>OntologyDevelopmentContext</strong>: Enumerates the possible development contexts for an ontology model.</p></li>
 <li><p><strong>OntologyRepresentationStyle</strong>: Enumerates the representation styles adopted in an ontology model.</p></li>
 <li><p><strong>OntologyType</strong>: Enumerates the categories of ontologies according to their scope.</p></li>
 </ul>
+</div></blockquote>
 </section>
 <section id="intended-use">
 <h2>Intended Use<a class="headerlink" href="#intended-use" title="Link to this heading"></a></h2>
 <p>This library is specifically designed to assist users in manipulating and querying ontology models that conform to the
 OntoUML/UFO standards. It provides a robust framework for interacting with the formal representations of concepts,
 relations, and constraints that are central to the OntoUML/UFO modeling approach.</p>
-<p>Example usage:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">ontouml_models_lib</span> <span class="kn">import</span> <span class="n">Catalog</span><span class="p">,</span> <span class="n">Query</span><span class="p">,</span> <span class="n">Model</span>
+<p><strong>Example</strong>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">ontouml_models_lib</span> <span class="kn">import</span> <span class="n">Catalog</span><span class="p">,</span> <span class="n">Query</span><span class="p">,</span> <span class="n">Model</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">catalog</span> <span class="o">=</span> <span class="n">Catalog</span><span class="p">(</span><span class="s1">&#39;/path/to/catalog&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">query</span> <span class="o">=</span> <span class="n">Query</span><span class="p">(</span><span class="s1">&#39;/path/to/query.sparql&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">model</span> <span class="o">=</span> <span class="n">Model</span><span class="p">(</span><span class="s1">&#39;/path/to/ontology_model_folder&#39;</span><span class="p">)</span>
@@ -220,8 +222,8 @@ relations, and constraints that are central to the OntoUML/UFO modeling approach
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ontouml_models_lib.</span></span><span class="sig-name descname"><span class="pre">Catalog</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">catalog_path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ontouml_models_lib.Catalog" title="Link to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="utils/queryable_element/index.html#ontouml_models_lib.utils.queryable_element.QueryableElement" title="ontouml_models_lib.utils.queryable_element.QueryableElement"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ontouml_models_lib.utils.queryable_element.QueryableElement</span></code></a></p>
 <p>Manages a collection of ontology models in the OntoUML/UFO Catalog.</p>
-<p>The <cite>Catalog</cite> class allows loading, managing, and executing queries on multiple ontology models. It compiles the
-results from individual models into a cohesive dataset, enabling complex queries across the entire catalog. This
+<p>The <cite>Catalog</cite> class allows loading, managing, and executing queries on multiple ontology models. It compiles
+graphs of individual models into a cohesive dataset, enabling complex queries across the entire catalog. This
 class inherits from <cite>QueryableElement</cite>, which provides functionality to execute SPARQL queries using RDFLib.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Variables<span class="colon">:</span></dt>
@@ -315,8 +317,8 @@ defaults to “./results”.</p></li>
 <dd class="field-odd"><p>None</p>
 </dd>
 </dl>
-<p>Example usage:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">ontouml_models_lib</span> <span class="kn">import</span> <span class="n">Catalog</span>
+<p><strong>Example</strong>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">ontouml_models_lib</span> <span class="kn">import</span> <span class="n">Catalog</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">ontouml_models_lib</span> <span class="kn">import</span> <span class="n">Query</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">catalog</span> <span class="o">=</span> <span class="n">Catalog</span><span class="p">(</span><span class="s1">&#39;/path/to/catalog&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">query</span> <span class="o">=</span> <span class="n">Query</span><span class="p">(</span><span class="s1">&#39;./queries/query.sparql&#39;</span><span class="p">)</span>  <span class="c1"># Load a SPARQL query from a file</span>
@@ -350,8 +352,8 @@ defaults to “./results”.</p></li>
 <dd class="field-odd"><p>None</p>
 </dd>
 </dl>
-<p>Example usage:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">ontouml_models_lib</span> <span class="kn">import</span> <span class="n">Catalog</span>
+<p><strong>Example</strong>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">ontouml_models_lib</span> <span class="kn">import</span> <span class="n">Catalog</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">ontouml_models_lib</span> <span class="kn">import</span> <span class="n">Query</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">catalog</span> <span class="o">=</span> <span class="n">Catalog</span><span class="p">(</span><span class="s1">&#39;/path/to/catalog&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">query</span> <span class="o">=</span> <span class="n">Query</span><span class="p">(</span><span class="s1">&#39;./queries/query.sparql&#39;</span><span class="p">)</span>  <span class="c1"># Load a SPARQL query from a file</span>
@@ -385,8 +387,8 @@ defaults to “./results”.</p></li>
 <dd class="field-odd"><p>None</p>
 </dd>
 </dl>
-<p>Example usage:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">ontouml_models_lib</span> <span class="kn">import</span> <span class="n">Catalog</span>
+<p><strong>Example</strong>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">ontouml_models_lib</span> <span class="kn">import</span> <span class="n">Catalog</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">ontouml_models_lib</span> <span class="kn">import</span> <span class="n">Query</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">catalog</span> <span class="o">=</span> <span class="n">Catalog</span><span class="p">(</span><span class="s1">&#39;/path/to/catalog&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">model</span> <span class="o">=</span> <span class="n">catalog</span><span class="o">.</span><span class="n">get_model</span><span class="p">(</span><span class="s1">&#39;some_model_id&#39;</span><span class="p">)</span>  <span class="c1"># Retrieve a model by its ID</span>
@@ -422,8 +424,8 @@ defaults to “./results”.</p></li>
 <dd class="field-odd"><p>None</p>
 </dd>
 </dl>
-<p>Example usage:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">ontouml_models_lib</span> <span class="kn">import</span> <span class="n">Catalog</span>
+<p><strong>Example</strong>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">ontouml_models_lib</span> <span class="kn">import</span> <span class="n">Catalog</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">ontouml_models_lib</span> <span class="kn">import</span> <span class="n">Query</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">catalog</span> <span class="o">=</span> <span class="n">Catalog</span><span class="p">(</span><span class="s1">&#39;/path/to/catalog&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">models</span> <span class="o">=</span> <span class="n">catalog</span><span class="o">.</span><span class="n">get_models</span><span class="p">(</span><span class="n">language</span><span class="o">=</span><span class="s2">&quot;en&quot;</span><span class="p">)</span>  <span class="c1"># Filter models by language</span>
@@ -458,8 +460,8 @@ defaults to “./results”.</p></li>
 <dd class="field-odd"><p>None</p>
 </dd>
 </dl>
-<p>Example usage:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">ontouml_models_lib</span> <span class="kn">import</span> <span class="n">Catalog</span>
+<p><strong>Example</strong>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">ontouml_models_lib</span> <span class="kn">import</span> <span class="n">Catalog</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">ontouml_models_lib</span> <span class="kn">import</span> <span class="n">Query</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">catalog</span> <span class="o">=</span> <span class="n">Catalog</span><span class="p">(</span><span class="s1">&#39;/path/to/catalog&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">queries</span> <span class="o">=</span> <span class="n">Query</span><span class="o">.</span><span class="n">load_queries</span><span class="p">(</span><span class="s1">&#39;./queries&#39;</span><span class="p">)</span>  <span class="c1"># Load multiple SPARQL queries from a directory</span>
@@ -488,8 +490,8 @@ specified ID is found, it is returned. Otherwise, a <cite>ValueError</cite> is r
 <dd class="field-even"><p><strong>ValueError</strong> – If no model with the specified ID is found.</p>
 </dd>
 </dl>
-<p>Example usage:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">ontouml_models_lib</span> <span class="kn">import</span> <span class="n">Catalog</span>
+<p><strong>Example</strong>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">ontouml_models_lib</span> <span class="kn">import</span> <span class="n">Catalog</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">catalog</span> <span class="o">=</span> <span class="n">Catalog</span><span class="p">(</span><span class="s1">&#39;/path/to/catalog&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">model</span> <span class="o">=</span> <span class="n">catalog</span><span class="o">.</span><span class="n">get_model</span><span class="p">(</span><span class="s1">&#39;some_model_id&#39;</span><span class="p">)</span>  <span class="c1"># Retrieve a model by its unique ID</span>
 </pre></div>
@@ -520,8 +522,8 @@ arguments. Multiple values for the same attribute can be provided as a list.</p>
 <dd class="field-even"><p><strong>ValueError</strong> – If an invalid operand is provided.</p>
 </dd>
 </dl>
-<p>Example usage:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">ontouml_models_lib</span> <span class="kn">import</span> <span class="n">Catalog</span>
+<p><strong>Example</strong>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">ontouml_models_lib</span> <span class="kn">import</span> <span class="n">Catalog</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">catalog</span> <span class="o">=</span> <span class="n">Catalog</span><span class="p">(</span><span class="s1">&#39;/path/to/catalog&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="c1"># Filter models by a single attribute (language)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">filtered_models</span> <span class="o">=</span> <span class="n">catalog</span><span class="o">.</span><span class="n">get_models</span><span class="p">(</span><span class="n">language</span><span class="o">=</span><span class="s2">&quot;en&quot;</span><span class="p">)</span>
@@ -550,8 +552,8 @@ specified ID is found, it is removed from the catalog. Otherwise, a <cite>ValueE
 <dd class="field-odd"><p>None</p>
 </dd>
 </dl>
-<p>Example usage:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">ontouml_models_lib</span> <span class="kn">import</span> <span class="n">Catalog</span>
+<p><strong>Example</strong>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">ontouml_models_lib</span> <span class="kn">import</span> <span class="n">Catalog</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">catalog</span> <span class="o">=</span> <span class="n">Catalog</span><span class="p">(</span><span class="s1">&#39;/path/to/catalog&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">catalog</span><span class="o">.</span><span class="n">remove_model_by_id</span><span class="p">(</span><span class="s1">&#39;some_model_id&#39;</span><span class="p">)</span>  <span class="c1"># Remove a model by its unique ID</span>
 </pre></div>
@@ -604,23 +606,6 @@ models.</p>
 </dd>
 <dt class="field-even">Return type<span class="colon">:</span></dt>
 <dd class="field-even"><p>Graph</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="ontouml_models_lib.Catalog._generate_compiled_results">
-<span class="sig-name descname"><span class="pre">_generate_compiled_results</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">results</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">compiled_file_path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ontouml_models_lib.Catalog._generate_compiled_results" title="Link to this definition"></a></dt>
-<dd><p>Generate a compiled CSV file from the results of all models.</p>
-<p>This method compiles the results of SPARQL queries executed across multiple models into a single CSV file.
-The compiled file is saved at the specified <cite>compiled_file_path</cite>. The method ensures that the results are
-formatted as a tabular dataset, with the <cite>model_id</cite> column appearing first.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>results</strong> (<em>list</em><em>[</em><em>dict</em><em>]</em>) – A list of dictionaries containing the results from multiple models.</p></li>
-<li><p><strong>compiled_file_path</strong> (<em>Path</em>) – The path where the compiled CSV file will be saved.</p></li>
-</ul>
 </dd>
 </dl>
 </dd></dl>
@@ -700,8 +685,8 @@ ontology models.</p>
 <dd class="field-even"><p><strong>query_file</strong> (<em>Union</em><em>[</em><em>str</em><em>, </em><em>pathlib.Path</em><em>]</em>)</p>
 </dd>
 </dl>
-<p>Example usage:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">ontouml_models_lib</span> <span class="kn">import</span> <span class="n">Query</span>
+<p><strong>Example</strong>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">ontouml_models_lib</span> <span class="kn">import</span> <span class="n">Query</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">query</span> <span class="o">=</span> <span class="n">Query</span><span class="p">(</span><span class="s1">&#39;/path/to/query.sparql&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">query</span><span class="o">.</span><span class="n">query_content</span><span class="p">)</span>
 <span class="go"># Output: &quot;SELECT ?s WHERE { ?s ?p ?o }&quot;</span>
@@ -829,8 +814,8 @@ Library of Congress Classification (LCC).</p></li>
 <dd class="field-even"><p><strong>model_path</strong> (<em>Union</em><em>[</em><em>pathlib.Path</em><em>, </em><em>str</em><em>]</em>)</p>
 </dd>
 </dl>
-<p>Example usage:</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">ontouml_models_lib</span> <span class="kn">import</span> <span class="n">Model</span>
+<p><strong>Example</strong>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">ontouml_models_lib</span> <span class="kn">import</span> <span class="n">Model</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">model</span> <span class="o">=</span> <span class="n">Model</span><span class="p">(</span><span class="s1">&#39;/path/to/ontology_model_folder&#39;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">title</span><span class="p">)</span>
 <span class="go"># Output: &quot;Example Ontology Title&quot;</span>

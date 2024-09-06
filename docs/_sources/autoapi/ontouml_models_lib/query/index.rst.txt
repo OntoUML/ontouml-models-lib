@@ -71,7 +71,7 @@ Module Contents
    :ivar hash: A persistent hash value computed from the query content, used to ensure consistent result management.
    :vartype hash: int
 
-   Example usage:
+   **Example**::
 
        >>> from ontouml_models_lib import Query
        >>> query = Query('/path/to/query.sparql')

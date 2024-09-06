@@ -59,7 +59,7 @@ class Query:
     :ivar hash: A persistent hash value computed from the query content, used to ensure consistent result management.
     :vartype hash: int
 
-    Example usage:
+    **Example**::
 
         >>> from ontouml_models_lib import Query
         >>> query = Query('/path/to/query.sparql')
@@ -81,7 +81,7 @@ class Query:
         :raises FileNotFoundError: If the specified query file does not exist.
         :raises OSError: If an error occurs while reading the query file.
 
-        Example usage:
+        **Example**::
 
             >>> from ontouml_models_lib import Query
             >>> query = Query('/path/to/query.sparql')

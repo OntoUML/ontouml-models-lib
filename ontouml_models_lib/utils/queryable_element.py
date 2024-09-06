@@ -97,7 +97,7 @@ class QueryableElement(ABC):
         :return: A list of dictionaries, where each dictionary represents a result row from the SPARQL query.
         :rtype: list[dict]
 
-        Example usage:
+        **Example**::
 
             >>> from ontouml_models_lib import Model
             >>> from ontouml_models_lib import Query
@@ -171,7 +171,7 @@ class QueryableElement(ABC):
                              defaults to `./results`.
         :type results_path: Optional[Path]
 
-        Example usage:
+        **Example**::
 
             >>> from ontouml_models_lib import Model
             >>> from ontouml_models_lib import Query

@@ -32,10 +32,10 @@ ontouml_models_lib
 
    Public Enumerations
    -------------------
-   - **OntologyPurpose**: Enumerates the standardized purposes for which an ontology model may be designed.
-   - **OntologyDevelopmentContext**: Enumerates the possible development contexts for an ontology model.
-   - **OntologyRepresentationStyle**: Enumerates the representation styles adopted in an ontology model.
-   - **OntologyType**: Enumerates the categories of ontologies according to their scope.
+       - **OntologyPurpose**: Enumerates the standardized purposes for which an ontology model may be designed.
+       - **OntologyDevelopmentContext**: Enumerates the possible development contexts for an ontology model.
+       - **OntologyRepresentationStyle**: Enumerates the representation styles adopted in an ontology model.
+       - **OntologyType**: Enumerates the categories of ontologies according to their scope.
 
    Intended Use
    ------------
@@ -43,7 +43,7 @@ ontouml_models_lib
    OntoUML/UFO standards. It provides a robust framework for interacting with the formal representations of concepts,
    relations, and constraints that are central to the OntoUML/UFO modeling approach.
 
-   Example usage:
+   **Example**::
 
        >>> from ontouml_models_lib import Catalog, Query, Model
        >>> catalog = Catalog('/path/to/catalog')
@@ -100,8 +100,8 @@ Package Contents
 
    Manages a collection of ontology models in the OntoUML/UFO Catalog.
 
-   The `Catalog` class allows loading, managing, and executing queries on multiple ontology models. It compiles the
-   results from individual models into a cohesive dataset, enabling complex queries across the entire catalog. This
+   The `Catalog` class allows loading, managing, and executing queries on multiple ontology models. It compiles
+   graphs of individual models into a cohesive dataset, enabling complex queries across the entire catalog. This
    class inherits from `QueryableElement`, which provides functionality to execute SPARQL queries using RDFLib.
 
    :ivar path: The path to the catalog directory.
@@ -177,7 +177,7 @@ Package Contents
       :raises FileNotFoundError: If the provided results path does not exist and cannot be created.
       :raises Exception: For any other errors that occur during query execution.
 
-      Example usage:
+      **Example**::
 
       >>> from ontouml_models_lib import Catalog
       >>> from ontouml_models_lib import Query
@@ -204,7 +204,7 @@ Package Contents
       :raises FileNotFoundError: If the provided results path does not exist and cannot be created.
       :raises Exception: For any other errors that occur during query execution.
 
-      Example usage:
+      **Example**::
 
       >>> from ontouml_models_lib import Catalog
       >>> from ontouml_models_lib import Query
@@ -232,7 +232,7 @@ Package Contents
       :raises FileNotFoundError: If the provided results path does not exist and cannot be created.
       :raises Exception: For any other errors that occur during query execution.
 
-      Example usage:
+      **Example**::
 
       >>> from ontouml_models_lib import Catalog
       >>> from ontouml_models_lib import Query
@@ -262,7 +262,7 @@ Package Contents
       :raises FileNotFoundError: If the provided results path does not exist and cannot be created.
       :raises Exception: For any other errors that occur during query execution.
 
-      Example usage:
+      **Example**::
 
       >>> from ontouml_models_lib import Catalog
       >>> from ontouml_models_lib import Query
@@ -290,7 +290,7 @@ Package Contents
       :raises FileNotFoundError: If the provided results path does not exist and cannot be created.
       :raises Exception: For any other errors that occur during query execution.
 
-      Example usage:
+      **Example**::
 
       >>> from ontouml_models_lib import Catalog
       >>> from ontouml_models_lib import Query
@@ -313,7 +313,7 @@ Package Contents
       :rtype: Model
       :raises ValueError: If no model with the specified ID is found.
 
-      Example usage:
+      **Example**::
 
       >>> from ontouml_models_lib import Catalog
       >>> catalog = Catalog('/path/to/catalog')
@@ -337,7 +337,7 @@ Package Contents
       :rtype: list[Model]
       :raises ValueError: If an invalid operand is provided.
 
-      Example usage:
+      **Example**::
 
       >>> from ontouml_models_lib import Catalog
       >>> catalog = Catalog('/path/to/catalog')
@@ -361,7 +361,7 @@ Package Contents
       :type model_id: str
       :raises ValueError: If no model with the specified ID is found.
 
-      Example usage:
+      **Example**::
 
       >>> from ontouml_models_lib import Catalog
       >>> catalog = Catalog('/path/to/catalog')
@@ -403,21 +403,6 @@ Package Contents
 
       :return: A merged RDFLib graph containing all triples from the models in the catalog.
       :rtype: Graph
-
-
-
-   .. py:method:: _generate_compiled_results(results, compiled_file_path)
-
-      Generate a compiled CSV file from the results of all models.
-
-      This method compiles the results of SPARQL queries executed across multiple models into a single CSV file.
-      The compiled file is saved at the specified `compiled_file_path`. The method ensures that the results are
-      formatted as a tabular dataset, with the `model_id` column appearing first.
-
-      :param results: A list of dictionaries containing the results from multiple models.
-      :type results: list[dict]
-      :param compiled_file_path: The path where the compiled CSV file will be saved.
-      :type compiled_file_path: Path
 
 
 
@@ -477,7 +462,7 @@ Package Contents
    :ivar hash: A persistent hash value computed from the query content, used to ensure consistent result management.
    :vartype hash: int
 
-   Example usage:
+   **Example**::
 
        >>> from ontouml_models_lib import Query
        >>> query = Query('/path/to/query.sparql')
@@ -591,7 +576,7 @@ Package Contents
                 Library of Congress Classification (LCC).
    :vartype theme: Optional[str]
 
-   Example usage:
+   **Example**::
 
        >>> from ontouml_models_lib import Model
        >>> model = Model('/path/to/ontology_model_folder')

@@ -101,7 +101,7 @@ class Model(QueryableElement):
                  Library of Congress Classification (LCC).
     :vartype theme: Optional[str]
 
-    Example usage:
+    **Example**::
 
         >>> from ontouml_models_lib import Model
         >>> model = Model('/path/to/ontology_model_folder')
@@ -127,7 +127,7 @@ class Model(QueryableElement):
         :raises ValueError: If the provided path is invalid or does not exist.
         :raises RuntimeError: If loading the RDF graph or metadata fails.
 
-        Example usage:
+        **Example**::
 
             >>> from ontouml_models_lib import Model
             >>> model = Model('/path/to/ontology_model_folder')

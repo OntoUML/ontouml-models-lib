@@ -70,9 +70,9 @@ Example 3: Executing Multiple Queries on a Specific Model
 
 Dependencies
 ------------
-- **rdflib**: For RDF graph operations and SPARQL query execution.
-- **loguru**: For logging operations and debugging information.
-- **pandas**: For compiling and managing query results in tabular format.
+    - **rdflib**: For RDF graph operations and SPARQL query execution.
+    - **loguru**: For logging operations and debugging information.
+    - **pandas**: For compiling and managing query results in tabular format.
 
 References
 ----------
@@ -82,7 +82,6 @@ https://github.com/OntoUML/ontouml-models
 
 from typing import Optional, Any, Union
 
-import pandas as pd
 from pathlib import Path
 
 from loguru import logger
@@ -97,8 +96,8 @@ class Catalog(QueryableElement):
     """
     Manages a collection of ontology models in the OntoUML/UFO Catalog.
 
-    The `Catalog` class allows loading, managing, and executing queries on multiple ontology models. It compiles the
-    results from individual models into a cohesive dataset, enabling complex queries across the entire catalog. This
+    The `Catalog` class allows loading, managing, and executing queries on multiple ontology models. It compiles
+    graphs of individual models into a cohesive dataset, enabling complex queries across the entire catalog. This
     class inherits from `QueryableElement`, which provides functionality to execute SPARQL queries using RDFLib.
 
     :ivar path: The path to the catalog directory.
@@ -135,23 +134,26 @@ class Catalog(QueryableElement):
         >>> catalog.execute_queries_on_model(queries, model)
     """
 
-    def __init__(self, catalog_path: Union[Path, str]) -> None:  # noqa: DOC101,DOC103
+    def __init__(self, catalog_path: Union[Path, str], limit_num_models: int = 0) -> None:  # noqa: DOC101,DOC103
         """
         Initialize the Catalog with a given path to the ontology models.
 
         This method sets up the catalog by specifying the directory containing the ontology models. It initializes the
-        paths, loads all models from the directory, and creates a merged RDF graph of all models.
+        paths, loads models from the directory up to the specified limit, and creates a merged RDF graph of all models.
 
         :param catalog_path: The path to the catalog directory containing the ontology models.
                              The path can be provided as a string or a Path object.
         :type catalog_path: Union[Path, str]
+        :param limit_num_models: The maximum number of models to load from the catalog.
+                                 If set to 0, all models are loaded. Defaults to 0.
+        :type limit_num_models: int
 
         :raises ValueError: If the provided path is not valid or if the directory does not contain any models.
 
-        Example usage:
+        **Example**::
 
         >>> from ontouml_models_lib import Catalog
-        >>> catalog = Catalog('/path/to/catalog')
+        >>> catalog = Catalog('/path/to/catalog', limit_num_models=5)
         """
         # Converting to catalog_path if it is a string
         catalog_path = Path(catalog_path) if isinstance(catalog_path, str) else catalog_path
@@ -161,7 +163,7 @@ class Catalog(QueryableElement):
         self.path: Path = catalog_path
         self.path_models: Path = self.path / "models"
         self.models: list[Model] = []
-        self._load_models()
+        self._load_models(limit_num_models)
         self.graph: Graph = self._create_catalog_graph()
 
     # ---------------------------------------------
@@ -190,7 +192,7 @@ class Catalog(QueryableElement):
         :raises FileNotFoundError: If the provided results path does not exist and cannot be created.
         :raises Exception: For any other errors that occur during query execution.
 
-        Example usage:
+        **Example**::
 
         >>> from ontouml_models_lib import Catalog
         >>> from ontouml_models_lib import Query
@@ -219,7 +221,7 @@ class Catalog(QueryableElement):
         :raises FileNotFoundError: If the provided results path does not exist and cannot be created.
         :raises Exception: For any other errors that occur during query execution.
 
-        Example usage:
+        **Example**::
 
         >>> from ontouml_models_lib import Catalog
         >>> from ontouml_models_lib import Query
@@ -255,7 +257,7 @@ class Catalog(QueryableElement):
         :raises FileNotFoundError: If the provided results path does not exist and cannot be created.
         :raises Exception: For any other errors that occur during query execution.
 
-        Example usage:
+        **Example**::
 
         >>> from ontouml_models_lib import Catalog
         >>> from ontouml_models_lib import Query
@@ -293,7 +295,7 @@ class Catalog(QueryableElement):
         :raises FileNotFoundError: If the provided results path does not exist and cannot be created.
         :raises Exception: For any other errors that occur during query execution.
 
-        Example usage:
+        **Example**::
 
         >>> from ontouml_models_lib import Catalog
         >>> from ontouml_models_lib import Query
@@ -327,7 +329,7 @@ class Catalog(QueryableElement):
         :raises FileNotFoundError: If the provided results path does not exist and cannot be created.
         :raises Exception: For any other errors that occur during query execution.
 
-        Example usage:
+        **Example**::
 
         >>> from ontouml_models_lib import Catalog
         >>> from ontouml_models_lib import Query
@@ -352,7 +354,7 @@ class Catalog(QueryableElement):
         :rtype: Model
         :raises ValueError: If no model with the specified ID is found.
 
-        Example usage:
+        **Example**::
 
         >>> from ontouml_models_lib import Catalog
         >>> catalog = Catalog('/path/to/catalog')
@@ -379,7 +381,7 @@ class Catalog(QueryableElement):
         :rtype: list[Model]
         :raises ValueError: If an invalid operand is provided.
 
-        Example usage:
+        **Example**::
 
         >>> from ontouml_models_lib import Catalog
         >>> catalog = Catalog('/path/to/catalog')
@@ -409,7 +411,7 @@ class Catalog(QueryableElement):
         :type model_id: str
         :raises ValueError: If no model with the specified ID is found.
 
-        Example usage:
+        **Example**::
 
         >>> from ontouml_models_lib import Catalog
         >>> catalog = Catalog('/path/to/catalog')
@@ -426,20 +428,28 @@ class Catalog(QueryableElement):
     # Private Methods
     # ---------------------------------------------
 
-    def _load_models(self) -> None:
+    def _load_models(self, limit_num_models: int) -> None:
         """
-        Load all ontology models from the catalog directory.
+        Load ontology models from the catalog directory.
 
         This method scans the catalog directory for subfolders, each representing an ontology model. It loads the models
         from these subfolders and initializes them as instances of the `Model` class. The loaded models are stored in
         the `models` attribute of the `Catalog` instance.
 
+        :param limit_num_models: The maximum number of models to load. If 0, load all models.
+        :type limit_num_models: int
         :raises FileNotFoundError: If the catalog directory does not contain any model subfolders.
         """
         list_models_folders = self._get_subfolders()
         logger.info("Loading catalog from catalog_path: {}", self.path_models)
 
-        for model_folder in list_models_folders:
+        # Determine the number of models to load based on the limit
+        num_models_to_load = (
+            len(list_models_folders) if limit_num_models == 0 else min(limit_num_models, len(list_models_folders))
+        )
+
+        # Load the models
+        for model_folder in list_models_folders[:num_models_to_load]:
             model_path = self.path_models / model_folder
             model = Model(model_path)
             self.models.append(model)
@@ -472,26 +482,6 @@ class Catalog(QueryableElement):
             if model.model_graph:
                 catalog_graph += model.model_graph
         return catalog_graph
-
-    def _generate_compiled_results(self, results: list[dict], compiled_file_path: Path):
-        """
-        Generate a compiled CSV file from the results of all models.
-
-        This method compiles the results of SPARQL queries executed across multiple models into a single CSV file.
-        The compiled file is saved at the specified `compiled_file_path`. The method ensures that the results are
-        formatted as a tabular dataset, with the `model_id` column appearing first.
-
-        :param results: A list of dictionaries containing the results from multiple models.
-        :type results: list[dict]
-        :param compiled_file_path: The path where the compiled CSV file will be saved.
-        :type compiled_file_path: Path
-        """
-        if results:
-            df = pd.DataFrame(results)
-            cols = ["model_id"] + [col for col in df.columns if col != "model_id"]
-            df = df[cols]
-            df.to_csv(compiled_file_path, index=False)
-            logger.info(f"Compiled results written to {compiled_file_path}")
 
     def _match_model(self, model: Model, filters: dict[str, Any], operand: str) -> bool:
         """
