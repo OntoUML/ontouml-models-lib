@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "ontouml-models-lib"
-version = "1.0.0b3"
+version = "1.0.0b4"
 description = "ontouml-models-lib Python Library"
 license = "Apache-2.0"
 authors = ["Pedro Paulo F. Barcelos <p.p.favatobarcelos@utwente.nl>"]

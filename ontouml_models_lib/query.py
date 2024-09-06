@@ -44,8 +44,6 @@ from typing import Union, Optional
 
 from loguru import logger
 
-from ontouml_models_lib import Model
-
 
 class Query:
     """
@@ -121,64 +119,73 @@ class Query:
         return [Query(query_file) for query_file in query_files]
 
 
-    # def execute_on_models(
-    #     self,
-    #     models: list[Model],
-    #     results_path: Optional[Union[str, Path]] = None
-    # ) -> None:
-    #     """
-    #     Execute the query on a list of models and consolidate the results into a single file.
-    #
-    #     This method executes the query across multiple ontology models and saves all results
-    #     into a single consolidated file.
-    #
-    #     :param models: A list of Model instances on which the query will be executed.
-    #     :type models: list[Model]
-    #     :param results_path: Optional; Path to the directory where the query results should be saved.
-    #                          If not provided, defaults to "./results".
-    #     :type results_path: Optional[Union[str, Path]]
-    #
-    #     :raises Exception: For any errors that occur during query execution.
-    #     """
-    #     results_path = Path(results_path or "./results")
-    #     results_path.mkdir(exist_ok=True)
-    #
-    #     # Consolidate results from all models
-    #     consolidated_results = []
-    #     for model in models:
-    #         result = model.execute_query(self)
-    #         consolidated_results.extend(result)
-    #
-    #     # Use the _save_results method to save consolidated results
-    #     self._save_results(consolidated_results, results_path, suffix='consolidated')
-    #
-    # def _save_results(self, results: list[dict], results_path: Path, suffix: str = "") -> None:
-    #     """
-    #     Save the results to a file.
-    #
-    #     This method is responsible for saving the results of the query execution to a file.
-    #
-    #     :param results: The results to save.
-    #     :type results: list[dict]
-    #     :param results_path: The path to save the results file.
-    #     :type results_path: Path
-    #     :param suffix: An optional suffix for the filename to distinguish different types of results.
-    #     :type suffix: str
-    #     """
-    #     if not results:
-    #         return  # No results to save
-    #
-    #     # Construct the filename based on the query's file name and the optional suffix
-    #     file_name = f"{self.query_file_path.stem}_{suffix}.csv"
-    #     file_path = results_path / file_name
-    #
-    #     # Write results to CSV using the csv.DictWriter
-    #     with open(file_path, "w", newline="", encoding="utf-8") as file:
-    #         writer = csv.DictWriter(file, fieldnames=results[0].keys())
-    #         writer.writeheader()
-    #         writer.writerows(results)
-    #
-    #     logger.success(f"Results saved to {file_path}")
+    def execute_on_models(
+        self,
+        models: list["Model"],
+        results_path: Optional[Union[str, Path]] = None
+    ) -> None:
+        """
+        Execute the query on a list of models and consolidate the results into a single file.
+
+        This method executes the query across multiple ontology models and saves all results
+        into a single consolidated file.
+
+        :param models: A list of Model instances on which the query will be executed.
+        :type models: list[Model]
+        :param results_path: Optional; Path to the directory where the query results should be saved.
+                             If not provided, defaults to "./results".
+        :type results_path: Optional[Union[str, Path]]
+
+        :raises Exception: For any errors that occur during query execution.
+        """
+        # Import Model here to avoid circular dependency
+        from .model import Model
+
+        results_path = Path(results_path or "./results")
+        results_path.mkdir(exist_ok=True)
+
+        # Consolidate results from all models
+        consolidated_results = []
+        for model in models:
+            # Execute query on the model without saving individual results
+            result = model.execute_query(self, save_results=False)
+
+            # Add model's ID to each result
+            for res in result:
+                res_with_model_id = {'model_id': model.id}  # Add model's ID as the first column
+                res_with_model_id.update(res)  # Combine with the rest of the result
+                consolidated_results.append(res_with_model_id)
+
+        # Use the _save_results method to save consolidated results
+        self._save_results(consolidated_results, results_path, suffix='consolidated')
+
+    def _save_results(self, results: list[dict], results_path: Path, suffix: str = "") -> None:
+        """
+        Save the results to a file.
+
+        This method is responsible for saving the results of the query execution to a file.
+
+        :param results: The results to save.
+        :type results: list[dict]
+        :param results_path: The path to save the results file.
+        :type results_path: Path
+        :param suffix: An optional suffix for the filename to distinguish different types of results.
+        :type suffix: str
+        """
+        if not results:
+            return  # No results to save
+
+        # Construct the filename based on the query's file name and the optional suffix
+        file_name = f"{self.query_file_path.stem}_{suffix}.csv"
+        file_path = results_path / file_name
+
+        # Write results to CSV using the csv.DictWriter
+        with open(file_path, "w", newline="", encoding="utf-8") as file:
+            writer = csv.DictWriter(file, fieldnames=results[0].keys())
+            writer.writeheader()
+            writer.writerows(results)
+
+        logger.success(f"Results saved to {file_path}")
 
     # ---------------------------------------------
     # Private Methods

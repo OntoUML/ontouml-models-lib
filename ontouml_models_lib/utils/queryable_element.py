@@ -80,20 +80,23 @@ class QueryableElement(ABC):
     # Public Methods
     # ---------------------------------------------
 
-    def execute_query(self, query: Query, results_path: Optional[Union[str, Path]] = None) -> list[dict]:
+    def execute_query(self, query: Query, results_path: Optional[Union[str, Path]] = None,
+                      save_results: bool = True) -> list[dict]:
         """
-        Execute a SPARQL query on the element's RDF graph and returns the results as a list of dictionaries.
+        Execute a SPARQL query on the element's RDF graph and return the results as a list of dictionaries.
 
         This method executes a SPARQL query on the `model_graph` associated with the `QueryableElement`. It first
         checks whether the combination of the graph's hash and the query's hash has already been executed, in which
-        case it skips execution to prevent redundancy. If the query is executed, the results are saved to a CSV file,
-        and the hash combination is recorded for future reference.
+        case it skips execution to prevent redundancy. If the query is executed and `save_results` is True, the results
+        are saved to a CSV file, and the hash combination is recorded for future reference.
 
         :param query: A `Query` instance containing the SPARQL query to be executed.
         :type query: Query
         :param results_path: The path to the directory where the query results and hash file will be saved.
                              If not provided, defaults to `./results`.
         :type results_path: Optional[Union[str, Path]]
+        :param save_results: Whether to save the results to a CSV file. Defaults to True.
+        :type save_results: bool
         :return: A list of dictionaries, where each dictionary represents a result row from the SPARQL query.
         :rtype: list[dict]
 
@@ -103,7 +106,7 @@ class QueryableElement(ABC):
             >>> from ontouml_models_lib import Query
             >>> model = Model('/path/to/ontology_model_folder')
             >>> query = Query('/path/to/query.sparql')
-            >>> results = model.execute_query(query, '/path/to/results')
+            >>> results = model.execute_query(query, '/path/to/results', save_results=False)
             >>> print(results)
             # Output: [{'subject': 'ExampleSubject', 'predicate': 'ExamplePredicate', 'object': 'ExampleObject'}]
         """
@@ -117,9 +120,9 @@ class QueryableElement(ABC):
         # Compute the model_graph_hash for the query_content
         query_hash = self._compute_query_hash(query.query_content)
 
-        # Check if the model_graph_hash combination already exists
-        if self._hash_exists(query_hash, results_path):
-            logger.info(
+        # Do not reexecute if the model_graph_hash combination already exists and if save_results is True
+        if self._hash_exists(query_hash, results_path) and save_results:
+            logger.warning(
                 f"Skipping execution of query {query.query_file_path.name} on {self.id}. "
                 f"Results already available at {result_file}."
             )
@@ -142,13 +145,14 @@ class QueryableElement(ABC):
                         result_dict[str(var)] = value
                 result_list.append(result_dict)
 
-            # Save the results and the model_graph_hash
-            self._save_results(result_list, result_file)
-            self._save_hash_file(query_hash, results_path)
-            logger.success(
-                f"Query {query.query_file_path.name} successfully executed on {self.id}. "
-                f"Results written to {result_file}"
-            )
+            # Save the results and the model_graph_hash if save_results is True
+            if save_results:
+                self._save_results(result_list, result_file)
+                self._save_hash_file(query_hash, results_path)
+                logger.success(
+                    f"Query {query.query_file_path.name} successfully executed on {self.id}. "
+                    f"Results written to {result_file}"
+                )
 
         except Exception:
             logger.exception(f"Query {query.query_file_path.name} execution failed on {self.id}.")
