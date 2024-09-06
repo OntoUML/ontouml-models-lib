@@ -92,6 +92,7 @@ class Query:
         """
         query_file = Path(query_file) if isinstance(query_file, str) else query_file
         self.query_file_path: Path = query_file
+        self.name: str = self.query_file_path.stem  # Extract the name from the file path without the extension
         self.query_content: str = self._read_query_file(query_file)
         self.hash: int = self._compute_persistent_hash(self.query_content)
 
@@ -185,7 +186,7 @@ class Query:
             writer.writeheader()
             writer.writerows(results)
 
-        logger.success(f"Results saved to {file_path}")
+        logger.success(f"Results of {self.name} saved to {file_path}")
 
     # ---------------------------------------------
     # Private Methods
