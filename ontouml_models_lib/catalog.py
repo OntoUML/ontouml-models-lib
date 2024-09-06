@@ -172,8 +172,8 @@ class Catalog(QueryableElement):
 
     # ----- EXECUTE METHODS -----
 
-    def execute_query_on_model(
-        self, query: Query, model: Model, results_path: Optional[Union[str, Path]] = None
+    def execute_query_on_models(
+        self, query: Query, models: list[Model], results_path: Optional[Union[str, Path]] = None
     ) -> None:
         """
         Execute a specific Query on a specific Model and save the results.
@@ -183,8 +183,8 @@ class Catalog(QueryableElement):
 
         :param query: A Query instance representing the SPARQL query to be executed.
         :type query: Query
-        :param model: A Model instance on which the query will be executed.
-        :type model: Model
+        :param models: A list of Model instances on which the query will be executed.
+        :type models: list[Model]
         :param results_path: Optional; Path to the directory where the query results should be saved. If not provided,
                              defaults to "./results".
         :type results_path: Optional[Union[str, Path]]
@@ -203,7 +203,8 @@ class Catalog(QueryableElement):
         """
         results_path = results_path or Path("./results")
         results_path.mkdir(exist_ok=True)
-        model.execute_query(query, results_path)
+        for model in models:
+            model.execute_query(query, results_path)
 
     def execute_query_on_all_models(self, query: Query, results_path: Optional[Union[str, Path]] = None) -> None:
         """
@@ -229,13 +230,8 @@ class Catalog(QueryableElement):
         >>> query = Query('./queries/query.sparql')  # Load a SPARQL query from a file
         >>> catalog.execute_query_on_all_models(query)  # Execute the query on all models
         """
-        # Ensure results_path is not None
-        results_path = Path(results_path or "./results")
-        results_path.mkdir(exist_ok=True)
-
         # Execute the query on each model in the catalog
-        for model in self.models:
-            model.execute_query(query, results_path)
+        self.execute_query_on_models(query,self.models,results_path)
 
     def execute_queries_on_model(
         self, queries: list[Query], model: Model, results_path: Optional[Union[str, Path]] = None
