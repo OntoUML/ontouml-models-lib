@@ -100,6 +100,20 @@ class Model(QueryableElement):
     :ivar theme: The central theme of the ontology model, identified according to a theme taxonomy such as the
                  Library of Congress Classification (LCC).
     :vartype theme: Optional[str]
+    :ivar contributor: An optional contributor to the ontology model, typically a person or organization that contributed
+                       to its development.
+    :vartype contributor: Optional[str]
+    :ivar editorialNote: An optional editorial note providing additional context or comments regarding the ontology model.
+    :vartype editorialNote: Optional[str]
+    :ivar issued: The year the ontology model was issued or published, represented as an integer.
+    :vartype issued: Optional[int]
+    :ivar landingPage: A URL representing the landing page or home page for the ontology model.
+    :vartype landingPage: Optional[str]
+    :ivar license: The license under which the ontology model is distributed. It is recommended to use a standard license
+                   identifier, such as those from SPDX (e.g., "CC-BY-4.0").
+    :vartype license: Optional[str]
+    :ivar modified: The year the ontology model was last modified, represented as an integer.
+    :vartype modified: Optional[int]
 
     **Example**::
 
@@ -144,16 +158,22 @@ class Model(QueryableElement):
         super().__init__(id=model_path.name)  # Set the id to the last folder in the catalog_path
 
         # Metadata attributes
-        self.title: str = ""
-        self.keyword: list[str] = []
         self.acronym: Optional[str] = None
-        self.source: Optional[str] = None
-        self.language: Optional[str] = None
-        self.designedForTask: list[OntologyPurpose] = []
         self.context: list[OntologyDevelopmentContext] = []
-        self.representationStyle: Optional[OntologyRepresentationStyle] = None
+        self.contributor: Optional[str] = None
+        self.designedForTask: list[OntologyPurpose] = []
+        self.editorialNote: Optional[str] = None
+        self.issued: Optional[int] = None
+        self.keyword: list[str] = []
+        self.landingPage: Optional[str] = None
+        self.language: Optional[str] = None
+        self.license: Optional[str] = None
+        self.modified: Optional[int] = None
         self.ontologyType: Optional[OntologyType] = None
+        self.representationStyle: Optional[OntologyRepresentationStyle] = None
+        self.source: Optional[str] = None
         self.theme: Optional[str] = None
+        self.title: str = ""
 
         # Paths
         self.model_path: Path = model_path
@@ -262,6 +282,12 @@ class Model(QueryableElement):
         self.acronym = metadata.get("acronym")
         self.source = metadata.get("source")
         self.language = metadata.get("language")
+        self.contributor = metadata.get("contributor")
+        self.editorialNote = metadata.get("editorialNote")
+        self.issued = None if metadata.get("issued") is None else int(metadata.get("issued"))
+        self.landingPage = metadata.get("landingPage")
+        self.license = metadata.get("license")
+        self.modified = None if metadata.get("modified") is None else int(metadata.get("modified"))
 
         def match_enum_value(enum_class, value: str):
             value_normalized = value.lower().replace(" ", "").replace("_", "")
