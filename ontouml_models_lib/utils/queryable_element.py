@@ -80,8 +80,9 @@ class QueryableElement(ABC):
     # Public Methods
     # ---------------------------------------------
 
-    def execute_query(self, query: Query, results_path: Optional[Union[str, Path]] = None,
-                      save_results: bool = True) -> list[dict]:
+    def execute_query(
+        self, query: Query, results_path: Optional[Union[str, Path]] = None, save_results: bool = True
+    ) -> list[dict]:
         """
         Execute a SPARQL query on the element's RDF graph and return the results as a list of dictionaries.
 

@@ -40,7 +40,7 @@
               <img src="https://raw.githubusercontent.com/OntoUML/ontouml-models-lib/main/resources/ontouml-models-lib-logo.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                1.0.0b3
+                1.0.0b4
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
@@ -191,6 +191,11 @@ ontology models.</p>
 <dd></dd></dl>
 
 <dl class="py attribute">
+<dt class="sig sig-object py" id="ontouml_models_lib.query.Query.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#ontouml_models_lib.query.Query.name" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="ontouml_models_lib.query.Query.query_content">
 <span class="sig-name descname"><span class="pre">query_content</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#ontouml_models_lib.query.Query.query_content" title="Link to this definition"></a></dt>
 <dd></dd></dl>
@@ -213,6 +218,48 @@ ontology models.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>list[<a class="reference internal" href="#ontouml_models_lib.query.Query" title="ontouml_models_lib.query.Query">Query</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ontouml_models_lib.query.Query.execute_on_models">
+<span class="sig-name descname"><span class="pre">execute_on_models</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">models</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">results_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ontouml_models_lib.query.Query.execute_on_models" title="Link to this definition"></a></dt>
+<dd><p>Execute the query on a list of models and consolidate the results into a single file.</p>
+<p>This method executes the query across multiple ontology models and saves all results
+into a single consolidated file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>models</strong> (<em>list</em><em>[</em><a class="reference internal" href="../index.html#ontouml_models_lib.Model" title="ontouml_models_lib.Model"><em>Model</em></a><em>]</em>) – A list of Model instances on which the query will be executed.</p></li>
+<li><p><strong>results_path</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><em>str</em><em>, </em><em>Path</em><em>]</em><em>]</em>) – Optional; Path to the directory where the query results should be saved.
+If not provided, defaults to “./results”.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>Exception</strong> – For any errors that occur during query execution.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ontouml_models_lib.query.Query._save_results">
+<span class="sig-name descname"><span class="pre">_save_results</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">results</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">results_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">suffix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ontouml_models_lib.query.Query._save_results" title="Link to this definition"></a></dt>
+<dd><p>Save the results to a file.</p>
+<p>This method is responsible for saving the results of the query execution to a file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>results</strong> (<em>list</em><em>[</em><em>dict</em><em>]</em>) – The results to save.</p></li>
+<li><p><strong>results_path</strong> (<em>Path</em>) – The path to save the results file.</p></li>
+<li><p><strong>suffix</strong> (<em>str</em>) – An optional suffix for the filename to distinguish different types of results.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
 </dd>
 </dl>
 </dd></dl>

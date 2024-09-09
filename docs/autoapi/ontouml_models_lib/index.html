@@ -41,7 +41,7 @@
               <img src="https://raw.githubusercontent.com/OntoUML/ontouml-models-lib/main/resources/ontouml-models-lib-logo.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                1.0.0b3
+                1.0.0b4
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -219,7 +219,7 @@ relations, and constraints that are central to the OntoUML/UFO modeling approach
 <h2>Package Contents<a class="headerlink" href="#package-contents" title="Link to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="ontouml_models_lib.Catalog">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ontouml_models_lib.</span></span><span class="sig-name descname"><span class="pre">Catalog</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">catalog_path</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ontouml_models_lib.Catalog" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">ontouml_models_lib.</span></span><span class="sig-name descname"><span class="pre">Catalog</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">catalog_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">limit_num_models</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ontouml_models_lib.Catalog" title="Link to this definition"></a></dt>
 <dd><p>Bases: <a class="reference internal" href="utils/queryable_element/index.html#ontouml_models_lib.utils.queryable_element.QueryableElement" title="ontouml_models_lib.utils.queryable_element.QueryableElement"><code class="xref py py-obj docutils literal notranslate"><span class="pre">ontouml_models_lib.utils.queryable_element.QueryableElement</span></code></a></p>
 <p>Manages a collection of ontology models in the OntoUML/UFO Catalog.</p>
 <p>The <cite>Catalog</cite> class allows loading, managing, and executing queries on multiple ontology models. It compiles
@@ -235,7 +235,10 @@ class inherits from <cite>QueryableElement</cite>, which provides functionality 
 </ul>
 </dd>
 <dt class="field-even">Parameters<span class="colon">:</span></dt>
-<dd class="field-even"><p><strong>catalog_path</strong> (<em>Union</em><em>[</em><em>pathlib.Path</em><em>, </em><em>str</em><em>]</em>)</p>
+<dd class="field-even"><ul class="simple">
+<li><p><strong>catalog_path</strong> (<em>Union</em><em>[</em><em>pathlib.Path</em><em>, </em><em>str</em><em>]</em>)</p></li>
+<li><p><strong>limit_num_models</strong> (<em>int</em>)</p></li>
+</ul>
 </dd>
 </dl>
 <section id="examples">
@@ -293,8 +296,8 @@ class inherits from <cite>QueryableElement</cite>, which provides functionality 
 <dd></dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="ontouml_models_lib.Catalog.execute_query_on_model">
-<span class="sig-name descname"><span class="pre">execute_query_on_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">query</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">results_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ontouml_models_lib.Catalog.execute_query_on_model" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="ontouml_models_lib.Catalog.execute_query_on_models">
+<span class="sig-name descname"><span class="pre">execute_query_on_models</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">query</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">models</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">results_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ontouml_models_lib.Catalog.execute_query_on_models" title="Link to this definition"></a></dt>
 <dd><p>Execute a specific Query on a specific Model and save the results.</p>
 <p>This method runs a single SPARQL query on a specific ontology model and saves the results to the specified
 directory. If no directory is provided, the results are saved in the default “./results” directory.</p>
@@ -302,7 +305,7 @@ directory. If no directory is provided, the results are saved in the default “
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>query</strong> (<a class="reference internal" href="#ontouml_models_lib.Query" title="ontouml_models_lib.Query"><em>Query</em></a>) – A Query instance representing the SPARQL query to be executed.</p></li>
-<li><p><strong>model</strong> (<a class="reference internal" href="#ontouml_models_lib.Model" title="ontouml_models_lib.Model"><em>Model</em></a>) – A Model instance on which the query will be executed.</p></li>
+<li><p><strong>models</strong> (<em>list</em><em>[</em><a class="reference internal" href="#ontouml_models_lib.Model" title="ontouml_models_lib.Model"><em>Model</em></a><em>]</em>) – A list of Model instances on which the query will be executed.</p></li>
 <li><p><strong>results_path</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><em>str</em><em>, </em><em>Path</em><em>]</em><em>]</em>) – Optional; Path to the directory where the query results should be saved. If not provided,
 defaults to “./results”.</p></li>
 </ul>
@@ -562,17 +565,20 @@ specified ID is found, it is removed from the catalog. Otherwise, a <cite>ValueE
 
 <dl class="py method">
 <dt class="sig sig-object py" id="ontouml_models_lib.Catalog._load_models">
-<span class="sig-name descname"><span class="pre">_load_models</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#ontouml_models_lib.Catalog._load_models" title="Link to this definition"></a></dt>
-<dd><p>Load all ontology models from the catalog directory.</p>
+<span class="sig-name descname"><span class="pre">_load_models</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">limit_num_models</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ontouml_models_lib.Catalog._load_models" title="Link to this definition"></a></dt>
+<dd><p>Load ontology models from the catalog directory.</p>
 <p>This method scans the catalog directory for subfolders, each representing an ontology model. It loads the models
 from these subfolders and initializes them as instances of the <cite>Model</cite> class. The loaded models are stored in
 the <cite>models</cite> attribute of the <cite>Catalog</cite> instance.</p>
 <dl class="field-list simple">
-<dt class="field-odd">Raises<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>FileNotFoundError</strong> – If the catalog directory does not contain any model subfolders.</p>
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>limit_num_models</strong> (<em>int</em>) – The maximum number of models to load. If 0, load all models.</p>
 </dd>
-<dt class="field-even">Return type<span class="colon">:</span></dt>
-<dd class="field-even"><p>None</p>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>FileNotFoundError</strong> – If the catalog directory does not contain any model subfolders.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
 </dd>
 </dl>
 </dd></dl>
@@ -703,6 +709,11 @@ ontology models.</p>
 <dd></dd></dl>
 
 <dl class="py attribute">
+<dt class="sig sig-object py" id="ontouml_models_lib.Query.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#ontouml_models_lib.Query.name" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="ontouml_models_lib.Query.query_content">
 <span class="sig-name descname"><span class="pre">query_content</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#ontouml_models_lib.Query.query_content" title="Link to this definition"></a></dt>
 <dd></dd></dl>
@@ -725,6 +736,48 @@ ontology models.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>list[<a class="reference internal" href="#ontouml_models_lib.Query" title="ontouml_models_lib.Query">Query</a>]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ontouml_models_lib.Query.execute_on_models">
+<span class="sig-name descname"><span class="pre">execute_on_models</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">models</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">results_path</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ontouml_models_lib.Query.execute_on_models" title="Link to this definition"></a></dt>
+<dd><p>Execute the query on a list of models and consolidate the results into a single file.</p>
+<p>This method executes the query across multiple ontology models and saves all results
+into a single consolidated file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>models</strong> (<em>list</em><em>[</em><a class="reference internal" href="#ontouml_models_lib.Model" title="ontouml_models_lib.Model"><em>Model</em></a><em>]</em>) – A list of Model instances on which the query will be executed.</p></li>
+<li><p><strong>results_path</strong> (<em>Optional</em><em>[</em><em>Union</em><em>[</em><em>str</em><em>, </em><em>Path</em><em>]</em><em>]</em>) – Optional; Path to the directory where the query results should be saved.
+If not provided, defaults to “./results”.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>Exception</strong> – For any errors that occur during query execution.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="ontouml_models_lib.Query._save_results">
+<span class="sig-name descname"><span class="pre">_save_results</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">results</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">results_path</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">suffix</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">''</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#ontouml_models_lib.Query._save_results" title="Link to this definition"></a></dt>
+<dd><p>Save the results to a file.</p>
+<p>This method is responsible for saving the results of the query execution to a file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>results</strong> (<em>list</em><em>[</em><em>dict</em><em>]</em>) – The results to save.</p></li>
+<li><p><strong>results_path</strong> (<em>Path</em>) – The path to save the results file.</p></li>
+<li><p><strong>suffix</strong> (<em>str</em>) – An optional suffix for the filename to distinguish different types of results.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
 </dd>
 </dl>
 </dd></dl>
@@ -808,6 +861,14 @@ OntologyRepresentationStyle enumeration. Examples include OntoumlStyle and UfoSt
 Examples include Core, Domain, and Application.</p></li>
 <li><p><strong>theme</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – The central theme of the ontology model, identified according to a theme taxonomy such as the
 Library of Congress Classification (LCC).</p></li>
+<li><p><strong>contributor</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – An optional contributor to the ontology model, typically a person or organization that contributed
+to its development.</p></li>
+<li><p><strong>editorialNote</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – An optional editorial note providing additional context or comments regarding the ontology model.</p></li>
+<li><p><strong>issued</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em>) – The year the ontology model was issued or published, represented as an integer.</p></li>
+<li><p><strong>landingPage</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – A URL representing the landing page or home page for the ontology model.</p></li>
+<li><p><strong>license</strong> (<em>Optional</em><em>[</em><em>str</em><em>]</em>) – The license under which the ontology model is distributed. It is recommended to use a standard license
+identifier, such as those from SPDX (e.g., “CC-BY-4.0”).</p></li>
+<li><p><strong>modified</strong> (<em>Optional</em><em>[</em><em>int</em><em>]</em>) – The year the ontology model was last modified, represented as an integer.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Parameters<span class="colon">:</span></dt>
@@ -824,33 +885,8 @@ Library of Congress Classification (LCC).</p></li>
 </pre></div>
 </div>
 <dl class="py attribute">
-<dt class="sig sig-object py" id="ontouml_models_lib.Model.title">
-<span class="sig-name descname"><span class="pre">title</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">''</span></em><a class="headerlink" href="#ontouml_models_lib.Model.title" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="ontouml_models_lib.Model.keyword">
-<span class="sig-name descname"><span class="pre">keyword</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[]</span></em><a class="headerlink" href="#ontouml_models_lib.Model.keyword" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
 <dt class="sig sig-object py" id="ontouml_models_lib.Model.acronym">
 <span class="sig-name descname"><span class="pre">acronym</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#ontouml_models_lib.Model.acronym" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="ontouml_models_lib.Model.source">
-<span class="sig-name descname"><span class="pre">source</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#ontouml_models_lib.Model.source" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="ontouml_models_lib.Model.language">
-<span class="sig-name descname"><span class="pre">language</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#ontouml_models_lib.Model.language" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py attribute">
-<dt class="sig sig-object py" id="ontouml_models_lib.Model.designedForTask">
-<span class="sig-name descname"><span class="pre">designedForTask</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="enumerations/index.html#ontouml_models_lib.enumerations.OntologyPurpose" title="ontouml_models_lib.enumerations.OntologyPurpose"><span class="pre">ontouml_models_lib.enumerations.OntologyPurpose</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[]</span></em><a class="headerlink" href="#ontouml_models_lib.Model.designedForTask" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -859,8 +895,48 @@ Library of Congress Classification (LCC).</p></li>
 <dd></dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="ontouml_models_lib.Model.representationStyle">
-<span class="sig-name descname"><span class="pre">representationStyle</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="enumerations/index.html#ontouml_models_lib.enumerations.OntologyRepresentationStyle" title="ontouml_models_lib.enumerations.OntologyRepresentationStyle"><span class="pre">ontouml_models_lib.enumerations.OntologyRepresentationStyle</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#ontouml_models_lib.Model.representationStyle" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="ontouml_models_lib.Model.contributor">
+<span class="sig-name descname"><span class="pre">contributor</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#ontouml_models_lib.Model.contributor" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ontouml_models_lib.Model.designedForTask">
+<span class="sig-name descname"><span class="pre">designedForTask</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="enumerations/index.html#ontouml_models_lib.enumerations.OntologyPurpose" title="ontouml_models_lib.enumerations.OntologyPurpose"><span class="pre">ontouml_models_lib.enumerations.OntologyPurpose</span></a><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[]</span></em><a class="headerlink" href="#ontouml_models_lib.Model.designedForTask" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ontouml_models_lib.Model.editorialNote">
+<span class="sig-name descname"><span class="pre">editorialNote</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#ontouml_models_lib.Model.editorialNote" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ontouml_models_lib.Model.issued">
+<span class="sig-name descname"><span class="pre">issued</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#ontouml_models_lib.Model.issued" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ontouml_models_lib.Model.keyword">
+<span class="sig-name descname"><span class="pre">keyword</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">[]</span></em><a class="headerlink" href="#ontouml_models_lib.Model.keyword" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ontouml_models_lib.Model.landingPage">
+<span class="sig-name descname"><span class="pre">landingPage</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#ontouml_models_lib.Model.landingPage" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ontouml_models_lib.Model.language">
+<span class="sig-name descname"><span class="pre">language</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#ontouml_models_lib.Model.language" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ontouml_models_lib.Model.license">
+<span class="sig-name descname"><span class="pre">license</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#ontouml_models_lib.Model.license" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ontouml_models_lib.Model.modified">
+<span class="sig-name descname"><span class="pre">modified</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#ontouml_models_lib.Model.modified" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">
@@ -869,8 +945,23 @@ Library of Congress Classification (LCC).</p></li>
 <dd></dd></dl>
 
 <dl class="py attribute">
+<dt class="sig sig-object py" id="ontouml_models_lib.Model.representationStyle">
+<span class="sig-name descname"><span class="pre">representationStyle</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><a class="reference internal" href="enumerations/index.html#ontouml_models_lib.enumerations.OntologyRepresentationStyle" title="ontouml_models_lib.enumerations.OntologyRepresentationStyle"><span class="pre">ontouml_models_lib.enumerations.OntologyRepresentationStyle</span></a><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#ontouml_models_lib.Model.representationStyle" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ontouml_models_lib.Model.source">
+<span class="sig-name descname"><span class="pre">source</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#ontouml_models_lib.Model.source" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
 <dt class="sig sig-object py" id="ontouml_models_lib.Model.theme">
 <span class="sig-name descname"><span class="pre">theme</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">None</span></em><a class="headerlink" href="#ontouml_models_lib.Model.theme" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="ontouml_models_lib.Model.title">
+<span class="sig-name descname"><span class="pre">title</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">''</span></em><a class="headerlink" href="#ontouml_models_lib.Model.title" title="Link to this definition"></a></dt>
 <dd></dd></dl>
 
 <dl class="py attribute">

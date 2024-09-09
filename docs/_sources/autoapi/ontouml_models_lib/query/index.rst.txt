@@ -86,6 +86,10 @@ Module Contents
       :type:  pathlib.Path
 
 
+   .. py:attribute:: name
+      :type:  str
+
+
    .. py:attribute:: query_content
       :type:  str
 
@@ -104,6 +108,38 @@ Module Contents
       :type queries_path: Path
       :return: List of Query instances.
       :rtype: list[Query]
+
+
+
+   .. py:method:: execute_on_models(models, results_path = None)
+
+      Execute the query on a list of models and consolidate the results into a single file.
+
+      This method executes the query across multiple ontology models and saves all results
+      into a single consolidated file.
+
+      :param models: A list of Model instances on which the query will be executed.
+      :type models: list[Model]
+      :param results_path: Optional; Path to the directory where the query results should be saved.
+                           If not provided, defaults to "./results".
+      :type results_path: Optional[Union[str, Path]]
+
+      :raises Exception: For any errors that occur during query execution.
+
+
+
+   .. py:method:: _save_results(results, results_path, suffix = '')
+
+      Save the results to a file.
+
+      This method is responsible for saving the results of the query execution to a file.
+
+      :param results: The results to save.
+      :type results: list[dict]
+      :param results_path: The path to save the results file.
+      :type results_path: Path
+      :param suffix: An optional suffix for the filename to distinguish different types of results.
+      :type suffix: str
 
 
 

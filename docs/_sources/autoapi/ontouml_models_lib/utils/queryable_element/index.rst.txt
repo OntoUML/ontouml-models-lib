@@ -78,20 +78,22 @@ Module Contents
       :type:  int
 
 
-   .. py:method:: execute_query(query, results_path = None)
+   .. py:method:: execute_query(query, results_path = None, save_results = True)
 
-      Execute a SPARQL query on the element's RDF graph and returns the results as a list of dictionaries.
+      Execute a SPARQL query on the element's RDF graph and return the results as a list of dictionaries.
 
       This method executes a SPARQL query on the `model_graph` associated with the `QueryableElement`. It first
       checks whether the combination of the graph's hash and the query's hash has already been executed, in which
-      case it skips execution to prevent redundancy. If the query is executed, the results are saved to a CSV file,
-      and the hash combination is recorded for future reference.
+      case it skips execution to prevent redundancy. If the query is executed and `save_results` is True, the results
+      are saved to a CSV file, and the hash combination is recorded for future reference.
 
       :param query: A `Query` instance containing the SPARQL query to be executed.
       :type query: Query
       :param results_path: The path to the directory where the query results and hash file will be saved.
                            If not provided, defaults to `./results`.
       :type results_path: Optional[Union[str, Path]]
+      :param save_results: Whether to save the results to a CSV file. Defaults to True.
+      :type save_results: bool
       :return: A list of dictionaries, where each dictionary represents a result row from the SPARQL query.
       :rtype: list[dict]
 
@@ -101,7 +103,7 @@ Module Contents
           >>> from ontouml_models_lib import Query
           >>> model = Model('/path/to/ontology_model_folder')
           >>> query = Query('/path/to/query.sparql')
-          >>> results = model.execute_query(query, '/path/to/results')
+          >>> results = model.execute_query(query, '/path/to/results', save_results=False)
           >>> print(results)
           # Output: [{'subject': 'ExampleSubject', 'predicate': 'ExamplePredicate', 'object': 'ExampleObject'}]
 

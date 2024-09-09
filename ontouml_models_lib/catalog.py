@@ -231,7 +231,7 @@ class Catalog(QueryableElement):
         >>> catalog.execute_query_on_all_models(query)  # Execute the query on all models
         """
         # Execute the query on each model in the catalog
-        self.execute_query_on_models(query,self.models,results_path)
+        self.execute_query_on_models(query, self.models, results_path)
 
     def execute_queries_on_model(
         self, queries: list[Query], model: Model, results_path: Optional[Union[str, Path]] = None

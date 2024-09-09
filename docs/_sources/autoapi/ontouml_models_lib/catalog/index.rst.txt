@@ -97,7 +97,7 @@ Classes
 Module Contents
 ---------------
 
-.. py:class:: Catalog(catalog_path)
+.. py:class:: Catalog(catalog_path, limit_num_models = 0)
 
    Bases: :py:obj:`ontouml_models_lib.utils.queryable_element.QueryableElement`
 
@@ -163,7 +163,7 @@ Module Contents
       :type:  rdflib.Graph
 
 
-   .. py:method:: execute_query_on_model(query, model, results_path = None)
+   .. py:method:: execute_query_on_models(query, models, results_path = None)
 
       Execute a specific Query on a specific Model and save the results.
 
@@ -172,8 +172,8 @@ Module Contents
 
       :param query: A Query instance representing the SPARQL query to be executed.
       :type query: Query
-      :param model: A Model instance on which the query will be executed.
-      :type model: Model
+      :param models: A list of Model instances on which the query will be executed.
+      :type models: list[Model]
       :param results_path: Optional; Path to the directory where the query results should be saved. If not provided,
                            defaults to "./results".
       :type results_path: Optional[Union[str, Path]]
@@ -373,14 +373,16 @@ Module Contents
 
 
 
-   .. py:method:: _load_models()
+   .. py:method:: _load_models(limit_num_models)
 
-      Load all ontology models from the catalog directory.
+      Load ontology models from the catalog directory.
 
       This method scans the catalog directory for subfolders, each representing an ontology model. It loads the models
       from these subfolders and initializes them as instances of the `Model` class. The loaded models are stored in
       the `models` attribute of the `Catalog` instance.
 
+      :param limit_num_models: The maximum number of models to load. If 0, load all models.
+      :type limit_num_models: int
       :raises FileNotFoundError: If the catalog directory does not contain any model subfolders.
 
 

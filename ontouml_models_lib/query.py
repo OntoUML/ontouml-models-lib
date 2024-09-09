@@ -37,6 +37,7 @@ References
 For additional details on the OntoUML/UFO catalog, refer to the official OntoUML repository:
 https://github.com/OntoUML/ontouml-models
 """
+
 import csv
 import hashlib
 from pathlib import Path
@@ -119,12 +120,7 @@ class Query:
         query_files = [file for file in queries_path.iterdir() if file.is_file()]
         return [Query(query_file) for query_file in query_files]
 
-
-    def execute_on_models(
-        self,
-        models: list["Model"],
-        results_path: Optional[Union[str, Path]] = None
-    ) -> None:
+    def execute_on_models(self, models: list["Model"], results_path: Optional[Union[str, Path]] = None) -> None:
         """
         Execute the query on a list of models and consolidate the results into a single file.
 
@@ -140,7 +136,6 @@ class Query:
         :raises Exception: For any errors that occur during query execution.
         """
         # Import Model here to avoid circular dependency
-        from .model import Model
 
         results_path = Path(results_path or "./results")
         results_path.mkdir(exist_ok=True)
@@ -153,12 +148,12 @@ class Query:
 
             # Add model's ID to each result
             for res in result:
-                res_with_model_id = {'model_id': model.id}  # Add model's ID as the first column
+                res_with_model_id = {"model_id": model.id}  # Add model's ID as the first column
                 res_with_model_id.update(res)  # Combine with the rest of the result
                 consolidated_results.append(res_with_model_id)
 
         # Use the _save_results method to save consolidated results
-        self._save_results(consolidated_results, results_path, suffix='consolidated')
+        self._save_results(consolidated_results, results_path, suffix="consolidated")
 
     def _save_results(self, results: list[dict], results_path: Path, suffix: str = "") -> None:
         """

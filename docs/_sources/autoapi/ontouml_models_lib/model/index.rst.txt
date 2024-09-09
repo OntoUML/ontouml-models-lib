@@ -106,6 +106,20 @@ Module Contents
    :ivar theme: The central theme of the ontology model, identified according to a theme taxonomy such as the
                 Library of Congress Classification (LCC).
    :vartype theme: Optional[str]
+   :ivar contributor: An optional contributor to the ontology model, typically a person or organization that contributed
+                      to its development.
+   :vartype contributor: Optional[str]
+   :ivar editorialNote: An optional editorial note providing additional context or comments regarding the ontology model.
+   :vartype editorialNote: Optional[str]
+   :ivar issued: The year the ontology model was issued or published, represented as an integer.
+   :vartype issued: Optional[int]
+   :ivar landingPage: A URL representing the landing page or home page for the ontology model.
+   :vartype landingPage: Optional[str]
+   :ivar license: The license under which the ontology model is distributed. It is recommended to use a standard license
+                  identifier, such as those from SPDX (e.g., "CC-BY-4.0").
+   :vartype license: Optional[str]
+   :ivar modified: The year the ontology model was last modified, represented as an integer.
+   :vartype modified: Optional[int]
 
    **Example**::
 
@@ -117,31 +131,19 @@ Module Contents
        # Output: ["ontology", "example"]
 
 
-   .. py:attribute:: title
-      :type:  str
-      :value: ''
-
-
-
-   .. py:attribute:: keyword
-      :type:  list[str]
-      :value: []
-
-
-
    .. py:attribute:: acronym
       :type:  Optional[str]
       :value: None
 
 
 
-   .. py:attribute:: source
-      :type:  Optional[str]
-      :value: None
+   .. py:attribute:: context
+      :type:  list[ontouml_models_lib.enumerations.OntologyDevelopmentContext]
+      :value: []
 
 
 
-   .. py:attribute:: language
+   .. py:attribute:: contributor
       :type:  Optional[str]
       :value: None
 
@@ -153,14 +155,44 @@ Module Contents
 
 
 
-   .. py:attribute:: context
-      :type:  list[ontouml_models_lib.enumerations.OntologyDevelopmentContext]
+   .. py:attribute:: editorialNote
+      :type:  Optional[str]
+      :value: None
+
+
+
+   .. py:attribute:: issued
+      :type:  Optional[int]
+      :value: None
+
+
+
+   .. py:attribute:: keyword
+      :type:  list[str]
       :value: []
 
 
 
-   .. py:attribute:: representationStyle
-      :type:  Optional[ontouml_models_lib.enumerations.OntologyRepresentationStyle]
+   .. py:attribute:: landingPage
+      :type:  Optional[str]
+      :value: None
+
+
+
+   .. py:attribute:: language
+      :type:  Optional[str]
+      :value: None
+
+
+
+   .. py:attribute:: license
+      :type:  Optional[str]
+      :value: None
+
+
+
+   .. py:attribute:: modified
+      :type:  Optional[int]
       :value: None
 
 
@@ -171,9 +203,27 @@ Module Contents
 
 
 
+   .. py:attribute:: representationStyle
+      :type:  Optional[ontouml_models_lib.enumerations.OntologyRepresentationStyle]
+      :value: None
+
+
+
+   .. py:attribute:: source
+      :type:  Optional[str]
+      :value: None
+
+
+
    .. py:attribute:: theme
       :type:  Optional[str]
       :value: None
+
+
+
+   .. py:attribute:: title
+      :type:  str
+      :value: ''
 
 
 

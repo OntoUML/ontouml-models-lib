@@ -93,7 +93,7 @@ Classes
 Package Contents
 ----------------
 
-.. py:class:: Catalog(catalog_path)
+.. py:class:: Catalog(catalog_path, limit_num_models = 0)
 
    Bases: :py:obj:`ontouml_models_lib.utils.queryable_element.QueryableElement`
 
@@ -159,7 +159,7 @@ Package Contents
       :type:  rdflib.Graph
 
 
-   .. py:method:: execute_query_on_model(query, model, results_path = None)
+   .. py:method:: execute_query_on_models(query, models, results_path = None)
 
       Execute a specific Query on a specific Model and save the results.
 
@@ -168,8 +168,8 @@ Package Contents
 
       :param query: A Query instance representing the SPARQL query to be executed.
       :type query: Query
-      :param model: A Model instance on which the query will be executed.
-      :type model: Model
+      :param models: A list of Model instances on which the query will be executed.
+      :type models: list[Model]
       :param results_path: Optional; Path to the directory where the query results should be saved. If not provided,
                            defaults to "./results".
       :type results_path: Optional[Union[str, Path]]
@@ -369,14 +369,16 @@ Package Contents
 
 
 
-   .. py:method:: _load_models()
+   .. py:method:: _load_models(limit_num_models)
 
-      Load all ontology models from the catalog directory.
+      Load ontology models from the catalog directory.
 
       This method scans the catalog directory for subfolders, each representing an ontology model. It loads the models
       from these subfolders and initializes them as instances of the `Model` class. The loaded models are stored in
       the `models` attribute of the `Catalog` instance.
 
+      :param limit_num_models: The maximum number of models to load. If 0, load all models.
+      :type limit_num_models: int
       :raises FileNotFoundError: If the catalog directory does not contain any model subfolders.
 
 
@@ -477,6 +479,10 @@ Package Contents
       :type:  pathlib.Path
 
 
+   .. py:attribute:: name
+      :type:  str
+
+
    .. py:attribute:: query_content
       :type:  str
 
@@ -495,6 +501,38 @@ Package Contents
       :type queries_path: Path
       :return: List of Query instances.
       :rtype: list[Query]
+
+
+
+   .. py:method:: execute_on_models(models, results_path = None)
+
+      Execute the query on a list of models and consolidate the results into a single file.
+
+      This method executes the query across multiple ontology models and saves all results
+      into a single consolidated file.
+
+      :param models: A list of Model instances on which the query will be executed.
+      :type models: list[Model]
+      :param results_path: Optional; Path to the directory where the query results should be saved.
+                           If not provided, defaults to "./results".
+      :type results_path: Optional[Union[str, Path]]
+
+      :raises Exception: For any errors that occur during query execution.
+
+
+
+   .. py:method:: _save_results(results, results_path, suffix = '')
+
+      Save the results to a file.
+
+      This method is responsible for saving the results of the query execution to a file.
+
+      :param results: The results to save.
+      :type results: list[dict]
+      :param results_path: The path to save the results file.
+      :type results_path: Path
+      :param suffix: An optional suffix for the filename to distinguish different types of results.
+      :type suffix: str
 
 
 
@@ -575,6 +613,20 @@ Package Contents
    :ivar theme: The central theme of the ontology model, identified according to a theme taxonomy such as the
                 Library of Congress Classification (LCC).
    :vartype theme: Optional[str]
+   :ivar contributor: An optional contributor to the ontology model, typically a person or organization that contributed
+                      to its development.
+   :vartype contributor: Optional[str]
+   :ivar editorialNote: An optional editorial note providing additional context or comments regarding the ontology model.
+   :vartype editorialNote: Optional[str]
+   :ivar issued: The year the ontology model was issued or published, represented as an integer.
+   :vartype issued: Optional[int]
+   :ivar landingPage: A URL representing the landing page or home page for the ontology model.
+   :vartype landingPage: Optional[str]
+   :ivar license: The license under which the ontology model is distributed. It is recommended to use a standard license
+                  identifier, such as those from SPDX (e.g., "CC-BY-4.0").
+   :vartype license: Optional[str]
+   :ivar modified: The year the ontology model was last modified, represented as an integer.
+   :vartype modified: Optional[int]
 
    **Example**::
 
@@ -586,31 +638,19 @@ Package Contents
        # Output: ["ontology", "example"]
 
 
-   .. py:attribute:: title
-      :type:  str
-      :value: ''
-
-
-
-   .. py:attribute:: keyword
-      :type:  list[str]
-      :value: []
-
-
-
    .. py:attribute:: acronym
       :type:  Optional[str]
       :value: None
 
 
 
-   .. py:attribute:: source
-      :type:  Optional[str]
-      :value: None
+   .. py:attribute:: context
+      :type:  list[ontouml_models_lib.enumerations.OntologyDevelopmentContext]
+      :value: []
 
 
 
-   .. py:attribute:: language
+   .. py:attribute:: contributor
       :type:  Optional[str]
       :value: None
 
@@ -622,14 +662,44 @@ Package Contents
 
 
 
-   .. py:attribute:: context
-      :type:  list[ontouml_models_lib.enumerations.OntologyDevelopmentContext]
+   .. py:attribute:: editorialNote
+      :type:  Optional[str]
+      :value: None
+
+
+
+   .. py:attribute:: issued
+      :type:  Optional[int]
+      :value: None
+
+
+
+   .. py:attribute:: keyword
+      :type:  list[str]
       :value: []
 
 
 
-   .. py:attribute:: representationStyle
-      :type:  Optional[ontouml_models_lib.enumerations.OntologyRepresentationStyle]
+   .. py:attribute:: landingPage
+      :type:  Optional[str]
+      :value: None
+
+
+
+   .. py:attribute:: language
+      :type:  Optional[str]
+      :value: None
+
+
+
+   .. py:attribute:: license
+      :type:  Optional[str]
+      :value: None
+
+
+
+   .. py:attribute:: modified
+      :type:  Optional[int]
       :value: None
 
 
@@ -640,9 +710,27 @@ Package Contents
 
 
 
+   .. py:attribute:: representationStyle
+      :type:  Optional[ontouml_models_lib.enumerations.OntologyRepresentationStyle]
+      :value: None
+
+
+
+   .. py:attribute:: source
+      :type:  Optional[str]
+      :value: None
+
+
+
    .. py:attribute:: theme
       :type:  Optional[str]
       :value: None
+
+
+
+   .. py:attribute:: title
+      :type:  str
+      :value: ''
 
 
 
